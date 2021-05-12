@@ -1,0 +1,11 @@
+.NavStyle {
+  background-color: #0052d4;
+}
+
+.NavStyle li {
+  color: #fff;
+}
+
+.NavStyle li:hover {
+  cursor: pointer;
+}
