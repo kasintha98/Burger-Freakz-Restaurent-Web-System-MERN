@@ -6,12 +6,16 @@ const initState = {
   error: null,
 };
 
-const buildNewCategories = (categories) => {
-  let myCategories = [];
-  for (let cat of categories) {
-    myCategories.push({ ...cat });
-  }
-  return myCategories;
+const buildNewCategories = (categories, category) => {
+  return [
+    ...categories,
+    {
+      _id: category._id,
+      name: category.name,
+      slug: category.slug,
+      description: category.description,
+    },
+  ];
 };
 
 export default (state = initState, action) => {
@@ -30,7 +34,7 @@ export default (state = initState, action) => {
       break;
     case categoryConstants.ADD_NEW_CATEGORY_SUCCESS:
       const category = action.payload.category;
-      const updatedCategories = buildNewCategories(state.categories);
+      const updatedCategories = buildNewCategories(state.categories, category);
       console.log("updatedCategories", updatedCategories);
 
       state = {

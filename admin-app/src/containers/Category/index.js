@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { Container, Row, Col, Modal, Button } from "react-bootstrap";
+import React, { useState } from "react";
+import { Container, Row, Col, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { addCategory, getAllCategory } from "../../actions";
+import { addCategory } from "../../actions";
 import Layout from "../../components/Layouts";
 import Input from "../../components/UI/Input";
+import NewModal from "../../components/UI/Modal";
 
 function Category(props) {
   const category = useSelector((state) => state.category);
@@ -13,10 +14,6 @@ function Category(props) {
   const [categoryDescription, setCategoryDescription] = useState("");
 
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getAllCategory());
-  }, []);
 
   const [show, setShow] = useState(false);
 
@@ -28,6 +25,10 @@ function Category(props) {
     form.append("categoryImages", categoryImage);
 
     dispatch(addCategory(form));
+
+    setCategoryName("");
+    setCategoryDescription("");
+    setCategoryImage("");
   };
 
   const handleClose = () => {
@@ -72,56 +73,43 @@ function Category(props) {
         </Row>
       </Container>
 
-      <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Add New Category</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Input
-            type={"text"}
-            value={categoryName}
-            placeholder={"Category Name"}
-            onChange={(e) => {
-              setCategoryName(e.target.value);
-            }}
+      {/* Add new category modal */}
+      <NewModal
+        show={show}
+        handleClose={handleClose}
+        addNewItem={addNewCategory}
+        modalTitle="Add New Category"
+      >
+        <Input
+          type={"text"}
+          value={categoryName}
+          placeholder={"Category Name"}
+          onChange={(e) => {
+            setCategoryName(e.target.value);
+          }}
+        />
+        <Input
+          as="textarea"
+          rows={3}
+          value={categoryDescription}
+          placeholder={"Category Description"}
+          onChange={(e) => {
+            setCategoryDescription(e.target.value);
+          }}
+        />
+        <div className="input-group mb-3">
+          <label className="input-group-text" htmlFor="inputGroupFile01">
+            Upload Category Image
+          </label>
+          <input
+            type="file"
+            name="categoryImage"
+            className="form-control"
+            id="inputGroupFile01"
+            onChange={handleCategoryImage}
           />
-          <Input
-            as="textarea"
-            rows={3}
-            value={categoryDescription}
-            placeholder={"Category Description"}
-            onChange={(e) => {
-              setCategoryDescription(e.target.value);
-            }}
-          />
-          <div className="input-group mb-3">
-            <label className="input-group-text" htmlFor="inputGroupFile01">
-              Upload Category Image
-            </label>
-            <input
-              type="file"
-              name="categoryImage"
-              className="form-control"
-              id="inputGroupFile01"
-              onChange={handleCategoryImage}
-            />
-          </div>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Cancel
-          </Button>
-          <Button
-            variant="primary"
-            onClick={() => {
-              addNewCategory();
-              handleClose();
-            }}
-          >
-            Add
-          </Button>
-        </Modal.Footer>
-      </Modal>
+        </div>
+      </NewModal>
     </Layout>
   );
 }

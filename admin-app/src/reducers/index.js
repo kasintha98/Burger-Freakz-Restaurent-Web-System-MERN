@@ -1,4 +1,5 @@
 //reduce code complexity in store. so include reducing code here
+//combine reducers
 
 import authReducer from "./auth.reducers";
 import userReducer from "./user.reducers";

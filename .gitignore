@@ -25,3 +25,4 @@ yarn-error.log*
 /admin-app/node_modules
 /backend/node_modules
 /backend/.env
+/client-app/node_modules

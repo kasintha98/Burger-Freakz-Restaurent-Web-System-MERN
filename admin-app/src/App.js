@@ -1,6 +1,6 @@
 import { Route, Switch } from "react-router-dom";
 import React, { useEffect } from "react";
-import { isUserLoggedIn } from "./actions";
+import { isUserLoggedIn, getAllCategory, getInitialData } from "./actions";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Home from "./containers/Home";
@@ -20,6 +20,7 @@ function App() {
     if (!auth.authenticate) {
       dispatch(isUserLoggedIn());
     }
+    dispatch(getInitialData());
   }, []);
 
   return (

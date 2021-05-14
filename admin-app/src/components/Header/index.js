@@ -47,6 +47,7 @@ function Header(props) {
     <div>
       <Navbar
         collapseOnSelect
+        fixed="top"
         expand="lg"
         variant="dark"
         style={{ zIndex: "1" }}
