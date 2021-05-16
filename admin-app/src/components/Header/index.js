@@ -50,7 +50,7 @@ function Header(props) {
         fixed="top"
         expand="lg"
         variant="dark"
-        style={{ zIndex: "1" }}
+        style={{ zIndex: "2" }}
         className="NavStyle"
       >
         <Container fluid>

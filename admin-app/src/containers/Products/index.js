@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import Layout from "../../components/Layouts";
-import { Container, Row, Col, Button, Table } from "react-bootstrap";
+import { Container, Row, Col, Button, Table, Carousel } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Input from "../../components/UI/Input";
 import { addProduct } from "../../actions";
 import NewModal from "../../components/UI/Modal";
+import { generatePublicUrl } from "../../urlConfig";
+import "./style.css";
 
 function Products(props) {
   const [productName, setProductName] = useState("");
@@ -14,6 +16,8 @@ function Products(props) {
   const [productOffer, setProductOffer] = useState("");
   const [productCategory, setProductCategory] = useState("");
   const [productImage, setProductImage] = useState([]);
+  const [productDetailsModal, setProductDetailsModal] = useState(false);
+  const [productDetails, setProductDetails] = useState(null);
 
   const category = useSelector((state) => state.category);
   const product = useSelector((state) => state.product);
@@ -79,26 +83,40 @@ function Products(props) {
             <th>Name</th>
             <th>Description</th>
             <th>Price</th>
-            <th>Offer</th>
             <th>Rating</th>
-            <th>Quantity</th>
             <th>Category</th>
-            <th>Added By</th>
           </tr>
         </thead>
         <tbody>
           {product.products.length > 0
             ? product.products.map((product) => (
-                <tr key={product._id}>
-                  <td>{"image"}</td>
+                <tr
+                  onClick={() => {
+                    showProductDetailsModal(product);
+                  }}
+                  key={product._id}
+                >
+                  <td>
+                    <div style={{ maxWidth: "100px" }}>
+                      <Carousel fade>
+                        {product.productImages.map((picture) => (
+                          <Carousel.Item>
+                            <div className="productImageContainer">
+                              <img
+                                src={generatePublicUrl(picture.img)}
+                                alt=""
+                              />
+                            </div>
+                          </Carousel.Item>
+                        ))}
+                      </Carousel>
+                    </div>
+                  </td>
                   <td>{product.name}</td>
                   <td>{product.description}</td>
                   <td>{product.price}</td>
-                  <td>{product.offer}</td>
                   <td>{"rating"}</td>
-                  <td>{product.quantity}</td>
-                  <td>{"--"}</td>
-                  <td>{"--"}</td>
+                  <td>{product.category.name}</td>
                 </tr>
               ))
             : null}
@@ -107,28 +125,8 @@ function Products(props) {
     );
   };
 
-  return (
-    <Layout sidebar>
-      <Container>
-        <Row>
-          <Col md={12}>
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
-              <h3>Products</h3>
-              <Button
-                variant="dark"
-                onClick={handleShow}
-                style={{ marginTop: "5px" }}
-              >
-                Add
-              </Button>
-            </div>
-          </Col>
-        </Row>
-        <Row>
-          <Col md={12}>{renderProducts()}</Col>
-        </Row>
-      </Container>
-
+  const renderAddProductModal = () => {
+    return (
       <NewModal
         modalTitle={"Add New Product"}
         show={show}
@@ -208,6 +206,105 @@ function Products(props) {
           />
         </div>
       </NewModal>
+    );
+  };
+
+  const handleCloseProductDetailsModal = () => {
+    setProductDetailsModal(false);
+  };
+
+  const showProductDetailsModal = (product) => {
+    setProductDetails(product);
+    setProductDetailsModal(true);
+    //console.log(product);
+  };
+
+  const renderProductDetailsModal = () => {
+    if (!productDetails) {
+      return null;
+    }
+
+    return (
+      <NewModal
+        modalTitle={"Product Details"}
+        show={productDetailsModal}
+        handleClose={handleCloseProductDetailsModal}
+        size="lg"
+      >
+        <Row>
+          <Col md="6">
+            <lable className="key">Id</lable>
+            <p className="value">{productDetails._id}</p>
+          </Col>
+          <Col md="6">
+            <lable className="key">Name</lable>
+            <p className="value">{productDetails.name}</p>
+          </Col>
+          <Col md="6">
+            <lable className="key">Price</lable>
+            <p className="value">{productDetails.price}</p>
+          </Col>
+          <Col md="6">
+            <lable className="key">Quantity</lable>
+            <p className="value">{productDetails.quantity}</p>
+          </Col>
+          <Col md="6">
+            <lable className="key">Description</lable>
+            <p className="value">{productDetails.description}</p>
+          </Col>
+          <Col md="6">
+            <lable className="key">Offer</lable>
+            <p className="value">{productDetails.offer}</p>
+          </Col>
+          <Col md="6">
+            <lable className="key">Category</lable>
+            <p className="value">{productDetails.category.name}</p>
+          </Col>
+          <Col md="6">
+            <lable className="key">Added By</lable>
+            <p className="value">
+              {productDetails.createdBy.firstName}&nbsp;
+              {productDetails.createdBy.lastName}
+            </p>
+          </Col>
+          <Col md="6">
+            <lable className="key">Images</lable>
+            <div style={{ display: "flex" }}>
+              {productDetails.productImages.map((picture) => (
+                <div className="productImageContainer">
+                  <img src={generatePublicUrl(picture.img)} alt="" />
+                </div>
+              ))}
+            </div>
+          </Col>
+        </Row>
+      </NewModal>
+    );
+  };
+
+  return (
+    <Layout sidebar>
+      <Container>
+        <Row>
+          <Col md={12}>
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
+              <h3>Products</h3>
+              <Button
+                variant="dark"
+                onClick={handleShow}
+                style={{ marginTop: "5px" }}
+              >
+                Add
+              </Button>
+            </div>
+          </Col>
+        </Row>
+        <Row>
+          <Col md={12}>{renderProducts()}</Col>
+        </Row>
+      </Container>
+      {renderAddProductModal()}
+      {renderProductDetailsModal()}
     </Layout>
   );
 }

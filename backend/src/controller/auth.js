@@ -1,11 +1,12 @@
 //controllers for client users
 const User = require("../models/user");
 const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
 const { validationResult } = require("express-validator");
 
 //signup controller
 exports.signup = (req, res) => {
-  User.findOne({ email: req.body.email }).exec((err, user) => {
+  User.findOne({ email: req.body.email }).exec(async (err, user) => {
     if (user)
       return res.status(400).json({
         message: "User already registerd!",
@@ -21,6 +22,9 @@ exports.signup = (req, res) => {
       contactNumber,
       address,
     } = req.body;
+
+    const hash_password = await bcrypt.hash(password, 10);
+
     const _user = new User({
       firstName,
       lastName,
@@ -28,7 +32,7 @@ exports.signup = (req, res) => {
       nic,
       gender,
       email,
-      password,
+      hash_password,
       contactNumber,
       address,
     });
