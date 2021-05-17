@@ -1,10 +1,12 @@
 import React, { useState } from "react";
-import { Container, Row, Col, Button } from "react-bootstrap";
+import { Container, Row, Col, Button, Table } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { addCategory } from "../../actions";
 import Layout from "../../components/Layouts";
 import Input from "../../components/UI/Input";
 import NewModal from "../../components/UI/Modal";
+import { generatePublicUrl } from "../../urlConfig";
+import "./style.css";
 
 function Category(props) {
   const category = useSelector((state) => state.category);
@@ -39,7 +41,21 @@ function Category(props) {
   const renderCategories = (categories) => {
     let myCategories = [];
     for (let category of categories) {
-      myCategories.push(<li key={category._id}>{category.name}</li>);
+      myCategories.push(
+        <tr key={category._id}>
+          <td>
+            <div style={{ maxWidth: "100px" }}>
+              {category.categoryImages.map((picture) => (
+                <div className="categoryImageContainer">
+                  <img src={generatePublicUrl(picture.img)} alt="" />
+                </div>
+              ))}
+            </div>
+          </td>
+          <td>{category.name}</td>
+          <td>{category.description}</td>
+        </tr>
+      );
     }
 
     return myCategories;
@@ -68,7 +84,17 @@ function Category(props) {
         </Row>
         <Row>
           <Col md={12}>
-            <ul>{renderCategories(category.categories)}</ul>
+            <Table responsive="sm">
+              <thead>
+                <tr>
+                  <th>Image</th>
+                  <th>Name</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>{renderCategories(category.categories)}</tbody>
+            </Table>
+            ;
           </Col>
         </Row>
       </Container>
