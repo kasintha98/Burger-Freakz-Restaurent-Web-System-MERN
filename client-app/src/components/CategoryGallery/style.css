@@ -3,3 +3,12 @@
   height: 300px;
   overflow: hidden;
 }
+
+a {
+  color: black;
+}
+
+a:hover {
+  text-decoration: none;
+  color: #333;
+}
