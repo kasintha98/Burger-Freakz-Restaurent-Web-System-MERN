@@ -11,16 +11,17 @@ function NewModal(props) {
         <Modal.Body>{props.children}</Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={props.handleClose}>
-            Cancel
+            Close
           </Button>
           <Button
+            hidden={props.hiddenAddBtn}
             variant="primary"
             onClick={() => {
               props.addNewItem();
               props.handleClose();
             }}
           >
-            Add
+            Save
           </Button>
         </Modal.Footer>
       </Modal>

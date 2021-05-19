@@ -1,3 +1,6 @@
-.main {
-  background-color: rgba(0, 32, 173, 0.253);
+.mainReg {
+  background-image: url("../../img/side-1.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: auto 100%;
 }

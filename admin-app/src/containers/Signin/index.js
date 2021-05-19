@@ -6,6 +6,7 @@ import { login } from "../../actions";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
 import "./style.css";
+import logo from "../../img/logo.jpg";
 
 function Signin(props) {
   //initial state of email
@@ -36,51 +37,60 @@ function Signin(props) {
   return (
     <div>
       <Layout>
-        <Container className="main">
-          <Row
-            style={{ marginTop: "120px", padding: "20px" }}
-            className="text-center"
-          >
-            <Col md={{ span: 6, offset: 3 }}>
-              <Form onSubmit={userLogin}>
-                <Input
-                  lable="Email"
-                  type="email"
-                  placeholder="Enter email"
-                  value={email}
-                  onChange={(e) => {
-                    setEmail(e.target.value);
-                  }}
-                  error="We'll never share your email with anyone else."
-                ></Input>
+        <Row style={{ height: "100vh" }}>
+          <Col className="main col-4"></Col>
+          <Col className="col-8">
+            <Row
+              style={{ marginTop: "50px", padding: "20px" }}
+              className="text-center"
+            >
+              <Col md={{ span: 6, offset: 3 }}>
+                <img width="100px" src={logo} alt="logo" />
 
-                <Input
-                  lable="Password"
-                  type="password"
-                  placeholder="Enter password"
-                  value={password}
-                  onChange={(e) => {
-                    setPassword(e.target.value);
-                  }}
-                ></Input>
-                <Form.Group>
-                  <Form.Check
-                    className="text-center"
-                    type="checkbox"
-                    label="Remember Me"
-                  />
-                </Form.Group>
-                <Button
-                  variant="primary"
-                  type="submit"
-                  style={{ width: "100%" }}
-                >
-                  Sign In
-                </Button>
-              </Form>
-            </Col>
-          </Row>
-        </Container>
+                <h2 className="text-center">Sign In</h2>
+                <br></br>
+                <h3 className="text-center">Burger Freakz Admin Dashboard</h3>
+                <br></br>
+                <Form onSubmit={userLogin}>
+                  <Input
+                    lable="Email"
+                    type="email"
+                    placeholder="Enter email"
+                    value={email}
+                    onChange={(e) => {
+                      setEmail(e.target.value);
+                    }}
+                    error="We'll never share your email with anyone else."
+                  ></Input>
+
+                  <Input
+                    lable="Password"
+                    type="password"
+                    placeholder="Enter password"
+                    value={password}
+                    onChange={(e) => {
+                      setPassword(e.target.value);
+                    }}
+                  ></Input>
+                  <Form.Group>
+                    <Form.Check
+                      className="text-center"
+                      type="checkbox"
+                      label="Remember Me"
+                    />
+                  </Form.Group>
+                  <Button
+                    variant="primary"
+                    type="submit"
+                    style={{ width: "100%", marginBottom: "50px" }}
+                  >
+                    Sign In
+                  </Button>
+                </Form>
+              </Col>
+            </Row>
+          </Col>
+        </Row>
       </Layout>
     </div>
   );

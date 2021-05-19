@@ -1,0 +1,29 @@
+.imageHolder_img {
+  width: auto;
+  height: 300px;
+  overflow: hidden;
+}
+
+a {
+  color: black;
+}
+
+a:hover {
+  text-decoration: none;
+  color: #333;
+}
+
+.carousel-indicators {
+  display: none;
+}
+
+.carousel-indicators li {
+  display: none;
+}
+
+.carousel-control-next-icon {
+  display: none;
+}
+.carousel-control-prev-icon {
+  display: none;
+}

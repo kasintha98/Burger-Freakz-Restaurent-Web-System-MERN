@@ -1,6 +1,14 @@
 import React, { useState } from "react";
 import Layout from "../../components/Layouts";
-import { Container, Row, Col, Button, Table, Carousel } from "react-bootstrap";
+import {
+  Container,
+  Row,
+  Col,
+  Button,
+  Table,
+  Carousel,
+  ButtonGroup,
+} from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Input from "../../components/UI/Input";
 import { addProduct } from "../../actions";
@@ -77,7 +85,7 @@ function Products(props) {
   const renderProducts = () => {
     return (
       <Table responsive="sm">
-        <thead>
+        <thead className="text-center">
           <tr>
             <th>Image</th>
             <th>Name</th>
@@ -85,17 +93,13 @@ function Products(props) {
             <th>Price</th>
             <th>Rating</th>
             <th>Category</th>
+            <th>Actions</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className="text-center">
           {product.products.length > 0
             ? product.products.map((product) => (
-                <tr
-                  onClick={() => {
-                    showProductDetailsModal(product);
-                  }}
-                  key={product._id}
-                >
+                <tr key={product._id}>
                   <td>
                     <div style={{ maxWidth: "100px" }}>
                       <Carousel fade>
@@ -117,6 +121,21 @@ function Products(props) {
                   <td>{product.price}</td>
                   <td>{"rating"}</td>
                   <td>{product.category.name}</td>
+                  <td>
+                    <ButtonGroup style={{ width: "100%" }}>
+                      <Button variant="success">Edit</Button>
+                      <Button variant="danger">Delete</Button>
+                    </ButtonGroup>
+                    <Button
+                      style={{ width: "100%" }}
+                      size="sm"
+                      onClick={() => {
+                        showProductDetailsModal(product);
+                      }}
+                    >
+                      Show Full Details
+                    </Button>
+                  </td>
                 </tr>
               ))
             : null}
@@ -230,6 +249,7 @@ function Products(props) {
         show={productDetailsModal}
         handleClose={handleCloseProductDetailsModal}
         size="lg"
+        hiddenAddBtn={true}
       >
         <Row>
           <Col md="6">

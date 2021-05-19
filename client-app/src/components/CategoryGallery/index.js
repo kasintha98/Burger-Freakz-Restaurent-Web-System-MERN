@@ -46,6 +46,9 @@ export default function CategoryGallery(props) {
   return (
     <div>
       <Container>
+        <h2 className="text-center" style={{ padding: "15px" }}>
+          Our Menu
+        </h2>
         <Row>
           {category.categories.length > 0
             ? renderCategories(category.categories)

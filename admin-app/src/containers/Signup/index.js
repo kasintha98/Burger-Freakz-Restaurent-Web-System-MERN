@@ -6,6 +6,7 @@ import { Redirect } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { signup } from "../../actions";
 import "./style.css";
+import logo from "../../img/logo.jpg";
 
 function Signup(props) {
   const [firstName, setFirstName] = useState("");
@@ -56,142 +57,157 @@ function Signup(props) {
   return (
     <div>
       <Layout>
-        <Container className="main">
-          {/* showing error messages */}
-          {user.message ? (
-            <div
-              className="alert alert-success text-center"
-              role="alert"
-              style={{ marginTop: "20px" }}
+        <Row style={{ height: "100vh" }}>
+          <Col className="mainReg col-4"></Col>
+          <Col className="col-8">
+            {/* showing error messages */}
+            {user.message ? (
+              <div
+                className="alert alert-success text-center"
+                role="alert"
+                style={{ marginTop: "20px" }}
+              >
+                {user.message}
+              </div>
+            ) : null}
+
+            <Row
+              style={{
+                marginTop: "50px",
+                marginBottom: "50px",
+                padding: "20px",
+              }}
             >
-              {user.message}
-            </div>
-          ) : (
-            ""
-          )}
+              <Col md={{ span: 6, offset: 3 }}>
+                <img
+                  style={{ marginLeft: "36%" }}
+                  width="100px"
+                  src={logo}
+                  alt="logo"
+                />
+                <h2 className="text-center">Sign Up</h2>
+                <br></br>
+                <h3 className="text-center">Burger Freakz Admin Dashboard</h3>
+                <br></br>
+                <Form onSubmit={userSignup}>
+                  <Row>
+                    <Col md={6}>
+                      <Input
+                        lable="First Name"
+                        type="text"
+                        placeholder="Enter first name"
+                        value={firstName}
+                        onChange={(e) => {
+                          setFirstName(e.target.value);
+                        }}
+                      ></Input>
+                    </Col>
+                    <Col md={6}>
+                      <Input
+                        lable="Last Name"
+                        type="text"
+                        placeholder="Enter last name"
+                        value={lastName}
+                        onChange={(e) => {
+                          setLastName(e.target.value);
+                        }}
+                      ></Input>
+                    </Col>
+                  </Row>
 
-          <Row
-            style={{ marginTop: "50px", marginBottom: "50px", padding: "20px" }}
-          >
-            <Col md={{ span: 6, offset: 3 }}>
-              <Form onSubmit={userSignup}>
-                <Row>
-                  <Col md={6}>
-                    <Input
-                      lable="First Name"
-                      type="text"
-                      placeholder="Enter first name"
-                      value={firstName}
-                      onChange={(e) => {
-                        setFirstName(e.target.value);
-                      }}
-                    ></Input>
-                  </Col>
-                  <Col md={6}>
-                    <Input
-                      lable="Last Name"
-                      type="text"
-                      placeholder="Enter last name"
-                      value={lastName}
-                      onChange={(e) => {
-                        setLastName(e.target.value);
-                      }}
-                    ></Input>
-                  </Col>
-                </Row>
-
-                <Input
-                  lable="Email"
-                  type="email"
-                  placeholder="Enter email"
-                  value={email}
-                  onChange={(e) => {
-                    setEmail(e.target.value);
-                  }}
-                  error="We'll never share your email with anyone else."
-                ></Input>
-
-                <Input
-                  lable="National Identity Card Number"
-                  type="text"
-                  placeholder="Enter NIC number"
-                  value={nic}
-                  onChange={(e) => {
-                    setNic(e.target.value);
-                  }}
-                ></Input>
-                <Form.Group>
-                  <Form.Label>Gender</Form.Label>
-                  <Form.Control
-                    as="select"
-                    value={gender}
+                  <Input
+                    lable="Email"
+                    type="email"
+                    placeholder="Enter email"
+                    value={email}
                     onChange={(e) => {
-                      setGender(e.target.value);
+                      setEmail(e.target.value);
                     }}
-                  >
-                    <option value="male">Male</option>
-                    <option value="female">Female</option>
-                    <option value="other">Other</option>
-                  </Form.Control>
-                </Form.Group>
+                    error="We'll never share your email with anyone else."
+                  ></Input>
 
-                <Form.Group>
-                  <Form.Label>Role</Form.Label>
-                  <Form.Control
-                    as="select"
-                    value={role}
+                  <Input
+                    lable="National Identity Card Number"
+                    type="text"
+                    placeholder="Enter NIC number"
+                    value={nic}
                     onChange={(e) => {
-                      setRole(e.target.value);
+                      setNic(e.target.value);
                     }}
+                  ></Input>
+                  <Form.Group>
+                    <Form.Label>Gender</Form.Label>
+                    <Form.Control
+                      as="select"
+                      value={gender}
+                      onChange={(e) => {
+                        setGender(e.target.value);
+                      }}
+                    >
+                      <option value="male">Male</option>
+                      <option value="female">Female</option>
+                      <option value="other">Other</option>
+                    </Form.Control>
+                  </Form.Group>
+
+                  <Form.Group>
+                    <Form.Label>Role</Form.Label>
+                    <Form.Control
+                      as="select"
+                      value={role}
+                      onChange={(e) => {
+                        setRole(e.target.value);
+                      }}
+                    >
+                      <option value="admin">System Admin</option>
+                      <option value="manager">Manager</option>
+                      <option value="chef">Chef</option>
+                      <option value="deliveryrider">Delivery Rider</option>
+                    </Form.Control>
+                  </Form.Group>
+
+                  <Input
+                    lable="Contact Number"
+                    type="tel"
+                    placeholder="Enter contact number"
+                    value={contactNumber}
+                    onChange={(e) => {
+                      setContactNumber(e.target.value);
+                    }}
+                  ></Input>
+
+                  <Input
+                    lable="Address"
+                    as="textarea"
+                    rows="3"
+                    placeholder="Enter address"
+                    value={address}
+                    onChange={(e) => {
+                      setAddress(e.target.value);
+                    }}
+                  ></Input>
+
+                  <Input
+                    lable="Password"
+                    type="password"
+                    placeholder="Enter password"
+                    value={password}
+                    onChange={(e) => {
+                      setPassword(e.target.value);
+                    }}
+                  ></Input>
+                  <Button
+                    variant="primary"
+                    type="submit"
+                    style={{ width: "100%", marginBottom: "50px" }}
                   >
-                    <option value="admin">System Admin</option>
-                    <option value="manager">Manager</option>
-                    <option value="chef">Chef</option>
-                    <option value="deliveryrider">Delivery Rider</option>
-                  </Form.Control>
-                </Form.Group>
-
-                <Input
-                  lable="Contact Number"
-                  type="tel"
-                  placeholder="Enter contact number"
-                  value={contactNumber}
-                  onChange={(e) => {
-                    setContactNumber(e.target.value);
-                  }}
-                ></Input>
-
-                <Input
-                  lable="Address"
-                  as="textarea"
-                  rows="3"
-                  placeholder="Enter address"
-                  value={address}
-                  onChange={(e) => {
-                    setAddress(e.target.value);
-                  }}
-                ></Input>
-
-                <Input
-                  lable="Password"
-                  type="password"
-                  placeholder="Enter password"
-                  value={password}
-                  onChange={(e) => {
-                    setPassword(e.target.value);
-                  }}
-                ></Input>
-                <Button
-                  variant="primary"
-                  type="submit"
-                  style={{ width: "100%" }}
-                >
-                  Sign Up
-                </Button>
-              </Form>
-            </Col>
-          </Row>
-        </Container>
+                    Sign Up
+                  </Button>
+                </Form>
+              </Col>
+            </Row>
+          </Col>
+        </Row>
       </Layout>
     </div>
   );
