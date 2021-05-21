@@ -8,7 +8,12 @@ import {
   ButtonGroup,
 } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { addCategory } from "../../actions";
+import {
+  addCategory,
+  getAllCategory,
+  updateCategory,
+  deleteCategory,
+} from "../../actions";
 import Layout from "../../components/Layouts";
 import Input from "../../components/UI/Input";
 import NewModal from "../../components/UI/Modal";
@@ -22,7 +27,10 @@ function Category(props) {
   const [categoryImage, setCategoryImage] = useState("");
   const [categoryDescription, setCategoryDescription] = useState("");
   const [updateCategoryModal, setUpdateCategoryModal] = useState(false);
+  const [deleteCategoryModal, setDeleteCategoryModal] = useState(false);
+  const [currentCategory, setCurrentCategory] = useState({});
 
+  const [categoryIdUpdate, setCategoryIdUpdate] = useState("");
   const [categoryNameUpdate, setCategoryNameUpdate] = useState("");
   const [categoryImageUpdate, setCategoryImageUpdate] = useState("");
   const [categoryDescriptionUpdate, setCategoryDescriptionUpdate] =
@@ -71,7 +79,7 @@ function Category(props) {
                 ))
               ) : (
                 <div
-                  className="spinner-border text-primary"
+                  className="spinner-border text-center text-primary"
                   role="status"
                 ></div>
               )}
@@ -83,13 +91,24 @@ function Category(props) {
             <ButtonGroup style={{ width: "100%" }}>
               <Button
                 onClick={() => {
-                  updateCategory(category);
+                  updateCategoryData(category);
                 }}
                 variant="success"
               >
                 Edit
               </Button>
-              <Button variant="danger">Delete</Button>
+              <Button
+                onClick={() => {
+                  setDeleteCategoryModal(true);
+                  setCurrentCategory(category);
+                }}
+                /* onClick={() => {
+                  deleteCategoryData(category);
+                }} */
+                variant="danger"
+              >
+                Delete
+              </Button>
             </ButtonGroup>
             <Button style={{ width: "100%" }} size="sm">
               Show Full Details
@@ -110,62 +129,46 @@ function Category(props) {
     setCategoryImageUpdate(e.target.files[0]);
   };
 
-  const updateCategory = (cat) => {
+  const updateCategoryData = (cat) => {
     setUpdateCategoryModal(true);
-    /* const categories = category.categories;
-    console.log(categories);*/
-    console.log(cat);
 
+    console.log(cat._id);
+
+    //updating state value according to selected category
+    setCategoryIdUpdate(cat._id);
     setCategoryNameUpdate(cat.name);
     setCategoryDescriptionUpdate(cat.description);
-    // setCategoryImageUpdate(cat.)
+
     cat.categoryImages.map((picture) => setCategoryImageUpdate(picture.img));
-
-    //console.log(categoryNameUpdate);
-
-    /* categories.length>0 && categories.forEach((cat._id, index)=>{
-      const category = categories.find((category, _index)=>{ cat._id == category._id})
-    })
-
-    console.log(category); */
   };
 
-  return (
-    <Layout sidebar>
-      <Container>
-        <Row>
-          <Col md={12}>
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
-              <h3>Categories</h3>
-              <Button
-                variant="dark"
-                onClick={handleShow}
-                style={{ marginTop: "5px" }}
-              >
-                Add
-              </Button>
-            </div>
-          </Col>
-        </Row>
-        <Row>
-          <Col md={12}>
-            <Table responsive="sm">
-              <thead>
-                <tr>
-                  <th>Image</th>
-                  <th>Name</th>
-                  <th>Description</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>{renderCategories(category.categories)}</tbody>
-            </Table>
-            ;
-          </Col>
-        </Row>
-      </Container>
+  const deleteCategoryData = (cat) => {
+    //dispatching the action to delete selected category
+    dispatch(deleteCategory(cat._id)).then((result) => {
+      if (result) {
+        dispatch(getAllCategory());
+      }
+    });
+  };
 
-      {/* Add new category modal */}
+  const renderDeleteCategoryModal = () => {
+    return (
+      <NewModal
+        modalTitle="Please Confirm!"
+        variant="danger"
+        clsBtnName="No"
+        saveBtnName="Yes"
+        addNewItem={() => deleteCategoryData(currentCategory)}
+        show={deleteCategoryModal}
+        handleClose={() => {
+          setDeleteCategoryModal(false);
+        }}
+      >{`Do you want to delete "${currentCategory.name}" category?`}</NewModal>
+    );
+  };
+
+  const renderAddCategoriesModal = () => {
+    return (
       <NewModal
         show={show}
         handleClose={handleClose}
@@ -202,16 +205,36 @@ function Category(props) {
           />
         </div>
       </NewModal>
+    );
+  };
 
-      {/* Edit category modal */}
+  const updateCategoryForm = () => {
+    const form = new FormData();
+
+    console.log(categoryNameUpdate);
+    console.log(categoryIdUpdate);
+
+    form.append("_id", categoryIdUpdate);
+    form.append("name", categoryNameUpdate);
+    form.append("description", categoryDescriptionUpdate);
+    form.append("categoryImages", categoryImageUpdate);
+
+    //updating the category with new form data and then updating the category list(getting the updated category list)
+    dispatch(updateCategory(form)).then((result) => {
+      if (result) {
+        dispatch(getAllCategory());
+      }
+    });
+  };
+
+  const renderUpdateCategoriesModal = () => {
+    return (
       <NewModal
         show={updateCategoryModal}
         handleClose={() => {
           setUpdateCategoryModal(false);
         }}
-        addNewItem={() => {
-          updateCategory();
-        }}
+        addNewItem={updateCategoryForm}
         modalTitle="Edit Category"
         size="lg"
       >
@@ -265,6 +288,46 @@ function Category(props) {
           ) : null}
         </div>
       </NewModal>
+    );
+  };
+
+  return (
+    <Layout sidebar>
+      <Container>
+        <Row>
+          <Col md={12}>
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
+              <h3>Categories</h3>
+              <Button
+                variant="dark"
+                onClick={handleShow}
+                style={{ marginTop: "5px" }}
+              >
+                Add
+              </Button>
+            </div>
+          </Col>
+        </Row>
+        <Row>
+          <Col md={12}>
+            <Table responsive="sm">
+              <thead>
+                <tr>
+                  <th>Image</th>
+                  <th>Name</th>
+                  <th>Description</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>{renderCategories(category.categories)}</tbody>
+            </Table>
+            ;
+          </Col>
+        </Row>
+      </Container>
+      {renderAddCategoriesModal()}
+      {renderUpdateCategoriesModal()}
+      {renderDeleteCategoryModal()}
     </Layout>
   );
 }

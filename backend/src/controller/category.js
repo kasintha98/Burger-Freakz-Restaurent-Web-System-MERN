@@ -67,3 +67,58 @@ exports.getCategories = (req, res) => {
     }
   });
 };
+
+exports.updateCategory = async (req, res) => {
+  //const { _id, name, description, categoryImages } = req.body;
+
+  /* const category = { _id, name, description, categoryImages };
+
+  const updatedCategory = await Category.findOneAndUpdate({ _id }, category, {
+    new: true,
+  });
+
+  return res.status(201).json({ updatedCategory }); */
+
+  //saving all category images uploaded in an array
+  let categoryImages = [];
+
+  //if categoryImages exists then mapping them to a array of objects as needed in the category schema
+  if (req.files.length > 0) {
+    categoryImages = req.files.map((file) => {
+      return { img: file.filename };
+    });
+  }
+
+  try {
+    await Category.findById(req.body._id).then((category) => {
+      category._id = req.body._id;
+      category.name = req.body.name;
+      category.description = req.body.description;
+
+      if (categoryImages.length > 0) {
+        category.categoryImages = categoryImages;
+      }
+
+      category
+        .save()
+        .then(() =>
+          res.status(201).json({ msg: "You've Updated the category!" })
+        )
+        .catch((err) => res.status(400).json({ error: err.message }));
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+exports.deleteCategory = async (req, res) => {
+  try {
+    await Category.findByIdAndDelete(req.params.id)
+      .then(() =>
+        res.status(200).json({ msg: "Category Deleted Successfully!" })
+      )
+      .catch((err) => res.status(400).json("Error: " + err));
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
