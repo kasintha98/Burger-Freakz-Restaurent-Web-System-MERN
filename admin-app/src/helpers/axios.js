@@ -2,6 +2,8 @@
 //creating axios instance for easy usage for every needed page
 import axios from "axios";
 import { api } from "../urlConfig";
+import store from "../store";
+import { authConstants } from "../actions/constants";
 
 const token = window.localStorage.getItem("token");
 
@@ -10,5 +12,35 @@ const axiosInstance = axios.create({
   baseURL: api,
   headers: { Authorization: token ? `Bearer ${token}` : "" },
 });
+
+//intercepting the req or res before they are handled by then or catch
+//if an error happen when sending a request handling it
+axiosInstance.interceptors.request.use((req) => {
+  //assigning the new token after login again after logout
+  const { auth } = store.getState();
+  if (auth.token) {
+    req.headers.Authorization = `Bearer ${auth.token}`;
+  }
+  return req;
+});
+
+//if an error happen when receiving a respond handling it
+axiosInstance.interceptors.response.use(
+  (res) => {
+    return res;
+  },
+  (error) => {
+    console.log(error.response);
+    const { status } = error.response;
+
+    if (status === 500) {
+      //if error = 500 / 400 mean users token is expired. Then we have to logout the user
+      localStorage.clear();
+      store.dispatch({ type: authConstants.LOGOUT_SUCCESS });
+    }
+
+    return Promise.reject(error);
+  }
+);
 
 export default axiosInstance;
