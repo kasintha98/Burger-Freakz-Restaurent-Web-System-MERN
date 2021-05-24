@@ -36,3 +36,8 @@
 .carousel-control-prev-icon {
   display: none;
 }
+
+.modal-header {
+  background-color: #0052d4;
+  color: white;
+}

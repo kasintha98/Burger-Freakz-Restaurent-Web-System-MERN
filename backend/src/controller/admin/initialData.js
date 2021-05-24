@@ -5,7 +5,9 @@ const Product = require("../../models/product");
 
 exports.initialData = async (req, res) => {
   //fetching all the categories
-  const categories = await Category.find({}).exec();
+  const categories = await Category.find({})
+    .populate({ path: "createdBy", select: "_id firstName lastName" })
+    .exec();
   const products = await Product.find({})
     .populate({ path: "category", select: "_id name" })
     .populate({ path: "createdBy", select: "_id firstName lastName" })

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getProductsBySlug } from "../../actions";
 import Header from "../../components/Header";
@@ -57,6 +57,7 @@ export default function ProductListPage(props) {
     <div>
       <Header></Header>
       <Container style={{ marginTop: "80px" }}>
+        <h2 className="text-center">{props.match.params.slug}</h2>
         <Row>
           {product.products.length > 0 ? (
             renderProducts(product.products)

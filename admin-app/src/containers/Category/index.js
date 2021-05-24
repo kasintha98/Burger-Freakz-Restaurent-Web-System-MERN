@@ -36,16 +36,35 @@ function Category(props) {
   const [categoryDescriptionUpdate, setCategoryDescriptionUpdate] =
     useState("");
 
+  const [categoryDetailsModal, setCategoryDetailsModal] = useState(false);
+  const [categoryDetails, setCategoryDetails] = useState(null);
+
   const dispatch = useDispatch();
 
   const [show, setShow] = useState(false);
 
+  //category is loading display loading spinner
   if (category.loading) {
     return <div className="spinner-border text-primary" role="status"></div>;
   }
 
+  //adding a new category from user entered form data. Those formdata pass into the addCategory() function in actions
   const addNewCategory = () => {
     const form = new FormData();
+
+    //validations of data
+    if (categoryName === "") {
+      alert("Name can't be empty!");
+      return;
+    }
+    if (categoryDescription === "") {
+      alert("Description can't be empty!");
+      return;
+    }
+    if (!categoryImage) {
+      alert("Category image can't be empty!");
+      return;
+    }
 
     form.append("name", categoryName);
     form.append("description", categoryDescription);
@@ -63,6 +82,7 @@ function Category(props) {
   };
   const handleShow = () => setShow(true);
 
+  //showing all the categories
   const renderCategories = (categories) => {
     let myCategories = [];
 
@@ -71,18 +91,13 @@ function Category(props) {
         <tr key={category._id}>
           <td>
             <div style={{ maxWidth: "100px" }}>
-              {category.categoryImages ? (
-                category.categoryImages.map((picture) => (
-                  <div className="categoryImageContainer">
-                    <img src={generatePublicUrl(picture.img)} alt="" />
-                  </div>
-                ))
-              ) : (
-                <div
-                  className="spinner-border text-center text-primary"
-                  role="status"
-                ></div>
-              )}
+              {category.categoryImages
+                ? category.categoryImages.map((picture) => (
+                    <div className="categoryImageContainer">
+                      <img src={generatePublicUrl(picture.img)} alt="" />
+                    </div>
+                  ))
+                : window.location.reload()}
             </div>
           </td>
           <td>{category.name}</td>
@@ -102,15 +117,18 @@ function Category(props) {
                   setDeleteCategoryModal(true);
                   setCurrentCategory(category);
                 }}
-                /* onClick={() => {
-                  deleteCategoryData(category);
-                }} */
                 variant="danger"
               >
                 Delete
               </Button>
             </ButtonGroup>
-            <Button style={{ width: "100%" }} size="sm">
+            <Button
+              style={{ width: "100%" }}
+              size="sm"
+              onClick={() => {
+                showCategoryDetailsModal(category);
+              }}
+            >
               Show Full Details
             </Button>
           </td>
@@ -121,14 +139,17 @@ function Category(props) {
     return myCategories;
   };
 
+  //handling selected category image
   const handleCategoryImage = (e) => {
     setCategoryImage(e.target.files[0]);
   };
 
+  //handling selected category image in category updating
   const handleCategoryImageUpdate = (e) => {
     setCategoryImageUpdate(e.target.files[0]);
   };
 
+  //updating the state after selecting category data to update
   const updateCategoryData = (cat) => {
     setUpdateCategoryModal(true);
 
@@ -142,15 +163,13 @@ function Category(props) {
     cat.categoryImages.map((picture) => setCategoryImageUpdate(picture.img));
   };
 
+  //fuction to delete category. dispatching the deleteCategory() from actions
   const deleteCategoryData = (cat) => {
     //dispatching the action to delete selected category
-    dispatch(deleteCategory(cat._id)).then((result) => {
-      if (result) {
-        dispatch(getAllCategory());
-      }
-    });
+    dispatch(deleteCategory(cat._id));
   };
 
+  //popup modal to delete category
   const renderDeleteCategoryModal = () => {
     return (
       <NewModal
@@ -167,6 +186,7 @@ function Category(props) {
     );
   };
 
+  //show add category popup modal
   const renderAddCategoriesModal = () => {
     return (
       <NewModal
@@ -208,6 +228,7 @@ function Category(props) {
     );
   };
 
+  //handling the data added to form when updating the category and passing them to updateCategory() in actions
   const updateCategoryForm = () => {
     const form = new FormData();
 
@@ -220,13 +241,10 @@ function Category(props) {
     form.append("categoryImages", categoryImageUpdate);
 
     //updating the category with new form data and then updating the category list(getting the updated category list)
-    dispatch(updateCategory(form)).then((result) => {
-      if (result) {
-        dispatch(getAllCategory());
-      }
-    });
+    dispatch(updateCategory(form));
   };
 
+  //showing update category modal popup
   const renderUpdateCategoriesModal = () => {
     return (
       <NewModal
@@ -291,6 +309,65 @@ function Category(props) {
     );
   };
 
+  const handleCloseCategoryDetailsModal = () => {
+    setCategoryDetailsModal(false);
+  };
+
+  const showCategoryDetailsModal = (category) => {
+    setCategoryDetails(category);
+    setCategoryDetailsModal(true);
+    //console.log(category);
+  };
+
+  //showing all the details of the category
+  const renderCategoryDetailsModal = () => {
+    if (!categoryDetails) {
+      return null;
+    }
+
+    return (
+      <NewModal
+        modalTitle={"Category Details"}
+        show={categoryDetailsModal}
+        handleClose={handleCloseCategoryDetailsModal}
+        size="lg"
+        hiddenAddBtn={true}
+      >
+        <Row>
+          <Col md="6">
+            <lable className="key">Id</lable>
+            <p className="value">{categoryDetails._id}</p>
+          </Col>
+          <Col md="6">
+            <lable className="key">Name</lable>
+            <p className="value">{categoryDetails.name}</p>
+          </Col>
+          <Col md="6">
+            <lable className="key">Description</lable>
+            <p className="value">{categoryDetails.description}</p>
+          </Col>
+          <Col md="6">
+            <lable className="key">Added By</lable>
+            <p className="value">
+              {categoryDetails.createdBy.firstName}&nbsp;
+              {categoryDetails.createdBy.lastName}
+            </p>
+          </Col>
+          <Col md="6">
+            <lable className="key">Image</lable>
+            <div style={{ display: "flex" }}>
+              {categoryDetails.categoryImages.map((picture) => (
+                <div className="categoryImageContainer">
+                  <img src={generatePublicUrl(picture.img)} alt="" />
+                </div>
+              ))}
+            </div>
+          </Col>
+        </Row>
+      </NewModal>
+    );
+  };
+
   return (
     <Layout sidebar>
       <Container>
@@ -328,6 +405,7 @@ function Category(props) {
       {renderAddCategoriesModal()}
       {renderUpdateCategoriesModal()}
       {renderDeleteCategoryModal()}
+      {renderCategoryDetailsModal()}
     </Layout>
   );
 }

@@ -53,6 +53,8 @@ function Products(props) {
     }
 
     dispatch(addProduct(form));
+
+    window.location.reload();
   };
 
   const handleClose = () => {
