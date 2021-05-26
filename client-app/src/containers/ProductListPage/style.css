@@ -4,6 +4,11 @@
   overflow: hidden;
 }
 
+.price {
+  color: red;
+  font-weight: bold;
+}
+
 a {
   color: black;
 }

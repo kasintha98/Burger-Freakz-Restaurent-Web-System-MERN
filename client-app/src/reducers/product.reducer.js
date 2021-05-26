@@ -14,10 +14,17 @@ export default (state = initState, action) => {
         products: action.payload.products,
       };
       break;
+    case productConstants.GET_SPECIFIC_PRODUCT_BY_SLUG_REQUEST:
+      state = {
+        ...state,
+        loading: true,
+      };
+      break;
     case productConstants.GET_SPECIFIC_PRODUCT_BY_SLUG_SUCCESS:
       state = {
         ...state,
         product: action.payload.product,
+        loading: false,
       };
       break;
   }

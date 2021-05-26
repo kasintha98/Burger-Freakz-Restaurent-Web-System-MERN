@@ -41,7 +41,9 @@ export default function ProductListPage(props) {
               </Carousel>
               <Card.Body>
                 <Card.Title>{product.name}</Card.Title>
-                <Card.Text>{product.description}</Card.Text>
+                <Card.Text>
+                  <h4 className="price">Rs. {product.price}</h4>
+                </Card.Text>
               </Card.Body>
             </Card>
           </Link>
