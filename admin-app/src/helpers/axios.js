@@ -31,10 +31,10 @@ axiosInstance.interceptors.response.use(
   },
   (error) => {
     console.log(error.response);
-    const { status } = error.response;
+    const status = error.response ? error.response.status : 500;
 
-    if (status === 500) {
-      //if error = 500 / 400 mean users token is expired. Then we have to logout the user
+    if (status && status === 500) {
+      //if error = 500 mean users token is expired. Then we have to logout the user
       localStorage.clear();
       store.dispatch({ type: authConstants.LOGOUT_SUCCESS });
     }

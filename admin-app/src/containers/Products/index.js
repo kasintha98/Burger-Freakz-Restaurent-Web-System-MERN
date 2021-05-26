@@ -41,6 +41,48 @@ function Products(props) {
   const addNewProduct = () => {
     const form = new FormData();
 
+    //validations of data
+    if (productName === "") {
+      alert("Name can't be empty!");
+      return;
+    }
+    if (productPrice === "") {
+      alert("Price can't be empty!");
+      return;
+    }
+    if (isNaN(productPrice)) {
+      alert("Price must be a number!");
+      return;
+    }
+    if (productQty === "") {
+      alert("Quantity can't be empty!");
+      return;
+    }
+    if (isNaN(productQty)) {
+      alert("Quantity must be a number!");
+      return;
+    }
+    if (productDescription === "") {
+      alert("Description can't be empty!");
+      return;
+    }
+    if (productOffer === "") {
+      alert("Offer can't be empty!");
+      return;
+    }
+    if (isNaN(productOffer)) {
+      alert("Offer must be a number!");
+      return;
+    }
+    if (!productCategory) {
+      alert("Category can't be empty!");
+      return;
+    }
+    if (productImage.length < 0) {
+      alert("Product images can't be empty!");
+      return;
+    }
+
     form.append("name", productName);
     form.append("price", productPrice);
     form.append("offer", productOffer);
