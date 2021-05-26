@@ -24,17 +24,16 @@ export default function ProductListPage(props) {
     for (let product of products) {
       myProducts.push(
         <Col sm={4} key={product._id}>
-          <Link to={`/${product.slug}`}>
+          <Link to={`/product/${product.slug}`}>
             <Card className="text-center" style={{ marginBottom: "15px" }}>
               <Carousel>
                 {product.productImages.map((picture) => (
-                  <Carousel.Item>
+                  <Carousel.Item key={product._id}>
                     <div className="productImageContainer">
                       <Card.Img
                         className="imageHolder_img"
                         variant="top"
                         src={generatePublicUrl(picture.img)}
-                        key={product._id}
                       />
                     </div>
                   </Carousel.Item>

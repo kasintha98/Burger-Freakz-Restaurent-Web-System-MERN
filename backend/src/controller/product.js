@@ -78,3 +78,28 @@ exports.getProductsBySlug = (req, res) => {
       }
     });
 };
+
+//getting the specific product by slug(when entering slug as url parameter)
+exports.getSpecificProductBySlug = (req, res) => {
+  const { slug } = req.params;
+  Product.findOne({ slug: slug }).exec((err, product) => {
+    if (err) {
+      return res.status(400).json({ err });
+    }
+    if (product) {
+      return res.status(200).json({ product });
+    }
+
+    /*   if (product) {
+        Product.find({ product: product._id }).exec((err, products) => {
+          if (err) {
+            return res.status(400).json({ err });
+          }
+
+          if (products.length > 0) {
+            res.status(200).json({ products });
+          }
+        });
+      } */
+  });
+};

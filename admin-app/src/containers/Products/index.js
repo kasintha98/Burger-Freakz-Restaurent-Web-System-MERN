@@ -251,7 +251,7 @@ function Products(props) {
             </option>
           ))}
         </select>
-
+        <br></br>
         {productImage.length > 0
           ? productImage.map((pic, index) => <div key={index}>{pic.name}</div>)
           : null}

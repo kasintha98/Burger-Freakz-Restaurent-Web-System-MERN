@@ -19,7 +19,7 @@ export default function CategoryGallery(props) {
     for (let category of categories) {
       myCategories.push(
         <Col sm={4} key={category._id}>
-          <Link to={`/${category.slug}`}>
+          <Link to={`/category/${category.slug}`}>
             <Card className="text-center" style={{ marginBottom: "15px" }}>
               {category.categoryImages.map((picture) => (
                 <Card.Img

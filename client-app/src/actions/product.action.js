@@ -7,7 +7,21 @@ export const getProductsBySlug = (slug) => {
 
     if (res.status === 200) {
       dispatch({
-        type: productConstants.GET_PRODUCTS_BY_SLUG_REQUEST,
+        type: productConstants.GET_PRODUCTS_BY_SLUG_SUCCESS,
+        payload: res.data,
+      });
+    } else {
+    }
+  };
+};
+
+export const getSpecificProductBySlug = (slug) => {
+  return async (dispatch) => {
+    const res = await axios.get(`/products/product/${slug}`);
+
+    if (res.status === 200) {
+      dispatch({
+        type: productConstants.GET_SPECIFIC_PRODUCT_BY_SLUG_SUCCESS,
         payload: res.data,
       });
     } else {
