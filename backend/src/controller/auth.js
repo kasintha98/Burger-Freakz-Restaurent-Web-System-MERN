@@ -56,7 +56,7 @@ exports.signin = (req, res) => {
       return res.status(400).json({ err });
     }
     if (user) {
-      if (user.authenticate(req.body.password)) {
+      if (user.authenticate(req.body.password) && user.role === "user") {
         //making a token using jwt if user exists
         const token = jwt.sign(
           { _id: user._id, role: user.role },
@@ -96,7 +96,7 @@ exports.signin = (req, res) => {
           },
         });
       } else {
-        return res.status(400).json({ message: "Invalid Password!" });
+        return res.status(400).json({ message: "Something went wrong!" });
       }
     } else {
       return res.status(400).json({ message: "Something went wrong!" });

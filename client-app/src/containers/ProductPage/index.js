@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Header from "../../components/Header";
-import { Row, Col, Card, Container } from "react-bootstrap";
+import { Row, Col, Container, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { getSpecificProductBySlug } from "../../actions";
 import { generatePublicUrl } from "../../urlConfig";
@@ -70,6 +70,10 @@ export default function ProductPage(props) {
             <h4>Delivery Charges: </h4>
             <br></br>
             <h4>Total: </h4>
+            <br></br>
+            <Button style={{ width: "100%" }} variant="primary">
+              Add To Cart
+            </Button>
           </Col>
         </Row>
       </>

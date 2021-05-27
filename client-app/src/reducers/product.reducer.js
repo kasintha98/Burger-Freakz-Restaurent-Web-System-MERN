@@ -4,6 +4,7 @@ const initState = {
   products: [],
   loading: false,
   product: {},
+  error: null,
 };
 
 export default (state = initState, action) => {
@@ -24,6 +25,13 @@ export default (state = initState, action) => {
       state = {
         ...state,
         product: action.payload.product,
+        loading: false,
+      };
+      break;
+    case productConstants.GET_SPECIFIC_PRODUCT_BY_SLUG_FAILURE:
+      state = {
+        ...state,
+        product: action.payload.error,
         loading: false,
       };
       break;

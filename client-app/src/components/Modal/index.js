@@ -1,5 +1,6 @@
 import React from "react";
 import { Modal, Button } from "react-bootstrap";
+import "./style.css";
 
 function NewModal(props) {
   return (
@@ -10,19 +11,28 @@ function NewModal(props) {
         </Modal.Header>
         <Modal.Body>{props.children}</Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={props.handleClose}>
-            {props.clsBtnName ? props.clsBtnName : "Close"}
-          </Button>
+          {props.clsBtnName ? (
+            <Button variant="secondary" onClick={props.handleClose}>
+              props.clsBtnName
+            </Button>
+          ) : null}
           <Button
             hidden={props.hiddenAddBtn}
             variant={props.variant ? props.variant : "primary"}
             onClick={() => {
-              props.addNewItem();
+              props.action();
               props.handleClose();
             }}
+            style={{ width: "100%" }}
           >
             {props.saveBtnName ? props.saveBtnName : "Save"}
           </Button>
+          <div>
+            <p>
+              Don't have an account? <a href="#signup">Signup Now!</a>
+            </p>
+          </div>
+          {/* <span>{props.footerText}</span> */}
         </Modal.Footer>
       </Modal>
     </div>
