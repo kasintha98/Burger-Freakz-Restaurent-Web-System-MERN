@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import Header from "../../components/Header";
+import Footer from "../../components/Footer";
 import { Row, Col, Container, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { getSpecificProductBySlug } from "../../actions";
 import { generatePublicUrl } from "../../urlConfig";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from "react-responsive-carousel";
+import { addToCart } from "../../actions";
 import "./style.css";
 
 export default function ProductPage(props) {
@@ -71,7 +73,24 @@ export default function ProductPage(props) {
             <br></br>
             <h4>Total: </h4>
             <br></br>
-            <Button style={{ width: "100%" }} variant="primary">
+            <br></br>
+            <h4>
+              Offer:{" "}
+              {product.offer > 0
+                ? "Rs. " + product.offer + " Off!"
+                : "No Offers Available"}
+            </h4>
+            <br></br>
+            <Button
+              style={{ width: "100%" }}
+              variant="primary"
+              onClick={() => {
+                const { _id, name, price } = product;
+                const img = product.productImages[0].img;
+                dispatch(addToCart({ _id, name, price, img }));
+                props.history.push("/cart");
+              }}
+            >
               Add To Cart
             </Button>
           </Col>
@@ -87,9 +106,10 @@ export default function ProductPage(props) {
   return (
     <div>
       <Header></Header>
-      <Container style={{ marginTop: "80px" }}>
+      <Container style={{ marginTop: "120px" }}>
         {renderProducts(product)}
       </Container>
+      <Footer></Footer>
     </div>
   );
 }

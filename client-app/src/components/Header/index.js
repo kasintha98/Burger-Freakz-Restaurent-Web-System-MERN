@@ -14,7 +14,7 @@ import NewModal from "../Modal";
 import Input from "../Input";
 import { useDispatch, useSelector } from "react-redux";
 import logo from "../../img/logo.jpg";
-import { login } from "../../actions";
+import { login, signout } from "../../actions";
 
 export default function Header(props) {
   const [loginModal, setLoginModal] = useState(false);
@@ -27,6 +27,10 @@ export default function Header(props) {
 
   const userLogin = () => {
     dispatch(login({ email, password }));
+  };
+
+  const logout = () => {
+    dispatch(signout());
   };
 
   /* useEffect(() => {
@@ -49,7 +53,7 @@ export default function Header(props) {
         </Nav.Link>
         <DropdownButton title={auth.user.fullName} variant="dark">
           <Dropdown.Item href="#/action-1">Profile</Dropdown.Item>
-          <Dropdown.Item href="#/action-2">Logout</Dropdown.Item>
+          <Dropdown.Item onClick={() => logout()}>Logout</Dropdown.Item>
         </DropdownButton>
       </>
     );

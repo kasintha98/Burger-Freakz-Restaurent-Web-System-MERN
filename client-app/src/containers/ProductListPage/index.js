@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getProductsBySlug } from "../../actions";
 import Header from "../../components/Header";
+import Footer from "../../components/Footer";
 import { Row, Col, Card, Container, Carousel } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { generatePublicUrl } from "../../urlConfig";
@@ -57,7 +58,7 @@ export default function ProductListPage(props) {
   return (
     <div>
       <Header></Header>
-      <Container style={{ marginTop: "80px" }}>
+      <Container style={{ marginTop: "120px" }}>
         <h2 className="text-center">{props.match.params.slug}</h2>
         <Row>
           {product.products.length > 0 ? (
@@ -69,6 +70,7 @@ export default function ProductListPage(props) {
           )}
         </Row>
       </Container>
+      <Footer></Footer>
     </div>
   );
 }
