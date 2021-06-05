@@ -83,7 +83,13 @@ export default function CartPage(props) {
                 </Link>
               </Col>
               <Col>
-                <Button>Checkout!</Button>
+                <Button
+                  onClick={() => {
+                    props.history.push("/checkout");
+                  }}
+                >
+                  Checkout!
+                </Button>
               </Col>
             </Row>
           </Card.Footer>
