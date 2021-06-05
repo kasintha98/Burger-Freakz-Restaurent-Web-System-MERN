@@ -15,6 +15,7 @@ import Input from "../Input";
 import { useDispatch, useSelector } from "react-redux";
 import logo from "../../img/logo.jpg";
 import { login, signout } from "../../actions";
+import { NavLink } from "react-router-dom";
 
 export default function Header(props) {
   const [loginModal, setLoginModal] = useState(false);
@@ -42,15 +43,25 @@ export default function Header(props) {
   const renderLoggedInMenu = () => {
     return (
       <>
-        <Nav.Link href="/">Home</Nav.Link>
-        <Nav.Link href="#action2">About</Nav.Link>
-        <Nav.Link href="#action3">Chef</Nav.Link>
-        <Nav.Link href="#action4">Menu</Nav.Link>
-        <Nav.Link href="#action5">Contact</Nav.Link>
+        <NavLink class="nav-link" to="/">
+          Home
+        </NavLink>
+        <NavLink class="nav-link" to="/">
+          About
+        </NavLink>
+        <NavLink class="nav-link" to="/">
+          Chef
+        </NavLink>
+        <NavLink class="nav-link" to="/">
+          Menu
+        </NavLink>
+        <NavLink class="nav-link" to="/">
+          Contact
+        </NavLink>
         {/* <Nav.Link href="#action6">{auth.user.fullName}</Nav.Link> */}
-        <Nav.Link href="#action7">
+        <NavLink class="nav-link" to="/cart">
           <i className="fa fa-cart-plus"></i> Cart
-        </Nav.Link>
+        </NavLink>
         <DropdownButton title={auth.user.fullName} variant="dark">
           <Dropdown.Item href="#/action-1">Profile</Dropdown.Item>
           <Dropdown.Item onClick={() => logout()}>Logout</Dropdown.Item>
@@ -62,11 +73,21 @@ export default function Header(props) {
   const renderNonLoggedInMenu = () => {
     return (
       <>
-        <Nav.Link href="/">Home</Nav.Link>
-        <Nav.Link href="#action2">About</Nav.Link>
-        <Nav.Link href="#action3">Chef</Nav.Link>
-        <Nav.Link href="#action4">Menu</Nav.Link>
-        <Nav.Link href="#action5">Contact</Nav.Link>
+        <NavLink class="nav-link" to="/">
+          Home
+        </NavLink>
+        <NavLink class="nav-link" to="/">
+          About
+        </NavLink>
+        <NavLink class="nav-link" to="/">
+          Chef
+        </NavLink>
+        <NavLink class="nav-link" to="/">
+          Menu
+        </NavLink>
+        <NavLink class="nav-link" to="/">
+          Contact
+        </NavLink>
         <Nav.Link
           href="#action6"
           onClick={() => {
@@ -75,9 +96,9 @@ export default function Header(props) {
         >
           Login
         </Nav.Link>
-        <Nav.Link href="#action7">
+        <NavLink class="nav-link" to="/cart">
           <i className="fa fa-cart-plus"></i> Cart
-        </Nav.Link>
+        </NavLink>
       </>
     );
   };

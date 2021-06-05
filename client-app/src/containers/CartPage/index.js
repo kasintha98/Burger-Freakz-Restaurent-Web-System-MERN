@@ -1,14 +1,41 @@
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import Header from "../../components/Header";
+import CartItem from "../../components/CartItem";
 import Footer from "../../components/Footer";
 import { Row, Col, Container, Button, Card, Table } from "react-bootstrap";
-import { generatePublicUrl } from "../../urlConfig";
+import { addToCart, getCartItems } from "../../actions";
+import { Link } from "react-router-dom";
 
 export default function CartPage(props) {
   const cart = useSelector((state) => state.cart);
+  const auth = useSelector((state) => state.auth);
 
-  const cartItems = cart.cartItems;
+  const dispatch = useDispatch();
+
+  const [cartItems, setCartItems] = useState("");
+
+  useEffect(() => {
+    setCartItems(cart.cartItems);
+  }, [cart.cartItems]);
+
+  useEffect(() => {
+    if (auth.authenticate) {
+      dispatch(getCartItems());
+    }
+  }, [auth.authenticate]);
+
+  const onQuantityIncrement = (_id, qty) => {
+    console.log({ _id, qty });
+    const { name, price, img } = cartItems[_id];
+    dispatch(addToCart({ _id, name, price, img }, 1));
+  };
+
+  const onQuantityDecrement = (_id, qty) => {
+    console.log({ _id, qty });
+    const { name, price, img } = cartItems[_id];
+    dispatch(addToCart({ _id, name, price, img }, -1));
+  };
 
   return (
     <div>
@@ -33,23 +60,12 @@ export default function CartPage(props) {
                 </thead>
                 <tbody>
                   {Object.keys(cartItems).map((key, index) => (
-                    <tr className="text-center" key={index}>
-                      <td>
-                        <img
-                          src={generatePublicUrl(`${cartItems[key].img}`)}
-                          alt="pic"
-                          width="100px"
-                          height="100px"
-                        />
-                      </td>
-                      <td>{cartItems[key].name}</td>
-                      <td>{cartItems[key].price}</td>
-                      <td>{cartItems[key].qty}</td>
-                      <td>
-                        {Number(cartItems[key].price) *
-                          Number(cartItems[key].qty)}
-                      </td>
-                    </tr>
+                    <CartItem
+                      key={index}
+                      cartItem={cartItems[key]}
+                      onQuantityDec={onQuantityDecrement}
+                      onQuantityInc={onQuantityIncrement}
+                    ></CartItem>
                   ))}
                 </tbody>
               </Table>
@@ -62,7 +78,9 @@ export default function CartPage(props) {
             </Row>
             <Row>
               <Col>
-                <Button>Shop More!</Button>
+                <Link to="/" className="btn btn-primary">
+                  Shop More!
+                </Link>
               </Col>
               <Col>
                 <Button>Checkout!</Button>
