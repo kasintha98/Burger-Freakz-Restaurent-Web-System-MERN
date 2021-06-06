@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAddress } from "../../actions";
 import Header from "../../components/Header";
@@ -13,13 +13,57 @@ const CheckoutStep = (props) => {
 export default function CheckoutPage() {
   const user = useSelector((state) => state.user);
   const auth = useSelector((state) => state.auth);
+
+  const [newAddress, setNewAddress] = useState([]);
+  const [confirmAddress, setConfirmAddress] = useState(false);
+  const [selectedAddress, setSelectedAddress] = useState(null);
+
+  //user.addressNew.push(auth.user.address);
+
   const dispatch = useDispatch();
 
   const onAddressSubmit = () => {};
 
+  const selectAddress = (adr) => {
+    //console.log(adr);
+    const updatedAddress = newAddress.map((ad) =>
+      ad._id === adr._id
+        ? { ...ad, selected: true }
+        : { ...ad, selected: false }
+    );
+
+    setNewAddress(updatedAddress);
+  };
+
+  const confirmDeliveryAddress = (adr) => {
+    setConfirmAddress(adr);
+    setSelectedAddress(adr);
+  };
+
   useEffect(() => {
-    dispatch(getAddress());
-  }, []);
+    auth.authenticate && dispatch(getAddress());
+  }, [auth.authenticate]);
+
+  useEffect(() => {
+    //pushing default user address to new user addresses
+    if (auth.authenticate) {
+      const defaultAddress = JSON.parse(
+        JSON.stringify({ _id: auth.user._id, addressNew: auth.user.address })
+      );
+      user.addressNew.push(defaultAddress);
+    }
+
+    const addressNew = user.addressNew.map((adr) => ({
+      ...adr,
+      selected: false,
+      edit: false,
+    }));
+
+    /* const defaultAddress = JSON.parse(auth.user.address);
+    addressNew.push(defaultAddress); */
+
+    setNewAddress(addressNew);
+  }, [user.addressNew]);
 
   return (
     <div>
@@ -28,80 +72,104 @@ export default function CheckoutPage() {
         <div style={{ marginBottom: "50px" }} className="text-center">
           <h2>Checkout!</h2>
         </div>
-        <Row>
-          <Col sm={8} style={{ backgroundColor: "#cdcdcd", padding: "30px" }}>
-            <Row style={{ marginBottom: "30px" }}>
-              <Col>
-                <div className="text-center">
-                  <h3 style={{ marginBottom: "30px" }}>
-                    Select Delivery Address
-                  </h3>
-                </div>
-                <Row>
-                  <div style={{ marginBottom: "30px" }}>
-                    {auth.authenticate ? (
-                      <div>
-                        <h5>Name: {auth.user.fullName}</h5>
-                        <h5>Email: {auth.user.email}</h5>
-                        <h5>Contact Number: {auth.user.contactNumber}</h5>
+        {auth.authenticate ? (
+          <>
+            <Row>
+              <Col
+                sm={8}
+                style={{ backgroundColor: "#cdcdcd", padding: "30px" }}
+              >
+                <Row style={{ marginBottom: "30px" }}>
+                  <Col>
+                    <div className="text-center">
+                      <h3 style={{ marginBottom: "30px" }}>
+                        Select Delivery Address
+                      </h3>
+                    </div>
+                    <Row>
+                      <div style={{ marginBottom: "30px" }}>
+                        <div>
+                          <h5>Name: {auth.user.fullName}</h5>
+                          <h5>Email: {auth.user.email}</h5>
+                          <h5>Contact Number: {auth.user.contactNumber}</h5>
+                        </div>
                       </div>
-                    ) : (
-                      <h4>Please Login Before Checkout</h4>
-                    )}
-                  </div>
+                    </Row>
+
+                    {/* <Row>
+                      <Col sm={1}>
+                        <div>
+                          <input name="address" type="radio"></input>
+                        </div>
+                      </Col>
+                      <Col sm={11}>
+                        <div>
+                          <p>{auth.user.address}</p>
+                        </div>
+                        <div>
+                          <Button>Deliver Here</Button>
+                        </div>
+                      </Col>
+                    </Row> */}
+
+                    {confirmAddress
+                      ? JSON.stringify(selectedAddress)
+                      : newAddress.map((adr) => (
+                          <Row>
+                            <Col sm={1}>
+                              <div>
+                                <input
+                                  name="address"
+                                  type="radio"
+                                  onClick={() => {
+                                    selectAddress(adr);
+                                  }}
+                                ></input>
+                              </div>
+                            </Col>
+                            <Col sm={11}>
+                              <div>
+                                <p>{adr.addressNew}</p>
+                              </div>
+                              <div>
+                                {adr.selected && (
+                                  <Button
+                                    onClick={() => confirmDeliveryAddress(adr)}
+                                  >
+                                    Deliver Here
+                                  </Button>
+                                )}
+                              </div>
+                            </Col>
+                          </Row>
+                        ))}
+                  </Col>
+                  <Col>
+                    {auth.authenticate ? <AddressForm></AddressForm> : null}
+                  </Col>
                 </Row>
-
-                {
-                  <Row>
-                    <Col sm={1}>
-                      <div>
-                        <input name="address" type="radio"></input>
-                      </div>
-                    </Col>
-                    <Col sm={11}>
-                      <div>
-                        <p>{auth.user.address}</p>
-                      </div>
-                      <div>
-                        <Button>Deliver Here</Button>
-                      </div>
-                    </Col>
-                  </Row>
-                }
-
-                {user.addressNew.map((adr) => (
-                  <Row>
-                    <Col sm={1}>
-                      <div>
-                        <input name="address" type="radio"></input>
-                      </div>
-                    </Col>
-                    <Col sm={11}>
-                      {" "}
-                      <div>
-                        <p>{adr.addressNew}</p>
-                      </div>
-                      <div>
-                        <Button>Deliver Here</Button>
-                      </div>
-                    </Col>
-                  </Row>
-                ))}
+                <Row style={{ marginBottom: "30px" }}>
+                  <h3 style={{ marginBottom: "30px" }}>Payment Option</h3>
+                </Row>
               </Col>
-              <Col>
-                <AddressForm></AddressForm>
+              <Col sm={4}>
+                <div className="text-center">
+                  <h3 style={{ marginBottom: "30px" }}>Order Summery</h3>
+                </div>
               </Col>
             </Row>
-            <Row style={{ marginBottom: "30px" }}>
-              <h3 style={{ marginBottom: "30px" }}>Payment Option</h3>
-            </Row>
-          </Col>
-          <Col sm={4}>
-            <div className="text-center">
-              <h3 style={{ marginBottom: "30px" }}>Order Summery</h3>
+          </>
+        ) : (
+          <div style={{ padding: "10vh" }}>
+            <div
+              style={{ padding: "50px" }}
+              class="alert alert-danger text-center"
+              role="alert"
+            >
+              <h3>Please Login Before Checkout</h3>
             </div>
-          </Col>
-        </Row>
+          </div>
+        )}
       </Container>
       <Footer></Footer>
     </div>
