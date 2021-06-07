@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   Navbar,
   Button,
@@ -15,7 +15,8 @@ import Input from "../Input";
 import { useDispatch, useSelector } from "react-redux";
 import logo from "../../img/logo.jpg";
 import { login, signout } from "../../actions";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
+import { useScrollSection } from "react-scroll-section";
 
 export default function Header(props) {
   const [loginModal, setLoginModal] = useState(false);
@@ -40,30 +41,60 @@ export default function Header(props) {
     } 
   }, [auth.authenticate]); */
 
+  const myRef = useRef(null);
+  const executeScroll = () => myRef.current.scrollIntoView();
+
+  const homeSection = useScrollSection("home");
+  const aboutSection = useScrollSection("about");
+  const chefSection = useScrollSection("chef");
+  const menuSection = useScrollSection("menu");
+  const contactSection = useScrollSection("contact");
+
   const renderLoggedInMenu = () => {
     return (
       <>
-        <NavLink class="nav-link" to="/">
+        <NavLink
+          class="nav-link"
+          to="/"
+          onClick={homeSection.onClick}
+          selected={homeSection.selected}
+        >
           Home
         </NavLink>
-        <NavLink class="nav-link" to="/">
+        <Nav.Link
+          onClick={aboutSection.onClick}
+          selected={aboutSection.selected}
+        >
           About
-        </NavLink>
-        <NavLink class="nav-link" to="/">
+        </Nav.Link>
+        <Nav.Link
+          class="nav-link"
+          onClick={chefSection.onClick}
+          selected={chefSection.selected}
+        >
           Chef
-        </NavLink>
-        <NavLink class="nav-link" to="/">
+        </Nav.Link>
+        <Nav.Link
+          class="nav-link"
+          onClick={menuSection.onClick}
+          selected={menuSection.selected}
+        >
           Menu
-        </NavLink>
-        <NavLink class="nav-link" to="/">
+        </Nav.Link>
+        <Nav.Link
+          class="nav-link"
+          onClick={contactSection.onClick}
+          selected={contactSection.selected}
+        >
           Contact
-        </NavLink>
-        {/* <Nav.Link href="#action6">{auth.user.fullName}</Nav.Link> */}
+        </Nav.Link>
         <NavLink class="nav-link" to="/cart">
           <i className="fa fa-cart-plus"></i> Cart
         </NavLink>
         <DropdownButton title={auth.user.fullName} variant="dark">
-          <Dropdown.Item href="#/action-1">Profile</Dropdown.Item>
+          <Dropdown.Item>
+            <Link to="/profile">Profile</Link>
+          </Dropdown.Item>
           <Dropdown.Item onClick={() => logout()}>Logout</Dropdown.Item>
         </DropdownButton>
       </>
@@ -76,20 +107,34 @@ export default function Header(props) {
         <NavLink class="nav-link" to="/">
           Home
         </NavLink>
-        <NavLink class="nav-link" to="/">
-          About
-        </NavLink>
-        <NavLink class="nav-link" to="/">
-          Chef
-        </NavLink>
-        <NavLink class="nav-link" to="/">
-          Menu
-        </NavLink>
-        <NavLink class="nav-link" to="/">
-          Contact
-        </NavLink>
         <Nav.Link
-          href="#action6"
+          onClick={aboutSection.onClick}
+          selected={aboutSection.selected}
+        >
+          About
+        </Nav.Link>
+        <Nav.Link
+          class="nav-link"
+          onClick={chefSection.onClick}
+          selected={chefSection.selected}
+        >
+          Chef
+        </Nav.Link>
+        <Nav.Link
+          class="nav-link"
+          onClick={menuSection.onClick}
+          selected={menuSection.selected}
+        >
+          Menu
+        </Nav.Link>
+        <Nav.Link
+          class="nav-link"
+          onClick={contactSection.onClick}
+          selected={contactSection.selected}
+        >
+          Contact
+        </Nav.Link>
+        <Nav.Link
           onClick={() => {
             setLoginModal(true);
           }}
@@ -141,8 +186,10 @@ export default function Header(props) {
     <div>
       <Navbar fixed="top" bg="dark" variant="dark" expand="lg">
         <Container>
-          <Navbar.Brand href="/">
-            <img width="40px" src={logo} alt="logo" />
+          <Navbar.Brand>
+            <Link to="/">
+              <img width="40px" src={logo} alt="logo" />
+            </Link>
           </Navbar.Brand>
           <Form className="d-flex">
             <FormControl

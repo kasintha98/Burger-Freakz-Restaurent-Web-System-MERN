@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { generatePublicUrl } from "../../urlConfig";
+import "./style.css";
 
 const CartItem = (props) => {
   const [qty, setQty] = useState(props.cartItem.qty);
@@ -38,24 +39,26 @@ const CartItem = (props) => {
         <button className="btn btn-danger">Remove</button>
       </td>
       <td>{price}</td>
-      <td>
-        {/* qrty control */}
-        <div className="input-group mb-3">
-          <span className="input-group-text">
-            <button onClick={onQuantityDecrement} class="btn btn-primary">
-              -
-            </button>
-          </span>
-          <input
-            className="form-control"
-            value={qty}
-            style={{ maxWidth: "60px" }}
-          />
-          <span className="input-group-text">
-            <button onClick={onQuantityIncrement} class="btn btn-primary">
-              +
-            </button>
-          </span>
+      <td className="form-row justify-content-center">
+        {/* qty control */}
+        <div class="form-group col-md-7">
+          <div className="input-group mx-auto mb-3">
+            <span className="input-group-text">
+              <button onClick={onQuantityDecrement} class="btn btn-primary">
+                <i className="fa fa-minus"></i>
+              </button>
+            </span>
+            <input
+              className="form-control"
+              value={qty}
+              style={{ maxWidth: "80px", height: "55px" }}
+            />
+            <span className="input-group-text">
+              <button onClick={onQuantityIncrement} class="btn btn-primary">
+                <i className="fa fa-plus"></i>
+              </button>
+            </span>
+          </div>
         </div>
       </td>
       <td>{Number(price) * Number(qty)}</td>

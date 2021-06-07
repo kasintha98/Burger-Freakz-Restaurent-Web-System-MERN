@@ -42,30 +42,42 @@ export default function CartPage(props) {
     <div>
       {props.onlyCartItems === true ? (
         <Card style={{ width: "100%" }}>
+          <div className="text-center">
+            <h5>Order Summery</h5>
+          </div>
+          <br></br>
           <Card.Body>
-            <Card.Text>
-              <Table responsive="sm">
-                <thead>
-                  <tr className="text-center">
-                    <th>Image</th>
-                    <th>Description</th>
-                    <th>Price</th>
-                    <th>Quanity</th>
-                    <th>Total</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {Object.keys(cartItems).map((key, index) => (
-                    <CartItem
-                      key={index}
-                      cartItem={cartItems[key]}
-                      onQuantityDec={onQuantityDecrement}
-                      onQuantityInc={onQuantityIncrement}
-                    ></CartItem>
-                  ))}
-                </tbody>
-              </Table>
-            </Card.Text>
+            {cartItems.length > 0 ? (
+              <Card.Text>
+                <Table responsive="sm">
+                  <thead>
+                    <tr className="text-center">
+                      <th>Image</th>
+                      <th>Description</th>
+                      <th>Price</th>
+                      <th>Quanity</th>
+                      <th>Total</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {Object.keys(cartItems).map((key, index) => (
+                      <CartItem
+                        key={index}
+                        cartItem={cartItems[key]}
+                        onQuantityDec={onQuantityDecrement}
+                        onQuantityInc={onQuantityIncrement}
+                      ></CartItem>
+                    ))}
+                  </tbody>
+                </Table>
+              </Card.Text>
+            ) : (
+              <div className="text-center">
+                <div class="alert alert-danger" role="alert">
+                  <h5>Your Cart Is Empty!</h5>
+                </div>
+              </div>
+            )}
           </Card.Body>
         </Card>
       ) : (
@@ -79,52 +91,62 @@ export default function CartPage(props) {
             <Card style={{ width: "100%" }}>
               <Card.Body>
                 <Card.Text>
-                  <Table responsive="sm">
-                    <thead>
-                      <tr className="text-center">
-                        <th>Image</th>
-                        <th>Description</th>
-                        <th>Price</th>
-                        <th>Quanity</th>
-                        <th>Total</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {Object.keys(cartItems).map((key, index) => (
-                        <CartItem
-                          key={index}
-                          cartItem={cartItems[key]}
-                          onQuantityDec={onQuantityDecrement}
-                          onQuantityInc={onQuantityIncrement}
-                        ></CartItem>
-                      ))}
-                    </tbody>
-                  </Table>
+                  {cartItems.length > 0 ? (
+                    <Table responsive="sm">
+                      <thead>
+                        <tr className="text-center">
+                          <th>Image</th>
+                          <th>Description</th>
+                          <th>Price</th>
+                          <th>Quanity</th>
+                          <th>Total</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {Object.keys(cartItems).map((key, index) => (
+                          <CartItem
+                            key={index}
+                            cartItem={cartItems[key]}
+                            onQuantityDec={onQuantityDecrement}
+                            onQuantityInc={onQuantityIncrement}
+                          ></CartItem>
+                        ))}
+                      </tbody>
+                    </Table>
+                  ) : (
+                    <div className="text-center" style={{ padding: "10vh" }}>
+                      <div class="alert alert-danger" role="alert">
+                        <h5>Your Cart Is Empty!</h5>
+                      </div>
+                    </div>
+                  )}
                 </Card.Text>
               </Card.Body>
               <Card.Footer>
-                <Row className="justify-content-md-center">
-                  <Col sm={6}></Col>
-                  <Col sm={6}>
-                    <PriceDetails
-                      totalItems={Object.keys(cart.cartItems).reduce(function (
-                        qty,
-                        key
-                      ) {
-                        return qty + cart.cartItems[key].qty;
-                      },
-                      0)}
-                      totalPrice={Object.keys(cart.cartItems).reduce(
-                        (totalPrice, key, deli) => {
-                          const { price, qty } = cart.cartItems[key];
-                          return totalPrice + price * qty;
-                        },
-                        0
-                      )}
-                      distance="10"
-                    ></PriceDetails>
-                  </Col>
-                </Row>
+                {cartItems.length > 0 ? (
+                  <Row className="justify-content-md-center">
+                    <Col sm={6}></Col>
+                    <Col sm={6}>
+                      <PriceDetails
+                        totalItems={Object.keys(cart.cartItems).reduce(
+                          function (qty, key) {
+                            return qty + cart.cartItems[key].qty;
+                          },
+                          0
+                        )}
+                        totalPrice={Object.keys(cart.cartItems).reduce(
+                          (totalPrice, key, deli) => {
+                            const { price, qty } = cart.cartItems[key];
+                            return totalPrice + price * qty;
+                          },
+                          0
+                        )}
+                        distance="10"
+                      ></PriceDetails>
+                    </Col>
+                  </Row>
+                ) : null}
+
                 <Row>
                   <Col>
                     <Link to="/" className="btn btn-primary">
@@ -132,13 +154,15 @@ export default function CartPage(props) {
                     </Link>
                   </Col>
                   <Col>
-                    <Button
-                      onClick={() => {
-                        props.history.push("/checkout");
-                      }}
-                    >
-                      Checkout!
-                    </Button>
+                    {cartItems.length > 0 ? (
+                      <Button
+                        onClick={() => {
+                          props.history.push("/checkout");
+                        }}
+                      >
+                        Checkout!
+                      </Button>
+                    ) : null}
                   </Col>
                 </Row>
               </Card.Footer>

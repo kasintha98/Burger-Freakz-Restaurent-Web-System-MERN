@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAddress, getCartItems } from "../../actions";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
-import { Row, Col, Container, Button, Card, Table } from "react-bootstrap";
+import { Row, Col, Container, Button, Form } from "react-bootstrap";
 import AddressForm from "./AddressForm";
 import PriceDetails from "../../components/PriceDetails";
 import CartPage from "../CartPage";
@@ -81,10 +81,18 @@ export default function CheckoutPage() {
             <Row>
               <Col
                 sm={8}
-                style={{ backgroundColor: "#cdcdcd", padding: "30px" }}
+                style={{
+                  backgroundColor: "rgb(235, 235, 235)",
+                  padding: "30px",
+                }}
               >
                 <Row style={{ marginBottom: "30px" }}>
-                  <Col>
+                  <Col
+                    style={{
+                      backgroundImage: "linear-gradient(#6DD5FA, #ffffff)",
+                      padding: "20px",
+                    }}
+                  >
                     <div className="text-center">
                       <h3 style={{ marginBottom: "30px" }}>
                         Select Delivery Address
@@ -118,7 +126,11 @@ export default function CheckoutPage() {
 
                     {confirmAddress ? (
                       <Row>
-                        <h5>Address: {selectedAddress.addressNew}</h5>
+                        <h5>
+                          Address: {selectedAddress.addressNew}
+                          <br></br>
+                          <br></br>
+                        </h5>
                       </Row>
                     ) : (
                       newAddress.map((adr) => (
@@ -157,19 +169,69 @@ export default function CheckoutPage() {
                       </Row>
                     ) : null}
                   </Col>
-                  <Col>
-                    {auth.authenticate ? (
+
+                  {!confirmAddress ? (
+                    <Col
+                      style={{
+                        backgroundImage: "linear-gradient(#6DD5FA, #ffffff)",
+                        padding: "20px",
+                      }}
+                    >
                       <AddressForm onSubmitForm={onAddressSubmit}></AddressForm>
-                    ) : null}
-                  </Col>
+                    </Col>
+                  ) : null}
                 </Row>
-                <Row style={{ marginBottom: "30px" }}>
-                  <h3 style={{ marginBottom: "30px" }}>Payment Option</h3>
+                <Row>
+                  <div
+                    style={{
+                      backgroundImage: "linear-gradient(#6DD5FA, #ffffff)",
+                      padding: "20px",
+                      width: "100%",
+                    }}
+                  >
+                    <Row>
+                      <div>
+                        <h3>Payment Option</h3>
+                      </div>
+                    </Row>
+                    <br></br>
+                    <Row>
+                      <Col sm={1}>
+                        <div>
+                          <input name="address" type="radio"></input>
+                        </div>
+                      </Col>
+                      <Col sm={11}>
+                        <div>Online payment</div>
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col sm={1}>
+                        <div>
+                          <input name="address" type="radio"></input>
+                        </div>
+                      </Col>
+                      <Col sm={11}>
+                        <div>Cash On Delivery</div>
+                      </Col>
+                    </Row>
+                    <br></br>
+                    <Row>
+                      <div>
+                        <h3>Delivery Note</h3>
+                      </div>
+                    </Row>
+                    <Row>
+                      <Form.Group>
+                        <Form.Control as="textarea" rows={3} />
+                      </Form.Group>
+                    </Row>
+                  </div>
                 </Row>
               </Col>
               <Col sm={4}>
                 <div className="text-center">
-                  <h3 style={{ marginBottom: "30px" }}>Order Summery</h3>
+                  <h3 style={{ marginBottom: "30px" }}>Order Details</h3>
                 </div>
                 <div>
                   <PriceDetails

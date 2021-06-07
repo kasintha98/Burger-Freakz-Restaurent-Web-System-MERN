@@ -4,7 +4,7 @@ import "./style.css";
 export default function Footer() {
   return (
     <div>
-      <div class="footer">
+      <div class="footerNew">
         <p>All right reserved</p>
         <p>Burger Freakz</p>
         <p>2021</p>
