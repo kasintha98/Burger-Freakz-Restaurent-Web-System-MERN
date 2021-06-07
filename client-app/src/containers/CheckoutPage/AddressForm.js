@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { addAddress } from "../../actions";
 import { Form, Button } from "react-bootstrap";
 import Input from "../../components/Input";
@@ -8,6 +8,9 @@ export default function AddressForm(props) {
   const [noNew, setNoNew] = useState("");
   const [streetNew, setStreetNew] = useState("");
   const [cityNew, setCityNew] = useState("");
+  const [submitFlag, setSubmitFlag] = useState(false);
+
+  const user = useSelector((state) => state.user);
 
   const dispatch = useDispatch();
 
@@ -22,7 +25,17 @@ export default function AddressForm(props) {
     };
     console.log(payload);
     dispatch(addAddress(payload));
+    setSubmitFlag(true);
   };
+
+  useEffect(() => {
+    console.log("addressCount", user.addressNew);
+    if (submitFlag) {
+      console.log("data", user);
+      const address = user.addressNew.slice(user.addressNew.length - 1)[0];
+      props.onSubmitForm(address);
+    }
+  }, [user.addressNew]);
 
   return (
     <div>
@@ -54,7 +67,7 @@ export default function AddressForm(props) {
             setCityNew(e.target.value);
           }}
         ></Input>
-        <Button onClick={onAddressSubmit}>Save And Deliver Here</Button>
+        <Button onClick={onAddressSubmit}>Save Address</Button>
       </Form>
     </div>
   );

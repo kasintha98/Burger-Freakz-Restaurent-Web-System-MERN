@@ -35,13 +35,13 @@ export const addAddress = (payload) => {
 
       if (res.status === 201) {
         console.log(res);
-        /* const {
-          userAddress: { addressNew },
+        const {
+          addressNew: { addressNew },
         } = res.data;
         dispatch({
           type: userConstants.ADD_USER_ADDRESS_SUCCESS,
           payload: { addressNew },
-        }); */
+        });
       } else {
         const { error } = res.data;
         dispatch({

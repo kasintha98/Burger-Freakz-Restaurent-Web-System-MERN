@@ -5,6 +5,7 @@ import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import { Row, Col, Container, Button, Card, Table } from "react-bootstrap";
 import AddressForm from "./AddressForm";
+import PriceDetails from "../../components/PriceDetails";
 
 const CheckoutStep = (props) => {
   return <div></div>;
@@ -13,6 +14,7 @@ const CheckoutStep = (props) => {
 export default function CheckoutPage() {
   const user = useSelector((state) => state.user);
   const auth = useSelector((state) => state.auth);
+  const cart = useSelector((state) => state.cart);
 
   const [newAddress, setNewAddress] = useState([]);
   const [confirmAddress, setConfirmAddress] = useState(false);
@@ -21,8 +23,6 @@ export default function CheckoutPage() {
   //user.addressNew.push(auth.user.address);
 
   const dispatch = useDispatch();
-
-  const onAddressSubmit = () => {};
 
   const selectAddress = (adr) => {
     //console.log(adr);
@@ -35,8 +35,13 @@ export default function CheckoutPage() {
     setNewAddress(updatedAddress);
   };
 
+  const onAddressSubmit = (adr) => {
+    setConfirmAddress(true);
+    setSelectedAddress(adr);
+  };
+
   const confirmDeliveryAddress = (adr) => {
-    setConfirmAddress(adr);
+    setConfirmAddress(true);
     setSelectedAddress(adr);
   };
 
@@ -58,9 +63,6 @@ export default function CheckoutPage() {
       selected: false,
       edit: false,
     }));
-
-    /* const defaultAddress = JSON.parse(auth.user.address);
-    addressNew.push(defaultAddress); */
 
     setNewAddress(addressNew);
   }, [user.addressNew]);
@@ -112,40 +114,46 @@ export default function CheckoutPage() {
                       </Col>
                     </Row> */}
 
-                    {confirmAddress
-                      ? JSON.stringify(selectedAddress)
-                      : newAddress.map((adr) => (
-                          <Row>
-                            <Col sm={1}>
-                              <div>
-                                <input
-                                  name="address"
-                                  type="radio"
-                                  onClick={() => {
-                                    selectAddress(adr);
-                                  }}
-                                ></input>
-                              </div>
-                            </Col>
-                            <Col sm={11}>
-                              <div>
-                                <p>{adr.addressNew}</p>
-                              </div>
-                              <div>
-                                {adr.selected && (
-                                  <Button
-                                    onClick={() => confirmDeliveryAddress(adr)}
-                                  >
-                                    Deliver Here
-                                  </Button>
-                                )}
-                              </div>
-                            </Col>
-                          </Row>
-                        ))}
+                    {confirmAddress ? (
+                      <Row>
+                        <h5>Address: {selectedAddress.addressNew}</h5>
+                      </Row>
+                    ) : (
+                      newAddress.map((adr) => (
+                        <Row>
+                          <Col sm={1}>
+                            <div>
+                              <input
+                                name="address"
+                                type="radio"
+                                onClick={() => {
+                                  selectAddress(adr);
+                                }}
+                              ></input>
+                            </div>
+                          </Col>
+                          <Col sm={11}>
+                            <div>
+                              <p>{adr.addressNew}</p>
+                            </div>
+                            <div>
+                              {adr.selected && (
+                                <Button
+                                  onClick={() => confirmDeliveryAddress(adr)}
+                                >
+                                  Deliver Here
+                                </Button>
+                              )}
+                            </div>
+                          </Col>
+                        </Row>
+                      ))
+                    )}
                   </Col>
                   <Col>
-                    {auth.authenticate ? <AddressForm></AddressForm> : null}
+                    {auth.authenticate ? (
+                      <AddressForm onSubmitForm={onAddressSubmit}></AddressForm>
+                    ) : null}
                   </Col>
                 </Row>
                 <Row style={{ marginBottom: "30px" }}>
@@ -155,6 +163,26 @@ export default function CheckoutPage() {
               <Col sm={4}>
                 <div className="text-center">
                   <h3 style={{ marginBottom: "30px" }}>Order Summery</h3>
+                </div>
+                <div>
+                  <PriceDetails
+                    totalItems={Object.keys(cart.cartItems).reduce(function (
+                      qty,
+                      key
+                    ) {
+                      return qty + cart.cartItems[key].qty;
+                    },
+                    0)}
+                    deliveryCharges="100"
+                    totalPrice={Object.keys(cart.cartItems).reduce(
+                      (totalPrice, key, deli) => {
+                        const { price, qty } = cart.cartItems[key];
+                        return totalPrice + price * qty;
+                      },
+                      0
+                    )}
+                    distance="10"
+                  ></PriceDetails>
                 </div>
               </Col>
             </Row>

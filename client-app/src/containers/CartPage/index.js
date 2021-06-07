@@ -6,6 +6,7 @@ import Footer from "../../components/Footer";
 import { Row, Col, Container, Button, Card, Table } from "react-bootstrap";
 import { addToCart, getCartItems } from "../../actions";
 import { Link } from "react-router-dom";
+import PriceDetails from "../../components/PriceDetails";
 
 export default function CartPage(props) {
   const cart = useSelector((state) => state.cart);
@@ -74,7 +75,25 @@ export default function CartPage(props) {
           <Card.Footer>
             <Row className="justify-content-md-center">
               <Col sm={6}></Col>
-              <Col sm={6}>Grand Total: grand Total</Col>
+              <Col sm={6}>
+                <PriceDetails
+                  totalItems={Object.keys(cart.cartItems).reduce(function (
+                    qty,
+                    key
+                  ) {
+                    return qty + cart.cartItems[key].qty;
+                  },
+                  0)}
+                  totalPrice={Object.keys(cart.cartItems).reduce(
+                    (totalPrice, key, deli) => {
+                      const { price, qty } = cart.cartItems[key];
+                      return totalPrice + price * qty;
+                    },
+                    0
+                  )}
+                  distance="10"
+                ></PriceDetails>
+              </Col>
             </Row>
             <Row>
               <Col>
