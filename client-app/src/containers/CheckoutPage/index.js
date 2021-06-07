@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAddress } from "../../actions";
+import { getAddress, getCartItems } from "../../actions";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import { Row, Col, Container, Button, Card, Table } from "react-bootstrap";
 import AddressForm from "./AddressForm";
 import PriceDetails from "../../components/PriceDetails";
+import CartPage from "../CartPage";
 
 const CheckoutStep = (props) => {
   return <div></div>;
@@ -47,6 +48,7 @@ export default function CheckoutPage() {
 
   useEffect(() => {
     auth.authenticate && dispatch(getAddress());
+    auth.authenticate && dispatch(getCartItems());
   }, [auth.authenticate]);
 
   useEffect(() => {
@@ -149,6 +151,11 @@ export default function CheckoutPage() {
                         </Row>
                       ))
                     )}
+                    {confirmAddress ? (
+                      <Row>
+                        <CartPage onlyCartItems={true}></CartPage>
+                      </Row>
+                    ) : null}
                   </Col>
                   <Col>
                     {auth.authenticate ? (

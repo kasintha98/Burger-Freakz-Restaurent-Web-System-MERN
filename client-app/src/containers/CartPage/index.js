@@ -40,12 +40,7 @@ export default function CartPage(props) {
 
   return (
     <div>
-      <Header></Header>
-      <Container style={{ marginTop: "120px" }}>
-        <div className="text-center">
-          <h2>My Cart</h2>
-        </div>
-        <br></br>
+      {props.onlyCartItems === true ? (
         <Card style={{ width: "100%" }}>
           <Card.Body>
             <Card.Text>
@@ -72,49 +67,86 @@ export default function CartPage(props) {
               </Table>
             </Card.Text>
           </Card.Body>
-          <Card.Footer>
-            <Row className="justify-content-md-center">
-              <Col sm={6}></Col>
-              <Col sm={6}>
-                <PriceDetails
-                  totalItems={Object.keys(cart.cartItems).reduce(function (
-                    qty,
-                    key
-                  ) {
-                    return qty + cart.cartItems[key].qty;
-                  },
-                  0)}
-                  totalPrice={Object.keys(cart.cartItems).reduce(
-                    (totalPrice, key, deli) => {
-                      const { price, qty } = cart.cartItems[key];
-                      return totalPrice + price * qty;
-                    },
-                    0
-                  )}
-                  distance="10"
-                ></PriceDetails>
-              </Col>
-            </Row>
-            <Row>
-              <Col>
-                <Link to="/" className="btn btn-primary">
-                  Shop More!
-                </Link>
-              </Col>
-              <Col>
-                <Button
-                  onClick={() => {
-                    props.history.push("/checkout");
-                  }}
-                >
-                  Checkout!
-                </Button>
-              </Col>
-            </Row>
-          </Card.Footer>
         </Card>
-      </Container>
-      <Footer></Footer>
+      ) : (
+        <div>
+          <Header></Header>
+          <Container style={{ marginTop: "120px" }}>
+            <div className="text-center">
+              <h2>My Cart</h2>
+            </div>
+            <br></br>
+            <Card style={{ width: "100%" }}>
+              <Card.Body>
+                <Card.Text>
+                  <Table responsive="sm">
+                    <thead>
+                      <tr className="text-center">
+                        <th>Image</th>
+                        <th>Description</th>
+                        <th>Price</th>
+                        <th>Quanity</th>
+                        <th>Total</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {Object.keys(cartItems).map((key, index) => (
+                        <CartItem
+                          key={index}
+                          cartItem={cartItems[key]}
+                          onQuantityDec={onQuantityDecrement}
+                          onQuantityInc={onQuantityIncrement}
+                        ></CartItem>
+                      ))}
+                    </tbody>
+                  </Table>
+                </Card.Text>
+              </Card.Body>
+              <Card.Footer>
+                <Row className="justify-content-md-center">
+                  <Col sm={6}></Col>
+                  <Col sm={6}>
+                    <PriceDetails
+                      totalItems={Object.keys(cart.cartItems).reduce(function (
+                        qty,
+                        key
+                      ) {
+                        return qty + cart.cartItems[key].qty;
+                      },
+                      0)}
+                      totalPrice={Object.keys(cart.cartItems).reduce(
+                        (totalPrice, key, deli) => {
+                          const { price, qty } = cart.cartItems[key];
+                          return totalPrice + price * qty;
+                        },
+                        0
+                      )}
+                      distance="10"
+                    ></PriceDetails>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    <Link to="/" className="btn btn-primary">
+                      Shop More!
+                    </Link>
+                  </Col>
+                  <Col>
+                    <Button
+                      onClick={() => {
+                        props.history.push("/checkout");
+                      }}
+                    >
+                      Checkout!
+                    </Button>
+                  </Col>
+                </Row>
+              </Card.Footer>
+            </Card>
+          </Container>
+          <Footer></Footer>
+        </div>
+      )}
     </div>
   );
 }
