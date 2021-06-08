@@ -6,6 +6,9 @@ import logo from "../../img/logo.jpg";
 export default function About() {
   return (
     <div>
+      <br></br>
+      <br></br>
+      <br></br>
       <Card style={{ width: "100%" }}>
         <Row>
           <Col sm={5}>

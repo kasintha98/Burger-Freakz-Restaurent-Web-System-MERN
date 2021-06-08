@@ -103,3 +103,76 @@ exports.getSpecificProductBySlug = (req, res) => {
       } */
   });
 };
+
+exports.getProducts = (req, res) => {
+  Product.find({})
+    .populate({ path: "category", select: "_id name" })
+    .populate({ path: "createdBy", select: "_id firstName lastName" })
+    .exec((err, products) => {
+      if (err) {
+        return res.status(400).json({ err });
+      }
+      if (products) {
+        return res.status(200).json({ products });
+      }
+    });
+};
+
+exports.updateProduct = async (req, res) => {
+  //const { _id, name,price,quantity, description,offer, productImages } = req.body;
+
+  /* const product = {  _id, name,price,quantity, description,offer, productImages  };
+
+  const updatedProduct = await Product.findOneAndUpdate({ _id }, product, {
+    new: true,
+  });
+
+  return res.status(201).json({ updatedProduct}); */
+
+  //saving all Productimages uploaded in an array
+  let productImages = [];
+
+  //if productImages exists then mapping them to a array of objects as needed in the product schema
+  if (req.files.length > 0) {
+    productImages = req.files.map((file) => {
+      return { img: file.filename };
+    });
+  }
+
+  try {
+    await Product.findById(req.body._id).then((product) => {
+      product._id = req.body._id;
+      product.name = req.body.name;
+      product.description = req.body.description;
+      product.offer = req.body.offer;
+      product.price = req.body.price;
+      product.quantity = req.body.quantity;
+      product.category = req.body.category;
+
+      if (productImages.length > 0) {
+        product.productImages = productImages;
+      }
+
+      product
+        .save()
+        .then(() =>
+          res.status(201).json({ msg: "You've Updated the product!" })
+        )
+        .catch((err) => res.status(400).json({ error: err.message }));
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+exports.deleteProduct = async (req, res) => {
+  try {
+    await Product.findByIdAndDelete(req.params.id)
+      .then(() =>
+        res.status(200).json({ msg: "Product Deleted Successfully!" })
+      )
+      .catch((err) => res.status(400).json("Error: " + err));
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};

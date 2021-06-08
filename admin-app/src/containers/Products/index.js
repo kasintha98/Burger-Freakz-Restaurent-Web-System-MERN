@@ -11,7 +11,7 @@ import {
 } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Input from "../../components/UI/Input";
-import { addProduct } from "../../actions";
+import { addProduct, updateProduct, deleteProduct } from "../../actions";
 import NewModal from "../../components/UI/Modal";
 import { generatePublicUrl } from "../../urlConfig";
 import "./style.css";
@@ -26,6 +26,18 @@ function Products(props) {
   const [productImage, setProductImage] = useState([]);
   const [productDetailsModal, setProductDetailsModal] = useState(false);
   const [productDetails, setProductDetails] = useState(null);
+  const [deleteProductModal, setDeleteProductModal] = useState(false);
+  const [currentProduct, setCurrentProduct] = useState({});
+  const [updateProductModal, setUpdateProductModal] = useState(false);
+
+  const [productIdUpdate, setProductIdUpdate] = useState("");
+  const [productNameUpdate, setProductNameUpdate] = useState("");
+  const [productPriceUpdate, setProductPriceUpdate] = useState("");
+  const [productQtyUpdate, setProductQtyUpdate] = useState("");
+  const [productDescriptionUpdate, setProductDescriptionUpdate] = useState("");
+  const [productOfferUpdate, setProductOfferUpdate] = useState("");
+  const [productCategoryUpdate, setProductCategoryUpdate] = useState("");
+  const [productImageUpdate, setProductImageUpdate] = useState([]);
 
   const category = useSelector((state) => state.category);
   const product = useSelector((state) => state.product);
@@ -37,6 +49,11 @@ function Products(props) {
   }, []); */
 
   const [show, setShow] = useState(false);
+
+  //product is loading display loading spinner
+  if (product.loading) {
+    return <div className="spinner-border text-primary" role="status"></div>;
+  }
 
   const addNewProduct = () => {
     const form = new FormData();
@@ -96,7 +113,7 @@ function Products(props) {
 
     dispatch(addProduct(form));
 
-    window.location.reload();
+    //window.location.reload();
   };
 
   const handleClose = () => {
@@ -115,6 +132,50 @@ function Products(props) {
 
   const handleProductImage = (e) => {
     setProductImage([...productImage, e.target.files[0]]);
+  };
+
+  //handling selected product image in product updating
+  const handleProductImageUpdate = (e) => {
+    setProductImageUpdate(e.target.files[0]);
+  };
+
+  //updating the state after selecting product data to update
+  const updateProductData = (prod) => {
+    setUpdateProductModal(true);
+
+    console.log(prod._id);
+
+    //updating state value according to selected Product
+    setProductIdUpdate(prod._id);
+    setProductNameUpdate(prod.name);
+    setProductDescriptionUpdate(prod.description);
+    setProductQtyUpdate(prod.quantity);
+    setProductOfferUpdate(prod.offer);
+    setProductPriceUpdate(prod.price);
+    setProductOfferUpdate(prod.offer);
+    setProductCategoryUpdate(prod.category._id);
+
+    prod.productImages.map((picture) => setProductImageUpdate(picture.img));
+  };
+
+  //handling the data added to form when updating the Product and passing them to updateProduct() in actions
+  const updateProductForm = () => {
+    const form = new FormData();
+
+    console.log(productNameUpdate);
+    console.log(productIdUpdate);
+
+    form.append("_id", productIdUpdate);
+    form.append("name", productNameUpdate);
+    form.append("description", productDescriptionUpdate);
+    form.append("productImages", productImageUpdate);
+    form.append("offer", productOfferUpdate);
+    form.append("quantity", productQtyUpdate);
+    form.append("price", productPriceUpdate);
+    form.append("category", productCategoryUpdate);
+
+    //updating the product with new form data and then updating the product list(getting the updated product list)
+    dispatch(updateProduct(form));
   };
 
   console.log(productImage);
@@ -167,8 +228,24 @@ function Products(props) {
                   <td>{product.category.name}</td>
                   <td>
                     <ButtonGroup style={{ width: "100%" }}>
-                      <Button variant="success">Edit</Button>
-                      <Button variant="danger">Delete</Button>
+                      <Button
+                        variant="success"
+                        onClick={() => {
+                          updateProductData(product);
+                        }}
+                        variant="success"
+                      >
+                        Edit
+                      </Button>
+                      <Button
+                        variant="danger"
+                        onClick={() => {
+                          setDeleteProductModal(true);
+                          setCurrentProduct(product);
+                        }}
+                      >
+                        Delete
+                      </Button>
                     </ButtonGroup>
                     <Button
                       style={{ width: "100%" }}
@@ -185,6 +262,133 @@ function Products(props) {
             : null}
         </tbody>
       </Table>
+    );
+  };
+
+  //showing updateproduct modal popup
+  const renderUpdateProductsModal = () => {
+    return (
+      <NewModal
+        show={updateProductModal}
+        handleClose={() => {
+          setUpdateProductModal(false);
+        }}
+        addNewItem={updateProductForm}
+        modalTitle="Edit Product"
+        size="lg"
+      >
+        <Input
+          type={"text"}
+          value={productNameUpdate}
+          placeholder={"Product Name"}
+          onChange={(e) => {
+            setProductNameUpdate(e.target.value);
+          }}
+        />
+        <Input
+          type={"text"}
+          value={productPriceUpdate}
+          placeholder={"Product Price"}
+          onChange={(e) => {
+            setProductPriceUpdate(e.target.value);
+          }}
+        />
+        <Input
+          type={"text"}
+          value={productQtyUpdate}
+          placeholder={"Product Quantity"}
+          onChange={(e) => {
+            setProductQtyUpdate(e.target.value);
+          }}
+        />
+        <Input
+          as="textarea"
+          rows={3}
+          value={productDescriptionUpdate}
+          placeholder={"Product Description"}
+          onChange={(e) => {
+            setProductDescriptionUpdate(e.target.value);
+          }}
+        />
+        <Input
+          type={"text"}
+          value={productOfferUpdate}
+          placeholder={"Product Offer"}
+          onChange={(e) => {
+            setProductOfferUpdate(e.target.value);
+          }}
+        />
+        <select
+          className="form-control"
+          value={productCategoryUpdate}
+          onChange={(e) => {
+            setProductCategoryUpdate(e.target.value);
+          }}
+        >
+          <option>{productCategoryUpdate.name}</option>
+          {createCategoryList(category.categories).map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.name}
+            </option>
+          ))}
+        </select>
+        <br></br>
+        <div className="input-group mb-3">
+          <label className="input-group-text" htmlFor="inputGroupFile01">
+            Upload Product Image
+          </label>
+          <input
+            type="file"
+            name="productImageUpdate"
+            className="form-control"
+            id="inputGroupFile01"
+            onChange={handleProductImageUpdate}
+          />
+        </div>
+        <div>
+          {typeof productImageUpdate === "string" ? (
+            <Row>
+              <Col>
+                <label style={{ color: "#333" }}>
+                  Current Image Name: <br></br> {productImageUpdate}
+                </label>
+              </Col>
+              <Col>
+                <label style={{ color: "#333" }}>Current Image Preview:</label>
+                <br></br>
+                <img
+                  style={{ maxWidth: "100px" }}
+                  src={generatePublicUrl(productImageUpdate)}
+                  alt="Category"
+                />
+              </Col>
+            </Row>
+          ) : null}
+        </div>
+      </NewModal>
+    );
+  };
+
+  //fuction to delete product. dispatching the deleteproduct() from actions
+  const deleteProductData = (pro) => {
+    //dispatching the action to delete selected Product
+    dispatch(deleteProduct(pro._id));
+  };
+
+  //popup modal to delete product
+  const renderDeleteProductModal = () => {
+    return (
+      <NewModal
+        modalTitle="Please Confirm!"
+        variant="danger"
+        clsBtnName="No"
+        saveBtnName="Yes"
+        addNewItem={() => deleteProductData(currentProduct)}
+        show={deleteProductModal}
+        handleClose={() => {
+          setDeleteProductModal(false);
+        }}
+      >{`Do you want to delete "${currentProduct.name}" product?`}</NewModal>
     );
   };
 
@@ -369,6 +573,8 @@ function Products(props) {
       </Container>
       {renderAddProductModal()}
       {renderProductDetailsModal()}
+      {renderDeleteProductModal()}
+      {renderUpdateProductsModal()}
     </Layout>
   );
 }

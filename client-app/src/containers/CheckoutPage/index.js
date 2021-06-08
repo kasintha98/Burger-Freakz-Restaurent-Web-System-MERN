@@ -82,28 +82,32 @@ export default function CheckoutPage() {
               <Col
                 sm={8}
                 style={{
-                  backgroundColor: "rgb(235, 235, 235)",
+                  backgroundColor: "#333",
                   padding: "30px",
                 }}
               >
                 <Row style={{ marginBottom: "30px" }}>
                   <Col
                     style={{
-                      backgroundImage: "linear-gradient(#6DD5FA, #ffffff)",
+                      backgroundImage:
+                        "linear-gradient(rgb(235, 235, 235), #ffffff)",
                       padding: "20px",
                     }}
                   >
-                    <div className="text-center">
+                    <div>
                       <h3 style={{ marginBottom: "30px" }}>
-                        Select Delivery Address
+                        <span style={{ fontSize: "15px" }}>&#9899;</span> Select
+                        Delivery Address
                       </h3>
                     </div>
                     <Row>
                       <div style={{ marginBottom: "30px" }}>
                         <div>
-                          <h5>Name: {auth.user.fullName}</h5>
-                          <h5>Email: {auth.user.email}</h5>
-                          <h5>Contact Number: {auth.user.contactNumber}</h5>
+                          <h5>&#128100; Name: {auth.user.fullName}</h5>
+                          <h5>&#128233; Email: {auth.user.email}</h5>
+                          <h5>
+                            &#128222; Contact Number: {auth.user.contactNumber}
+                          </h5>
                         </div>
                       </div>
                     </Row>
@@ -127,7 +131,7 @@ export default function CheckoutPage() {
                     {confirmAddress ? (
                       <Row>
                         <h5>
-                          Address: {selectedAddress.addressNew}
+                          &#128204; Address: {selectedAddress.addressNew}
                           <br></br>
                           <br></br>
                         </h5>
@@ -173,7 +177,8 @@ export default function CheckoutPage() {
                   {!confirmAddress ? (
                     <Col
                       style={{
-                        backgroundImage: "linear-gradient(#6DD5FA, #ffffff)",
+                        backgroundImage:
+                          "linear-gradient(rgb(235, 235, 235), #ffffff)",
                         padding: "20px",
                       }}
                     >
@@ -184,14 +189,18 @@ export default function CheckoutPage() {
                 <Row>
                   <div
                     style={{
-                      backgroundImage: "linear-gradient(#6DD5FA, #ffffff)",
+                      backgroundImage:
+                        "linear-gradient(rgb(235, 235, 235), #ffffff)",
                       padding: "20px",
                       width: "100%",
                     }}
                   >
                     <Row>
                       <div>
-                        <h3>Payment Option</h3>
+                        <h3>
+                          <span style={{ fontSize: "15px" }}>&#9899;</span>{" "}
+                          Payment Option
+                        </h3>
                       </div>
                     </Row>
                     <br></br>
@@ -218,7 +227,10 @@ export default function CheckoutPage() {
                     <br></br>
                     <Row>
                       <div>
-                        <h3>Delivery Note</h3>
+                        <h3>
+                          <span style={{ fontSize: "15px" }}>&#9899;</span>{" "}
+                          Delivery Note
+                        </h3>
                       </div>
                     </Row>
                     <Row>
@@ -242,7 +254,6 @@ export default function CheckoutPage() {
                       return qty + cart.cartItems[key].qty;
                     },
                     0)}
-                    deliveryCharges="100"
                     totalPrice={Object.keys(cart.cartItems).reduce(
                       (totalPrice, key, deli) => {
                         const { price, qty } = cart.cartItems[key];
@@ -251,8 +262,19 @@ export default function CheckoutPage() {
                       0
                     )}
                     distance="10"
+                    offer={Object.keys(cart.cartItems).reduce(function (
+                      offer,
+                      key
+                    ) {
+                      return (
+                        offer +
+                        cart.cartItems[key].offer * cart.cartItems[key].qty
+                      );
+                    },
+                    0)}
                   ></PriceDetails>
                 </div>
+                <Button style={{ width: "100%" }}>Confirm Order</Button>
               </Col>
             </Row>
           </>

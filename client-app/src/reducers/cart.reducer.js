@@ -8,6 +8,7 @@ const initState = {
       img: "",
       price: 0,
       qty: 1,
+      offer: 0
     }, */
   },
   updatingCart: false,

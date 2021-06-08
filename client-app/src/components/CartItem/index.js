@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { generatePublicUrl } from "../../urlConfig";
 import "./style.css";
+import CurrencyFormat from "react-currency-format";
 
 const CartItem = (props) => {
   const [qty, setQty] = useState(props.cartItem.qty);
 
-  const { _id, name, price, img } = props.cartItem;
+  const { _id, name, price, img, offer } = props.cartItem;
 
   const onQuantityIncrement = () => {
     setQty(qty + 1);
@@ -38,7 +39,14 @@ const CartItem = (props) => {
         <button className="btn btn-success">Save For Later</button>
         <button className="btn btn-danger">Remove</button>
       </td>
-      <td>{price}</td>
+      <td>
+        <CurrencyFormat
+          value={price}
+          displayType={"text"}
+          thousandSeparator={true}
+          prefix={"Rs. "}
+        />
+      </td>
       <td className="form-row justify-content-center">
         {/* qty control */}
         <div class="form-group col-md-7">
@@ -51,7 +59,7 @@ const CartItem = (props) => {
             <input
               className="form-control"
               value={qty}
-              style={{ maxWidth: "80px", height: "55px" }}
+              style={{ maxWidth: props.width, height: "55px" }}
             />
             <span className="input-group-text">
               <button onClick={onQuantityIncrement} class="btn btn-primary">
@@ -61,7 +69,25 @@ const CartItem = (props) => {
           </div>
         </div>
       </td>
-      <td>{Number(price) * Number(qty)}</td>
+      <td>
+        <CurrencyFormat
+          value={Number(price) * Number(qty) - Number(offer) * Number(qty)}
+          displayType={"text"}
+          thousandSeparator={true}
+          prefix={"Rs. "}
+        />
+        {offer > 0 ? (
+          <div style={{ color: "red" }}>
+            Total Offer{" "}
+            <CurrencyFormat
+              value={Number(offer) * Number(qty)}
+              displayType={"text"}
+              thousandSeparator={true}
+              prefix={"Rs. "}
+            />
+          </div>
+        ) : null}
+      </td>
     </tr>
   );
 };

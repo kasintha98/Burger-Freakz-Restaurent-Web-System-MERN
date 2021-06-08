@@ -7,6 +7,7 @@ import { Row, Col, Card, Container, Carousel } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { generatePublicUrl } from "../../urlConfig";
 import "./style.css";
+import CurrencyFormat from "react-currency-format";
 
 export default function ProductListPage(props) {
   const product = useSelector((state) => state.product);
@@ -43,7 +44,14 @@ export default function ProductListPage(props) {
               <Card.Body>
                 <Card.Title>{product.name}</Card.Title>
                 <Card.Text>
-                  <h4 className="price">Rs. {product.price}</h4>
+                  <h4 className="price">
+                    <CurrencyFormat
+                      value={product.price}
+                      displayType={"text"}
+                      thousandSeparator={true}
+                      prefix={"Rs. "}
+                    />
+                  </h4>
                 </Card.Text>
               </Card.Body>
             </Card>

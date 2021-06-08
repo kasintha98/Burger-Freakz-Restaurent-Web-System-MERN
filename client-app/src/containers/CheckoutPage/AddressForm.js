@@ -17,6 +17,20 @@ export default function AddressForm(props) {
   let addressNew;
 
   const onAddressSubmit = (e) => {
+    //validations of data
+    if (noNew === "") {
+      alert("Address No. can't be empty!");
+      return;
+    }
+    if (streetNew === "") {
+      alert("Address street can't be empty!");
+      return;
+    }
+    if (!cityNew) {
+      alert("Address city can't be empty!");
+      return;
+    }
+
     addressNew = `${noNew}, ${streetNew}, ${cityNew}.`;
     const payload = {
       addressNew: {

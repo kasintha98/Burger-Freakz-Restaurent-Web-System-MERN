@@ -1,13 +1,14 @@
 import React from "react";
 import { CardGroup, Card } from "react-bootstrap";
-import chef1 from "../../img/chef1.jpg";
-import chef2 from "../../img/chef2.jpg";
-import chef3 from "../../img/chef3.jpg";
+import sathish from "../../img/sathish.jpg";
+import supun from "../../img/supun.jpg";
+import deshitha from "../../img/deshitha.jpg";
 
 export default function index() {
   return (
     <div>
       <div className="text-center">
+        <br></br>
         <br></br>
         <br></br>
         <h2>Meet Our Chefs</h2>
@@ -16,10 +17,10 @@ export default function index() {
       </div>
       <CardGroup>
         <Card>
-          <Card.Img variant="top" src={chef1} />
+          <Card.Img variant="top" src={sathish} />
           <Card.Body>
             <Card.Title>
-              <div className="text-center">Chef 1</div>
+              <div className="text-center">Sathish Suharsha</div>
             </Card.Title>
             <Card.Text>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
@@ -28,11 +29,11 @@ export default function index() {
           </Card.Body>
         </Card>
         <Card>
-          <Card.Img variant="top" src={chef2} />
+          <Card.Img variant="top" src={supun} />
           <Card.Body>
             <Card.Title>
               {" "}
-              <div className="text-center">Chef 2</div>
+              <div className="text-center">Supun Dhananjaya</div>
             </Card.Title>
             <Card.Text>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
@@ -41,11 +42,11 @@ export default function index() {
           </Card.Body>
         </Card>
         <Card>
-          <Card.Img variant="top" src={chef3} />
+          <Card.Img variant="top" src={deshitha} />
           <Card.Body>
             <Card.Title>
               {" "}
-              <div className="text-center">Chef 3</div>
+              <div className="text-center">Deshitha Perera</div>
             </Card.Title>
             <Card.Text>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do

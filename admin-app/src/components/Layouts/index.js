@@ -21,6 +21,12 @@ function Layout(props) {
                   </NavLink>
                 </li>
                 <li>
+                  <NavLink exact to={"/employee"}>
+                    <i class="fa fa-user"></i>
+                    &nbsp; Employee Users
+                  </NavLink>
+                </li>
+                <li>
                   <NavLink to={"/categories"}>
                     <i class="fa fa-cubes"></i>
                     &nbsp; Categories
@@ -36,6 +42,24 @@ function Layout(props) {
                   <NavLink to={"/orders"}>
                     <i class="fa fa-motorcycle"></i>
                     &nbsp; Orders
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to={"/reports"}>
+                    <i class="fa fa-pie-chart"></i>
+                    &nbsp; Reports
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to={"/inventory"}>
+                    <i class="fa fa-suitcase"></i>
+                    &nbsp; Inventory
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to={"/purchases"}>
+                    <i class="fa fa-money"></i>
+                    &nbsp; Purchases
                   </NavLink>
                 </li>
               </ul>
