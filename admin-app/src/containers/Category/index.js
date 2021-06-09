@@ -196,6 +196,7 @@ function Category(props) {
         modalTitle="Add New Category"
       >
         <Input
+          lable="Category Name"
           type={"text"}
           value={categoryName}
           placeholder={"Category Name"}
@@ -204,6 +205,7 @@ function Category(props) {
           }}
         />
         <Input
+          lable="Category Description"
           as="textarea"
           rows={3}
           value={categoryDescription}
@@ -257,6 +259,7 @@ function Category(props) {
         size="lg"
       >
         <Input
+          lable="Category Name"
           type={"text"}
           value={categoryNameUpdate}
           placeholder={"Category Name"}
@@ -265,6 +268,7 @@ function Category(props) {
           }}
         />
         <Input
+          lable="Category Description"
           as="textarea"
           rows={3}
           value={categoryDescriptionUpdate}

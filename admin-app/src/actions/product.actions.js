@@ -37,6 +37,7 @@ export const addProduct = (form) => {
           type: productConstants.ADD_NEW_PRODUCT_SUCCESS,
           payload: { product: res.data.product },
         });
+        dispatch(getAllProducts());
       } else {
         dispatch({
           type: productConstants.ADD_NEW_PRODUCT_FAILURE,

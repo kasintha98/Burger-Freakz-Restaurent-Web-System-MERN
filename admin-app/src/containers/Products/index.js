@@ -36,7 +36,7 @@ function Products(props) {
   const [productQtyUpdate, setProductQtyUpdate] = useState("");
   const [productDescriptionUpdate, setProductDescriptionUpdate] = useState("");
   const [productOfferUpdate, setProductOfferUpdate] = useState("");
-  const [productCategoryUpdate, setProductCategoryUpdate] = useState("");
+  const [productCategoryUpdate, setProductCategoryUpdate] = useState({});
   const [productImageUpdate, setProductImageUpdate] = useState([]);
 
   const category = useSelector((state) => state.category);
@@ -153,7 +153,7 @@ function Products(props) {
     setProductOfferUpdate(prod.offer);
     setProductPriceUpdate(prod.price);
     setProductOfferUpdate(prod.offer);
-    setProductCategoryUpdate(prod.category._id);
+    setProductCategoryUpdate(prod.category);
 
     prod.productImages.map((picture) => setProductImageUpdate(picture.img));
   };
@@ -172,7 +172,7 @@ function Products(props) {
     form.append("offer", productOfferUpdate);
     form.append("quantity", productQtyUpdate);
     form.append("price", productPriceUpdate);
-    form.append("category", productCategoryUpdate);
+    form.append("category", productCategoryUpdate._id);
 
     //updating the product with new form data and then updating the product list(getting the updated product list)
     dispatch(updateProduct(form));
@@ -278,6 +278,7 @@ function Products(props) {
         size="lg"
       >
         <Input
+          lable="Product Name"
           type={"text"}
           value={productNameUpdate}
           placeholder={"Product Name"}
@@ -286,6 +287,7 @@ function Products(props) {
           }}
         />
         <Input
+          lable="Product Price"
           type={"text"}
           value={productPriceUpdate}
           placeholder={"Product Price"}
@@ -294,6 +296,7 @@ function Products(props) {
           }}
         />
         <Input
+          lable="Product Quantity"
           type={"text"}
           value={productQtyUpdate}
           placeholder={"Product Quantity"}
@@ -302,6 +305,7 @@ function Products(props) {
           }}
         />
         <Input
+          lable="Product Description"
           as="textarea"
           rows={3}
           value={productDescriptionUpdate}
@@ -311,6 +315,7 @@ function Products(props) {
           }}
         />
         <Input
+          lable="Product Offer"
           type={"text"}
           value={productOfferUpdate}
           placeholder={"Product Offer"}
@@ -318,9 +323,10 @@ function Products(props) {
             setProductOfferUpdate(e.target.value);
           }}
         />
+        <label>Product Category</label>
         <select
           className="form-control"
-          value={productCategoryUpdate}
+          value={productCategoryUpdate._id}
           onChange={(e) => {
             setProductCategoryUpdate(e.target.value);
           }}
@@ -399,8 +405,10 @@ function Products(props) {
         show={show}
         handleClose={handleClose}
         addNewItem={addNewProduct}
+        size="lg"
       >
         <Input
+          lable="Product Name"
           type={"text"}
           value={productName}
           placeholder={"Product Name"}
@@ -409,6 +417,7 @@ function Products(props) {
           }}
         />
         <Input
+          lable="Product Price"
           type={"text"}
           value={productPrice}
           placeholder={"Product Price"}
@@ -417,6 +426,7 @@ function Products(props) {
           }}
         />
         <Input
+          lable="Product Quantity"
           type={"text"}
           value={productQty}
           placeholder={"Product Quantity"}
@@ -425,6 +435,7 @@ function Products(props) {
           }}
         />
         <Input
+          lable="Product Description"
           as="textarea"
           rows={3}
           value={productDescription}
@@ -434,6 +445,7 @@ function Products(props) {
           }}
         />
         <Input
+          lable="Product Offer"
           type={"text"}
           value={productOffer}
           placeholder={"Product Offer"}
@@ -441,6 +453,7 @@ function Products(props) {
             setProductOffer(e.target.value);
           }}
         />
+        <label>Product Category</label>
         <select
           className="form-control"
           value={productCategory}

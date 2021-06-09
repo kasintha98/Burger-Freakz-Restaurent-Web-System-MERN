@@ -39,6 +39,49 @@ function Signup(props) {
   const userSignup = (e) => {
     e.preventDefault();
 
+    //validations of data
+    if (firstName === "") {
+      alert("First Name can't be empty!");
+      return;
+    }
+    if (lastName === "") {
+      alert("Last Name can't be empty!");
+      return;
+    }
+    if (nic === "") {
+      alert("NIC can't be empty!");
+      return;
+    }
+    if (gender === "") {
+      alert("Gender can't be empty!");
+      return;
+    }
+
+    if (role === "") {
+      alert("Role can't be empty!");
+      return;
+    }
+
+    if (contactNumber === "") {
+      alert("Contact Number can't be empty!");
+      return;
+    }
+
+    if (address === "") {
+      alert("Address can't be empty!");
+      return;
+    }
+
+    if (email === "") {
+      alert("Email can't be empty!");
+      return;
+    }
+
+    if (password === "") {
+      alert("Password can't be empty!");
+      return;
+    }
+
     const user = {
       firstName,
       lastName,
@@ -52,6 +95,7 @@ function Signup(props) {
     };
 
     dispatch(signup(user));
+    props.history.push("/signin");
   };
 
   return (

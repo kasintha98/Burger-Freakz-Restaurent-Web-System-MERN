@@ -46,7 +46,7 @@ export default function CategoryGallery(props) {
   return (
     <div>
       <Container>
-        <h2 className="text-center" style={{ padding: "15px" }}>
+        <h2 className="text-center">
           <br></br>
           <br></br>
           Our Menu

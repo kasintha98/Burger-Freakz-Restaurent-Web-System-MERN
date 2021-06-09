@@ -20,6 +20,7 @@ export default function Contact() {
       <div className="text-center">
         <br></br>
         <br></br>
+        <br></br>
         <h2>Contact Us</h2>
         <br></br>
         <br></br>
