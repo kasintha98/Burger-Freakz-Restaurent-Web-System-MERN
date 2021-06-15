@@ -83,6 +83,7 @@ export default function CheckoutPage() {
     }));
 
     const payload = {
+      user: auth.user,
       addressId: selectedAddress._id,
       totalAmount,
       items,

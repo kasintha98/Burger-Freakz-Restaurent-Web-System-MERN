@@ -9,6 +9,7 @@ import HomePage from "./containers/HomePage";
 import CartPage from "./containers/CartPage";
 import CheckoutPage from "./containers/CheckoutPage";
 import ProfilePage from "./containers/ProfilePage";
+import OrderPage from "./containers/OrderPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -32,7 +33,8 @@ function App() {
           <Route path="/" exact component={HomePage} />
           <Route path="/cart" component={CartPage} />
           <Route path="/checkout" component={CheckoutPage} />
-          <Route path="/profile" component={ProfilePage} />
+          <Route path="/profile" exact component={ProfilePage} />
+          <Route path="/profile/orders" component={OrderPage} />
           <Route path="/category/:slug" exact component={ProductListPage} />
           <Route path="/product/:slug" component={ProductPage} />
         </Switch>
