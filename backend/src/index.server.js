@@ -12,6 +12,7 @@ const categoryRoutes = require("./routes/category");
 const productRoutes = require("./routes/product");
 const cartRoutes = require("./routes/cart");
 const addressRoutes = require("./routes/address");
+const orderRoutes = require("./routes/order");
 const initialDataRoutes = require("./routes/admin/initialData");
 
 //environment variables
@@ -39,6 +40,7 @@ app.use("/api", categoryRoutes);
 app.use("/api", productRoutes);
 app.use("/api", cartRoutes);
 app.use("/api", addressRoutes);
+app.use("/api", orderRoutes);
 app.use("/api", initialDataRoutes);
 
 app.listen(process.env.PORT, () => {

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAddress, getCartItems } from "../../actions";
+import { addOrder, getAddress, getCartItems } from "../../actions";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import { Row, Col, Container, Button, Form } from "react-bootstrap";
@@ -20,7 +20,9 @@ export default function CheckoutPage() {
   const [newAddress, setNewAddress] = useState([]);
   const [confirmAddress, setConfirmAddress] = useState(false);
   const [selectedAddress, setSelectedAddress] = useState(null);
-
+  const [orderConfirmation, setOrderConfirmation] = useState(false);
+  const [paymentOption, setPaymentOption] = useState("");
+  const [confirmPayment, setConfirmPayment] = useState(false);
   //user.addressNew.push(auth.user.address);
 
   const dispatch = useDispatch();
@@ -36,6 +38,11 @@ export default function CheckoutPage() {
     setNewAddress(updatedAddress);
   };
 
+  const selectPayment = (option) => {
+    setPaymentOption(option);
+    console.log(paymentOption);
+  };
+
   const onAddressSubmit = (adr) => {
     setConfirmAddress(true);
     setSelectedAddress(adr);
@@ -45,6 +52,51 @@ export default function CheckoutPage() {
     setConfirmAddress(true);
     setSelectedAddress(adr);
   };
+
+  const userOrderConfirmation = () => {
+    const netAmount = Object.keys(cart.cartItems).reduce(
+      (totalPrice, key, deli) => {
+        const { price, qty } = cart.cartItems[key];
+        return totalPrice + price * qty;
+      },
+      0
+    );
+
+    const totalOffer = Object.keys(cart.cartItems).reduce(function (
+      offer,
+      key
+    ) {
+      return offer + cart.cartItems[key].offer * cart.cartItems[key].qty;
+    },
+    0);
+
+    const deliveryCharges = 150;
+
+    const totalAmount =
+      Number(netAmount) - Number(totalOffer) + deliveryCharges;
+
+    const items = Object.keys(cart.cartItems).map((key) => ({
+      productId: key,
+      payablePrice: cart.cartItems[key].price,
+      offer: cart.cartItems[key].offer,
+      purchasedQty: cart.cartItems[key].qty,
+    }));
+
+    const payload = {
+      addressId: selectedAddress._id,
+      totalAmount,
+      items,
+      paymentStatus: "pending",
+    };
+
+    console.log(payload);
+    dispatch(addOrder(payload));
+    setOrderConfirmation(true);
+  };
+
+  /* const onConfirmPayment = () => {
+    setConfirmPayment(true);
+  }; */
 
   useEffect(() => {
     auth.authenticate && dispatch(getAddress());
@@ -68,6 +120,23 @@ export default function CheckoutPage() {
 
     setNewAddress(addressNew);
   }, [user.addressNew]);
+
+  if (orderConfirmation) {
+    return (
+      <div>
+        <Header></Header>
+        <Container style={{ marginTop: "120px" }}>
+          Thank you , You Details.
+          {`Address: ${selectedAddress.addressNew} Name: ${
+            auth.user.fullName
+          } Contact: ${auth.user.contactNumber} Items: ${JSON.stringify(
+            cart.cartItems
+          )} Email: ${auth.user.email}`}
+        </Container>
+        <Footer></Footer>
+      </div>
+    );
+  }
 
   return (
     <div>
@@ -207,21 +276,39 @@ export default function CheckoutPage() {
                     <Row>
                       <Col sm={1}>
                         <div>
-                          <input name="address" type="radio"></input>
+                          <input
+                            name="paymentOption"
+                            type="radio"
+                            value="online"
+                            onClick={() => {
+                              selectPayment("online");
+                            }}
+                          ></input>
                         </div>
                       </Col>
                       <Col sm={11}>
                         <div>Online payment</div>
+                        {/*  <Button>Confirm Payment Option</Button> */}
                       </Col>
                     </Row>
                     <Row>
                       <Col sm={1}>
                         <div>
-                          <input name="address" type="radio"></input>
+                          <input
+                            name="paymentOption"
+                            type="radio"
+                            value="cod"
+                            onClick={() => {
+                              selectPayment("cod");
+                            }}
+                          ></input>
                         </div>
                       </Col>
                       <Col sm={11}>
                         <div>Cash On Delivery</div>
+                        {/* <Button onClick={onConfirmPayment}>
+                          Confirm Payment Option
+                        </Button> */}
                       </Col>
                     </Row>
                     <br></br>
@@ -238,6 +325,19 @@ export default function CheckoutPage() {
                         <Form.Control as="textarea" rows={3} />
                       </Form.Group>
                     </Row>
+                    {confirmAddress ? (
+                      <Row>
+                        <div>
+                          <h4>
+                            Order confirmation email will send to{" "}
+                            <strong> {auth.user.email}</strong>
+                          </h4>
+                          {/* <Button onClick={userOrderConfirmation}>
+                            Continue
+                          </Button> */}
+                        </div>
+                      </Row>
+                    ) : null}
                   </div>
                 </Row>
               </Col>
@@ -274,7 +374,14 @@ export default function CheckoutPage() {
                     0)}
                   ></PriceDetails>
                 </div>
-                <Button style={{ width: "100%" }}>Confirm Order</Button>
+                {confirmAddress && paymentOption ? (
+                  <Button
+                    style={{ width: "100%" }}
+                    onClick={userOrderConfirmation}
+                  >
+                    Confirm Order
+                  </Button>
+                ) : null}
               </Col>
             </Row>
           </>
