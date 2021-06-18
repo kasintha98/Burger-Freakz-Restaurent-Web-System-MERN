@@ -95,7 +95,11 @@ export default function Header(props) {
           <Dropdown.Item>
             <Link to="/profile">Profile</Link>
           </Dropdown.Item>
-          <Dropdown.Item onClick={() => logout()}>Logout</Dropdown.Item>
+          <Dropdown.Item>
+            <Link onClick={() => logout()} to="/">
+              Logout
+            </Link>
+          </Dropdown.Item>
         </DropdownButton>
       </>
     );
