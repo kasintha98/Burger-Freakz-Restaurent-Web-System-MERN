@@ -51,12 +51,14 @@ exports.signup = (req, res) => {
 
 //signin controller
 exports.signin = (req, res) => {
-  User.findOne({ email: req.body.email }).exec((err, user) => {
+  User.findOne({ email: req.body.email }).exec(async (err, user) => {
     if (err) {
       return res.status(400).json({ err });
     }
     if (user) {
-      if (user.authenticate(req.body.password) && user.role === "admin") {
+      const isPassword = await user.authenticate(req.body.password);
+
+      if (isPassword && user.role === "admin") {
         //making a token using jwt if user exists
         const token = jwt.sign(
           { _id: user._id, role: user.role },

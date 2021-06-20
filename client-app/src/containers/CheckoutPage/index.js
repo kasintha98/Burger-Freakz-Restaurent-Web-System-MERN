@@ -88,6 +88,7 @@ export default function CheckoutPage() {
       totalAmount,
       items,
       paymentStatus: "pending",
+      paymentType: "cod",
     };
 
     console.log(payload);
