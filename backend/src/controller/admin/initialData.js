@@ -14,7 +14,9 @@ exports.initialData = async (req, res) => {
     .populate({ path: "createdBy", select: "_id firstName lastName" })
     .exec();
 
-  const orders = await Order.find({}).exec();
+  const orders = await Order.find({})
+    .populate("items.productId", "name")
+    .exec();
 
   res.status(200).json({ categories, products, orders });
 };

@@ -5,6 +5,12 @@ const bcrypt = require("bcrypt");
 const { validationResult } = require("express-validator");
 const shortId = require("shortid");
 
+const generateJwtToken = (_id, role) => {
+  return jwt.sign({ _id, role }, process.env.JWT_SECRET, {
+    expiresIn: "90d",
+  });
+};
+
 //signup controller
 exports.signup = (req, res) => {
   User.findOne({ email: req.body.email }).exec(async (err, user) => {
@@ -16,11 +22,11 @@ exports.signup = (req, res) => {
     const {
       firstName,
       lastName,
-      nic,
       gender,
       email,
       password,
       contactNumber,
+      nic,
       address,
     } = req.body;
 
@@ -30,20 +36,46 @@ exports.signup = (req, res) => {
       firstName,
       lastName,
       username: shortId.generate(),
-      nic,
       gender,
       email,
       hash_password,
       contactNumber,
+      nic,
       address,
     });
 
-    _user.save((err, data) => {
+    _user.save((err, user) => {
       if (err) {
-        return res.status(400).json({ message: "Something went wrong!" });
+        return res
+          .status(400)
+          .json({ message: "Something went wrong when signup!" });
       }
-      if (data) {
-        return res.status(201).json({ message: "User created successfully!" });
+      if (user) {
+        const token = generateJwtToken(user._id, user.role);
+        const {
+          _id,
+          firstName,
+          lastName,
+          gender,
+          email,
+          contactNumber,
+          fullName,
+          role,
+        } = user;
+        return res.status(201).json({
+          token,
+          user: {
+            _id,
+            firstName,
+            lastName,
+            gender,
+            email,
+            contactNumber,
+            fullName,
+            role,
+          },
+          message: "User created successfully!",
+        });
       }
     });
   });
@@ -60,20 +92,15 @@ exports.signin = (req, res) => {
 
       if (isPassword && user.role === "user") {
         //making a token using jwt if user exists
-        const token = jwt.sign(
-          { _id: user._id, role: user.role },
-          process.env.JWT_SECRET,
-          {
-            expiresIn: "100d",
-          }
-        );
+        const token = generateJwtToken(user._id, user.role);
+
         const {
           _id,
           firstName,
           lastName,
-          nic,
           gender,
           email,
+          nic,
           fullName,
           contactNumber,
           address,
@@ -87,9 +114,9 @@ exports.signin = (req, res) => {
             _id,
             firstName,
             lastName,
-            nic,
             gender,
             email,
+            nic,
             fullName,
             contactNumber,
             address,

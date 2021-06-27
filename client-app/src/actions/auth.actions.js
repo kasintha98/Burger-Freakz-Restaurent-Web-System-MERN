@@ -1,5 +1,5 @@
 import axios from "../helpers/axios";
-import { authConstants, cartConstants } from "./constants";
+import { authConstants, cartConstants, userConstants } from "./constants";
 
 export const login = (user) => {
   return async (dispatch) => {
@@ -32,35 +32,33 @@ export const login = (user) => {
   };
 };
 
-/* export const signup = (user) => {
+export const signup = (user) => {
   return async (dispatch) => {
-    dispatch({ type: authConstants.LOGIN_REQUEST });
-    //post request from front end to signin with the data from frontend
-    const res = await axios.post(`/admin/signup`, {
-      ...user,
-    });
+    try {
+      dispatch({ type: authConstants.SIGNUP_REQUEST });
+      console.log(user);
+      const res = await axios.post("/signup", user);
 
-    //if respond is 200 (user successfully login)
-    if (res.status === 200) {
-      const { message } = res.data;
-
-      dispatch({
-        type: authConstants.LOGIN_SUCCESS,
-        payload: {
-          token,
-          user,
-        },
-      });
-    } else {
-      if (res.status === 400) {
+      if (res.status === 201) {
+        dispatch({ type: authConstants.SIGNUP_SUCCESS });
+        const { token, user } = res.data;
+        localStorage.setItem("token", token);
+        localStorage.setItem("user", JSON.stringify(user));
         dispatch({
-          type: authConstants.LOGIN_FAILURE,
-          payload: { error: res.data.error },
+          type: authConstants.LOGIN_SUCCESS,
+          payload: {
+            token,
+            user,
+          },
         });
+      } else {
+        dispatch({ type: authConstants.SIGNUP_FAILURE });
       }
+    } catch (error) {
+      console.log(error);
     }
   };
-}; */
+};
 
 //if user is logged in then stop user going again to /signin
 export const isUserLoggedIn = () => {

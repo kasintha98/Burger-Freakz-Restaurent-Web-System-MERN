@@ -17,6 +17,7 @@ import logo from "../../img/logo.jpg";
 import { login, signout } from "../../actions";
 import { Link, NavLink } from "react-router-dom";
 import { useScrollSection } from "react-scroll-section";
+import CartNum from "../UI/CartNum";
 
 export default function Header(props) {
   const [loginModal, setLoginModal] = useState(false);
@@ -24,6 +25,7 @@ export default function Header(props) {
   const [password, setPassword] = useState("");
 
   const auth = useSelector((state) => state.auth);
+  const cart = useSelector((state) => state.cart);
 
   const dispatch = useDispatch();
 
@@ -89,6 +91,9 @@ export default function Header(props) {
           Contact
         </Nav.Link>
         <NavLink class="nav-link" to="/cart">
+          {Object.keys(cart.cartItems) ? (
+            <CartNum count={Object.keys(cart.cartItems).length}></CartNum>
+          ) : null}
           <i className="fa fa-cart-plus"></i> Cart
         </NavLink>
         <DropdownButton title={auth.user.fullName} variant="dark">
@@ -146,6 +151,9 @@ export default function Header(props) {
           Login
         </Nav.Link>
         <NavLink class="nav-link" to="/cart">
+          {Object.keys(cart.cartItems) ? (
+            <CartNum count={Object.keys(cart.cartItems).length}></CartNum>
+          ) : null}
           <i className="fa fa-cart-plus"></i> Cart
         </NavLink>
       </>

@@ -17,7 +17,6 @@ const CartItem = (props) => {
     if (qty <= 1) {
       return;
     }
-
     setQty(qty - 1);
     props.onQuantityDec(_id, qty - 1);
   };
@@ -37,7 +36,12 @@ const CartItem = (props) => {
         <br></br>
         <br></br>
         <button className="btn btn-success">Save For Later</button>
-        <button className="btn btn-danger">Remove</button>
+        <button
+          className="btn btn-danger"
+          onClick={() => props.onRemoveCartItem(_id)}
+        >
+          Remove
+        </button>
       </td>
       <td>
         <CurrencyFormat

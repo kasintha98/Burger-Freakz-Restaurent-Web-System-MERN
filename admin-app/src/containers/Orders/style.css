@@ -1,14 +1,18 @@
 .orderTrack {
-  width: 500px;
+  width: 600px;
   display: flex;
 }
 
 .orderStatus {
   width: 33.33%;
   height: 5px;
-  background: #26a541;
+  background: #777;
   position: relative;
   font-size: 12px;
+}
+
+.orderStatus.active {
+  background: #26a541;
 }
 
 .orderStatus:last-child {
@@ -20,8 +24,12 @@
   height: 15px;
   position: absolute;
   border-radius: 8px;
-  background-color: #26a541;
+  background-color: #777;
   top: -5px;
+}
+
+.orderStatus .point.active {
+  background-color: #26a541;
 }
 
 .orderInfo {

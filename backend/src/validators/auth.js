@@ -19,6 +19,20 @@ exports.validateSignupRequest = [
   check("address").notEmpty().withMessage("Address is required!"),
 ];
 
+exports.validateSignupRequestUser = [
+  check("firstName").notEmpty().withMessage("First name is required!"),
+  check("lastName").notEmpty().withMessage("Last name is required!"),
+  check("email").isEmail().withMessage("Please enter a valid email!"),
+  check("password")
+    .isLength({ min: 8 })
+    .withMessage("Password must be at least 8 characters long!"),
+  check("gender").notEmpty().withMessage("Gender is required!"),
+  check("contactNumber").notEmpty().withMessage("Contact number is required!"),
+  check("contactNumber")
+    .isLength({ min: 10, max: 10 })
+    .withMessage("Please enter a valid contact number!"),
+];
+
 //validating user inputs in signin using express validator
 exports.validateSigninRequest = [
   check("email").isEmail().withMessage("Please enter a valid email!"),

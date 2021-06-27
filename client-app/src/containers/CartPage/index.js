@@ -4,7 +4,7 @@ import Header from "../../components/Header";
 import CartItem from "../../components/CartItem";
 import Footer from "../../components/Footer";
 import { Row, Col, Container, Button, Card, Table } from "react-bootstrap";
-import { addToCart, getCartItems } from "../../actions";
+import { addToCart, getCartItems, removeCartItem } from "../../actions";
 import { Link } from "react-router-dom";
 import PriceDetails from "../../components/PriceDetails";
 
@@ -36,6 +36,10 @@ export default function CartPage(props) {
     console.log({ _id, qty });
     const { name, price, img, offer } = cartItems[_id];
     dispatch(addToCart({ _id, name, price, img, offer }, -1));
+  };
+
+  const onRemoveCartItem = (_id) => {
+    dispatch(removeCartItem({ productId: _id }));
   };
 
   return (
@@ -109,6 +113,7 @@ export default function CartPage(props) {
                           cartItem={cartItems[key]}
                           onQuantityDec={onQuantityDecrement}
                           onQuantityInc={onQuantityIncrement}
+                          onRemoveCartItem={onRemoveCartItem}
                           width="120px"
                         ></CartItem>
                       ))}

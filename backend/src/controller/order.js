@@ -1,5 +1,6 @@
 const Cart = require("../models/cart");
 const Order = require("../models/order");
+const Address = require("../models/address");
 
 exports.addOrder = (req, res) => {
   //after adding the order we have to delete that items from cart
@@ -47,6 +48,24 @@ exports.getOrders = (req, res) => {
       if (err) return res.status(400).json({ err });
       if (orders) {
         res.status(200).json({ orders });
+      }
+    });
+};
+
+exports.getOrder = (req, res) => {
+  Order.findOne({ _id: req.body.orderId })
+    .populate("items.productId", "_id name productImages")
+    .lean()
+    .exec((err, order) => {
+      if (err) return res.status(400).json({ err });
+      if (order) {
+        Address.findOne({ user: req.user._id }).exec((err, address) => {
+          if (err) return res.status(400).json({ err });
+          order.address = address.addressNew.find(
+            (adr) => adr._id.toString() == order.addressId.toString()
+          );
+          res.status(200).json({ order });
+        });
       }
     });
 };

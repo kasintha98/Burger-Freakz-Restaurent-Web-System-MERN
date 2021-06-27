@@ -6,6 +6,7 @@ const initState = {
   error: null,
   loading: false,
   orderFetching: false,
+  message: "",
 };
 
 export default (state = initState, action) => {
@@ -101,6 +102,19 @@ export default (state = initState, action) => {
         orderFetching: false,
         error: action.payload.error,
       };
+      break;
+
+    case userConstants.GET_USER_ORDER_DETAILS_REQUEST:
+      break;
+
+    case userConstants.GET_USER_ORDER_DETAILS_SUCCESS:
+      state = {
+        ...state,
+        orderDetails: action.payload.order,
+      };
+      break;
+
+    case userConstants.GET_USER_ORDER_DETAILS_FAILURE:
       break;
   }
   return state;

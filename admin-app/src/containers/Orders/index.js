@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import Layout from "../../components/Layouts";
 import { useDispatch, useSelector } from "react-redux";
-import { Row, Card, Button, Form } from "react-bootstrap";
+import { Row, Card, Button, Form, Table } from "react-bootstrap";
+import CurrencyFormat from "react-currency-format";
 import "./style.css";
 import { Col } from "react-bootstrap";
 import { updateOrder } from "../../actions";
+var dateFormat = require("dateformat");
 
 function Orders(props) {
   const order = useSelector((state) => state.order);
@@ -31,9 +33,45 @@ function Orders(props) {
           <Card.Body>
             <Card.Title>Order ID : {orderItem._id}</Card.Title>
             <Card.Text>
+              <Table responsive="sm">
+                <thead>
+                  <tr>
+                    <th>Items</th>
+                    <th>Grand Total</th>
+                    <th>Payment Type</th>
+                    <th>Payment Status</th>
+                    <th>Delivery Location</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
+                      {orderItem.items.map((item, index) => (
+                        <p key={index}>{item.productId.name}</p>
+                      ))}
+                    </td>
+                    <td>
+                      <CurrencyFormat
+                        value={orderItem.totalAmount}
+                        displayType={"text"}
+                        thousandSeparator={true}
+                        prefix={"Rs. "}
+                      />
+                    </td>
+                    <td>
+                      {orderItem.paymentType === "cod"
+                        ? "Cash On Delivery"
+                        : orderItem.paymentType}
+                    </td>
+                    <td>{orderItem.paymentStatus}</td>
+                    <td>{orderItem.addressId.address}</td>
+                  </tr>
+                </tbody>
+              </Table>
+            </Card.Text>
+            <Card.Text>
               <Row>
                 <Col sm={9}>
-                  {" "}
                   <div
                     style={{
                       boxSizing: "border-box",
@@ -42,34 +80,30 @@ function Orders(props) {
                     }}
                   >
                     <div className="orderTrack">
-                      <div className="orderStatus">
-                        <div className="point"></div>
-                        <div className="orderInfo">
-                          <div className="status">Ordered</div>
-                          <div className="date">Fri, 2021</div>
+                      {orderItem.orderStatus.map((status) => (
+                        <div
+                          className={`orderStatus ${
+                            status.isCompleted ? "active" : ""
+                          }`}
+                        >
+                          <div
+                            className={`point ${
+                              status.isCompleted ? "active" : ""
+                            }`}
+                          ></div>
+                          <div className="orderInfo">
+                            <div className="status">{status.type}</div>
+                            <div className="date">
+                              {status.date
+                                ? dateFormat(
+                                    status.date,
+                                    "mmmm dS, yyyy, h:MM:ss TT"
+                                  )
+                                : null}
+                            </div>
+                          </div>
                         </div>
-                      </div>
-                      <div className="orderStatus">
-                        <div className="point"></div>
-                        <div className="orderInfo">
-                          <div className="status">Packed</div>
-                          <div className="date">Fri, 2021</div>
-                        </div>
-                      </div>
-                      <div className="orderStatus">
-                        <div className="point"></div>
-                        <div className="orderInfo">
-                          <div className="status">Shipped</div>
-                          <div className="date">Fri, 2021</div>
-                        </div>
-                      </div>
-                      <div className="orderStatus">
-                        <div className="point"></div>
-                        <div className="orderInfo">
-                          <div className="status">Delivered</div>
-                          <div className="date">Fri, 2021</div>
-                        </div>
-                      </div>
+                      ))}
                     </div>
                   </div>
                 </Col>

@@ -1,6 +1,7 @@
 import React from "react";
 import { Modal, Button } from "react-bootstrap";
 import "./style.css";
+import { Link } from "react-router-dom";
 
 function NewModal(props) {
   return (
@@ -29,7 +30,7 @@ function NewModal(props) {
           </Button>
           <div>
             <p>
-              Don't have an account? <a href="#signup">Signup Now!</a>
+              Don't have an account? <Link to="/signupuser">Signup Now!</Link>
             </p>
           </div>
           {/* <span>{props.footerText}</span> */}

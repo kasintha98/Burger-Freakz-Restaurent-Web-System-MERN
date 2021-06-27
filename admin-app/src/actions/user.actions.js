@@ -9,7 +9,7 @@ export const signup = (user) => {
       ...user,
     });
 
-    //if respond is 200 (user successfully login)
+    //if respond is 201 (user successfully signup)
     if (res.status === 201) {
       const { message } = res.data;
 

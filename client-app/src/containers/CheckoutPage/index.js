@@ -127,13 +127,13 @@ export default function CheckoutPage() {
     return (
       <div>
         <Header></Header>
-        <Container style={{ marginTop: "120px" }}>
-          Thank you , You Details.
-          {`Address: ${selectedAddress.addressNew} Name: ${
-            auth.user.fullName
-          } Contact: ${auth.user.contactNumber} Items: ${JSON.stringify(
-            cart.cartItems
-          )} Email: ${auth.user.email}`}
+        <Container style={{ marginTop: "120px", marginBottom: "300px" }}>
+          <div class="alert alert-success text-center" role="alert">
+            <h4>
+              Thank You! <br></br>
+              You Have Successfully Placed Your Order!
+            </h4>
+          </div>
         </Container>
         <Footer></Footer>
       </div>
