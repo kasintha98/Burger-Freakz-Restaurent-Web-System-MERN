@@ -52,7 +52,10 @@ export const signup = (user) => {
           },
         });
       } else {
-        dispatch({ type: authConstants.SIGNUP_FAILURE });
+        dispatch({
+          type: authConstants.SIGNUP_FAILURE,
+          payload: { error: "Failed to login!" },
+        });
       }
     } catch (error) {
       console.log(error);

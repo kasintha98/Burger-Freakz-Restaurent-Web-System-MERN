@@ -56,6 +56,7 @@ function Orders(props) {
                         displayType={"text"}
                         thousandSeparator={true}
                         prefix={"Rs. "}
+                        suffix={".00"}
                       />
                     </td>
                     <td>

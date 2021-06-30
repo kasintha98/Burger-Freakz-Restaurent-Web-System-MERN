@@ -23,6 +23,7 @@ export default function Header(props) {
   const [loginModal, setLoginModal] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState();
 
   const auth = useSelector((state) => state.auth);
   const cart = useSelector((state) => state.cart);
@@ -30,7 +31,12 @@ export default function Header(props) {
   const dispatch = useDispatch();
 
   const userLogin = () => {
-    dispatch(login({ email, password }));
+    try {
+      dispatch(login({ email, password }));
+      console.log(auth);
+    } catch (error) {
+      auth.error && setError(auth.error);
+    }
   };
 
   const logout = () => {
@@ -172,6 +178,9 @@ export default function Header(props) {
           setLoginModal(false);
         }}
       >
+        {error ? (
+          <div style={{ color: "red", fontSize: 12 }}>{auth.error}</div>
+        ) : null}
         <Input
           value={email}
           onChange={(e) => {

@@ -6,6 +6,8 @@ import Footer from "../../components/Footer";
 import { Row, Col, Container, Card, Button, Table } from "react-bootstrap";
 import CurrencyFormat from "react-currency-format";
 
+var dateFormat = require("dateformat");
+
 export default function OrderDetailsPage(props) {
   const dispatch = useDispatch();
   const orderDetails = useSelector((state) => state.user.orderDetails);
@@ -38,6 +40,7 @@ export default function OrderDetailsPage(props) {
                     displayType={"text"}
                     thousandSeparator={true}
                     prefix={"Rs. "}
+                    suffix={".00"}
                   />
                 </Col>
               </Row>
@@ -71,7 +74,35 @@ export default function OrderDetailsPage(props) {
                         ? "Cash On Delivery"
                         : orderDetails.paymentType}
                     </td>
-                    <td>Shipped</td>
+                    <td>
+                      {orderDetails.orderStatus.map((status) => (
+                        <Row>
+                          <Col sm={4}>{status.type}</Col>
+                          <Col sm={2}>
+                            {status.isCompleted ? (
+                              <i
+                                className="fa fa-check"
+                                style={{ color: "green" }}
+                              ></i>
+                            ) : (
+                              <div
+                                class="spinner-border text-warning spinner-border-sm"
+                                role="status"
+                                style={{}}
+                              ></div>
+                            )}
+                          </Col>
+                          <Col style={{ fontSize: "12px" }} sm={6}>
+                            {status.date
+                              ? dateFormat(
+                                  status.date,
+                                  "mm-dd-yyyy, h:MM:ss TT"
+                                )
+                              : null}
+                          </Col>
+                        </Row>
+                      ))}
+                    </td>
                   </tr>
                 </tbody>
               </Table>

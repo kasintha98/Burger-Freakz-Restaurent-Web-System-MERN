@@ -18,6 +18,7 @@ export default function SignupPage() {
   const [contactNumber, setContactNumberNumber] = useState("");
   const [nic, setNicNumber] = useState("");
   const [address, setAddress] = useState("");
+  const [error, setError] = useState("");
 
   const auth = useSelector((state) => state.auth);
 
@@ -39,6 +40,10 @@ export default function SignupPage() {
     };
 
     dispatch(signup(user));
+
+    /* if (auth.error) {
+      return;
+    } */
   };
 
   return (
@@ -57,6 +62,12 @@ export default function SignupPage() {
                 </Col>
                 <Col>
                   <Row>
+                    {/*  {auth.error && (
+                      <div style={{ color: "red", fontSize: 12 }}>
+                        {auth.error}
+                      </div>
+                    )} */}
+
                     <Col>
                       <Input
                         value={firstName}

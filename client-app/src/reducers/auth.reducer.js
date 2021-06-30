@@ -32,6 +32,7 @@ export default (state = initState, action) => {
       state = {
         ...state,
         authenticating: true,
+        error: null,
       };
       break;
     case authConstants.LOGIN_SUCCESS:
@@ -41,6 +42,15 @@ export default (state = initState, action) => {
         token: action.payload.token,
         authenticate: true,
         authenticating: false,
+        error: null,
+      };
+      break;
+    case authConstants.LOGIN_FAILURE:
+      state = {
+        ...state,
+        authenticate: false,
+        authenticating: false,
+        error: action.payload.error,
       };
       break;
     case authConstants.LOGOUT_REQUEST:
@@ -60,6 +70,12 @@ export default (state = initState, action) => {
         ...state,
         error: action.payload.error,
         loading: false,
+      };
+      break;
+    case authConstants.SIGNUP_FAILURE:
+      state = {
+        ...state,
+        error: action.payload.error,
       };
       break;
   }
