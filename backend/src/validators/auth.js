@@ -43,12 +43,12 @@ exports.validateSigninRequest = [
 
 //checking validation results
 exports.isRequestValidated = (req, res, next) => {
-  //storing validation errors from the request in an array and shoing it
+  //storing validation errors from the request in an array and showing it
   const errors = validationResult(req);
 
   if (errors.array().length > 0) {
     //if errors exists in the errors array showing them
-    return res.status(400).json({ error: errors.array()[0].msg });
+    return res.status(400).json({ errormsg: errors.array()[0].msg });
   }
   next();
 };

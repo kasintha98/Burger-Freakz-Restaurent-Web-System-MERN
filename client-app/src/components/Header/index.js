@@ -33,9 +33,9 @@ export default function Header(props) {
   const userLogin = () => {
     try {
       dispatch(login({ email, password }));
-      console.log(auth);
+      console.log({ auth: auth });
     } catch (error) {
-      auth.error && setError(auth.error);
+      console.log({ error: error.response.data });
     }
   };
 

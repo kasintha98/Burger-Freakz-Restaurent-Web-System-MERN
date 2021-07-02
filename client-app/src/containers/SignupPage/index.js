@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useForm } from "react-hook-form";
 import { signup } from "../../actions";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
@@ -28,6 +29,11 @@ export default function SignupPage() {
   const userSignup = (e) => {
     e.preventDefault();
 
+    if (firstName == "") {
+      alert("Empty first name");
+      return;
+    }
+
     const user = {
       firstName,
       lastName,
@@ -40,10 +46,6 @@ export default function SignupPage() {
     };
 
     dispatch(signup(user));
-
-    /* if (auth.error) {
-      return;
-    } */
   };
 
   return (
@@ -62,9 +64,9 @@ export default function SignupPage() {
                 </Col>
                 <Col>
                   <Row>
-                    {/*  {auth.error && (
+                    {/*  {auth.errormsg && (
                       <div style={{ color: "red", fontSize: 12 }}>
-                        {auth.error}
+                        {auth.errormsg}
                       </div>
                     )} */}
 

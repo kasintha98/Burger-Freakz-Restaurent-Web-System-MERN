@@ -23,9 +23,10 @@ export const login = (user) => {
       });
     } else {
       if (res.status === 400) {
+        console.log(res);
         dispatch({
           type: authConstants.LOGIN_FAILURE,
-          payload: { error: res.data.error },
+          payload: { errormsg: res.data.errormsg },
         });
       }
     }
@@ -54,7 +55,7 @@ export const signup = (user) => {
       } else {
         dispatch({
           type: authConstants.SIGNUP_FAILURE,
-          payload: { error: "Failed to login!" },
+          payload: { errormsg: res.data.errormsg },
         });
       }
     } catch (error) {
@@ -79,7 +80,7 @@ export const isUserLoggedIn = () => {
     } else {
       dispatch({
         type: authConstants.LOGIN_FAILURE,
-        payload: { error: "Failed to login!" },
+        payload: { error: "Failed to login (2)!" },
       });
     }
   };
