@@ -1,13 +1,6 @@
 import React, { useEffect } from "react";
 import Layout from "../../components/Layouts";
-import {
-  Container,
-  Row,
-  Col,
-  Button,
-  Table,
-  ButtonGroup,
-} from "react-bootstrap";
+import { Table } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { getEmployees } from "../../actions";
 
