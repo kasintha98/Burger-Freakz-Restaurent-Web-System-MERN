@@ -6,6 +6,18 @@ const initState = {
   error: null,
 };
 
+const buildNewInventory = (inventory, inventoryOne) => {
+  return [
+    ...inventory,
+    {
+      _id: inventoryOne._id,
+      name: inventoryOne.name,
+      qty: inventoryOne.qty,
+      description: inventoryOne.description,
+    },
+  ];
+};
+
 export default (state = initState, action) => {
   switch (action.type) {
     case inventoryConstants.ADD_INVENTORY_REQUEST:
@@ -15,9 +27,15 @@ export default (state = initState, action) => {
       };
       break;
     case inventoryConstants.ADD_INVENTORY_SUCCESS:
+      const inventoryOne = action.payload.inventory;
+      const updatedInventories = buildNewInventory(
+        state.inventory,
+        inventoryOne
+      );
+
       state = {
         ...state,
-        inventory: action.payload.inventory,
+        inventory: updatedInventories,
         loading: false,
       };
       break;

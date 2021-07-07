@@ -7,7 +7,7 @@ import NewModal from "../../components/UI/Modal";
 import Input from "../../components/UI/Input";
 
 export default function Inventory(props) {
-  const inventory = useSelector((state) => state.inventory.inventory);
+  const inventory = useSelector((state) => state.inventory);
 
   const [show, setShow] = useState(false);
   const [name, setName] = useState("");
@@ -46,8 +46,6 @@ export default function Inventory(props) {
     }
 
     dispatch(addInventory(inventoryObj));
-
-    window.location.reload();
 
     setName("");
     setDescription("");
@@ -145,33 +143,41 @@ export default function Inventory(props) {
 
   return (
     <Layout sidebar>
-      <Row>
-        <Col md={12}>
-          <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <h3>Inventory</h3>
-            <Button
-              variant="dark"
-              onClick={handleShow}
-              style={{ marginTop: "5px" }}
-            >
-              Add
-            </Button>
-          </div>
-        </Col>
-      </Row>
-      <Table responsive>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Quantity</th>
-            <th>Description</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        {renderInventory(inventory)}
-      </Table>
-      {renderInventoryModal()}
-      {renderDeleteInventoryModal()}
+      {inventory.loading ? (
+        <div class="d-flex justify-content-center">
+          <div class="spinner-border text-primary" role="status"></div>
+        </div>
+      ) : (
+        <>
+          <Row>
+            <Col md={12}>
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <h3>Inventory</h3>
+                <Button
+                  variant="dark"
+                  onClick={handleShow}
+                  style={{ marginTop: "5px" }}
+                >
+                  Add
+                </Button>
+              </div>
+            </Col>
+          </Row>
+          <Table responsive>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Quantity</th>
+                <th>Description</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            {renderInventory(inventory.inventory)}
+          </Table>
+          {renderInventoryModal()}
+          {renderDeleteInventoryModal()}
+        </>
+      )}
     </Layout>
   );
 }

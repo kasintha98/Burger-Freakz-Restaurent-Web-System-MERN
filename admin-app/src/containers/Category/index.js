@@ -43,11 +43,6 @@ function Category(props) {
 
   const [show, setShow] = useState(false);
 
-  //category is loading display loading spinner
-  if (category.loading) {
-    return <div className="spinner-border text-primary" role="status"></div>;
-  }
-
   //adding a new category from user entered form data. Those formdata pass into the addCategory() function in actions
   const addNewCategory = () => {
     const form = new FormData();
@@ -374,42 +369,52 @@ function Category(props) {
 
   return (
     <Layout sidebar>
-      <Container>
-        <Row>
-          <Col md={12}>
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
-              <h3>Categories</h3>
-              <Button
-                variant="dark"
-                onClick={handleShow}
-                style={{ marginTop: "5px" }}
-              >
-                Add
-              </Button>
-            </div>
-          </Col>
-        </Row>
-        <Row>
-          <Col md={12}>
-            <Table responsive="sm">
-              <thead>
-                <tr>
-                  <th>Image</th>
-                  <th>Name</th>
-                  <th>Description</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>{renderCategories(category.categories)}</tbody>
-            </Table>
-            ;
-          </Col>
-        </Row>
-      </Container>
-      {renderAddCategoriesModal()}
-      {renderUpdateCategoriesModal()}
-      {renderDeleteCategoryModal()}
-      {renderCategoryDetailsModal()}
+      {category.loading ? (
+        <div class="d-flex justify-content-center">
+          <div class="spinner-border text-primary" role="status"></div>
+        </div>
+      ) : (
+        <>
+          <Container>
+            <Row>
+              <Col md={12}>
+                <div
+                  style={{ display: "flex", justifyContent: "space-between" }}
+                >
+                  <h3>Categories</h3>
+                  <Button
+                    variant="dark"
+                    onClick={handleShow}
+                    style={{ marginTop: "5px" }}
+                  >
+                    Add
+                  </Button>
+                </div>
+              </Col>
+            </Row>
+            <Row>
+              <Col md={12}>
+                <Table responsive="sm">
+                  <thead>
+                    <tr>
+                      <th>Image</th>
+                      <th>Name</th>
+                      <th>Description</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>{renderCategories(category.categories)}</tbody>
+                </Table>
+                ;
+              </Col>
+            </Row>
+          </Container>
+          {renderAddCategoriesModal()}
+          {renderUpdateCategoriesModal()}
+          {renderDeleteCategoryModal()}
+          {renderCategoryDetailsModal()}
+        </>
+      )}
     </Layout>
   );
 }

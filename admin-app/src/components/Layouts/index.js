@@ -23,43 +23,53 @@ function Layout(props) {
                     &nbsp; Home
                   </NavLink>
                 </li>
-                <li>
-                  <NavLink exact to={"/employee"}>
-                    <i class="fa fa-user"></i>
-                    &nbsp; Employee Users
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink to={"/categories"}>
-                    <i class="fa fa-cubes"></i>
-                    &nbsp; Categories
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink to={"/products"}>
-                    <i class="fa fa-cutlery"></i>
-                    &nbsp; Products
-                  </NavLink>
-                </li>
+                {auth.user.role === "admin" || auth.user.role === "manager" ? (
+                  <li>
+                    <NavLink exact to={"/employee"}>
+                      <i class="fa fa-user"></i>
+                      &nbsp; Employee Users
+                    </NavLink>
+                  </li>
+                ) : null}
+                {auth.user.role === "admin" || auth.user.role === "manager" ? (
+                  <li>
+                    <NavLink to={"/categories"}>
+                      <i class="fa fa-cubes"></i>
+                      &nbsp; Categories
+                    </NavLink>
+                  </li>
+                ) : null}
+                {auth.user.role === "admin" || auth.user.role === "manager" ? (
+                  <li>
+                    <NavLink to={"/products"}>
+                      <i class="fa fa-cutlery"></i>
+                      &nbsp; Products
+                    </NavLink>
+                  </li>
+                ) : null}
                 <li>
                   <NavLink to={"/orders"}>
                     <i class="fa fa-motorcycle"></i>
                     &nbsp; Orders
                   </NavLink>
                 </li>
-                <li>
-                  <NavLink to={"/reports"}>
-                    <i class="fa fa-pie-chart"></i>
-                    &nbsp; Reports
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink to={"/inventory"}>
-                    <i class="fa fa-suitcase"></i>
-                    &nbsp; Inventory
-                  </NavLink>
-                </li>
-                {auth.user.role === "admin" ? (
+                {auth.user.role === "admin" || auth.user.role === "manager" ? (
+                  <li>
+                    <NavLink to={"/reports"}>
+                      <i class="fa fa-pie-chart"></i>
+                      &nbsp; Reports
+                    </NavLink>
+                  </li>
+                ) : null}
+                {auth.user.role !== "deliveryrider" ? (
+                  <li>
+                    <NavLink to={"/inventory"}>
+                      <i class="fa fa-suitcase"></i>
+                      &nbsp; Inventory
+                    </NavLink>
+                  </li>
+                ) : null}
+                {auth.user.role === "admin" || auth.user.role === "manager" ? (
                   <li>
                     <NavLink to={"/purchases"}>
                       <i class="fa fa-money"></i>
