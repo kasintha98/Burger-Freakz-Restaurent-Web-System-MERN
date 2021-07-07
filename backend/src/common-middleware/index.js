@@ -27,7 +27,7 @@ exports.userMiddleware = (req, res, next) => {
 
 //checking if the user is a admin or not to do the actions
 exports.adminMiddleware = (req, res, next) => {
-  if (req.user.role !== "admin") {
+  if (req.user.role == "user") {
     return res
       .status(400)
       .json({ message: "Access denied! Only admins can access!" });

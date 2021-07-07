@@ -21,6 +21,7 @@ exports.signup = (req, res) => {
       password,
       contactNumber,
       address,
+      role,
     } = req.body;
 
     const hash_password = await bcrypt.hash(password, 10);
@@ -35,7 +36,7 @@ exports.signup = (req, res) => {
       hash_password,
       contactNumber,
       address,
-      role: "admin",
+      role,
     });
 
     _user.save((err, data) => {
@@ -58,7 +59,7 @@ exports.signin = (req, res) => {
     if (user) {
       const isPassword = await user.authenticate(req.body.password);
 
-      if (isPassword && user.role === "admin") {
+      if (isPassword && user.role !== "user") {
         //making a token using jwt if user exists
         const token = jwt.sign(
           { _id: user._id, role: user.role },

@@ -4,8 +4,11 @@ import { Col, Container, Row } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
 import "./style.css";
 import Footer from "../Footer";
+import { useSelector } from "react-redux";
 
 function Layout(props) {
+  const auth = useSelector((state) => state.auth);
+
   return (
     <div>
       <Header></Header>
@@ -56,12 +59,14 @@ function Layout(props) {
                     &nbsp; Inventory
                   </NavLink>
                 </li>
-                <li>
-                  <NavLink to={"/purchases"}>
-                    <i class="fa fa-money"></i>
-                    &nbsp; Purchases
-                  </NavLink>
-                </li>
+                {auth.user.role === "admin" ? (
+                  <li>
+                    <NavLink to={"/purchases"}>
+                      <i class="fa fa-money"></i>
+                      &nbsp; Purchases
+                    </NavLink>
+                  </li>
+                ) : null}
               </ul>
             </Col>
             <Col md={10} style={{ marginLeft: "auto", padding: "60px" }}>
