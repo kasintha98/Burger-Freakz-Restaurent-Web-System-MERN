@@ -14,6 +14,7 @@ export default function PriceDetails(props) {
               displayType={"text"}
               thousandSeparator={true}
               prefix={"Rs. "}
+              suffix={".00"}
             />
           </Card.Title>
           <Card.Title>
@@ -23,6 +24,7 @@ export default function PriceDetails(props) {
               displayType={"text"}
               thousandSeparator={true}
               prefix={"Rs. "}
+              suffix={".00"}
             />
           </Card.Title>
           <Card.Title style={{ color: "red", fontWeight: "bold" }}>
@@ -32,6 +34,7 @@ export default function PriceDetails(props) {
               displayType={"text"}
               thousandSeparator={true}
               prefix={"Rs. "}
+              suffix={".00"}
             />
           </Card.Title>
           <Card.Title style={{ color: "green", fontWeight: "bold" }}>
@@ -41,6 +44,7 @@ export default function PriceDetails(props) {
               displayType={"text"}
               thousandSeparator={true}
               prefix={"Rs. "}
+              suffix={".00"}
             />
           </Card.Title>
         </Card.Body>

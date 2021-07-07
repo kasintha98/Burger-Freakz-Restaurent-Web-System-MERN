@@ -50,6 +50,7 @@ export default function ProductListPage(props) {
                       displayType={"text"}
                       thousandSeparator={true}
                       prefix={"Rs. "}
+                      suffix={".00"}
                     />
                   </h4>
                 </Card.Text>

@@ -79,6 +79,7 @@ export default function ProductPage(props) {
                 displayType={"text"}
                 thousandSeparator={true}
                 prefix={"Rs. "}
+                suffix={".00"}
               />
             </h4>
             <br></br>
@@ -134,6 +135,7 @@ export default function ProductPage(props) {
                 displayType={"text"}
                 thousandSeparator={true}
                 prefix={"Rs. "}
+                suffix={".00"}
               />
             </h4>
             <br></br>
@@ -146,6 +148,7 @@ export default function ProductPage(props) {
                 displayType={"text"}
                 thousandSeparator={true}
                 prefix={"Rs. "}
+                suffix={".00"}
               />
             </h4>
             <br></br>
@@ -159,6 +162,7 @@ export default function ProductPage(props) {
                     displayType={"text"}
                     thousandSeparator={true}
                     prefix={"Rs. "}
+                    suffix={".00"}
                   />{" "}
                   Off!
                 </div>
@@ -181,6 +185,7 @@ export default function ProductPage(props) {
                 displayType={"text"}
                 thousandSeparator={true}
                 prefix={"Rs. "}
+                suffix={".00"}
               />
             </h4>
             <br></br>

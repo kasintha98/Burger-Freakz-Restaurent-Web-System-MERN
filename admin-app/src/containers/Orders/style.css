@@ -41,3 +41,8 @@
   top: -26px;
   transform: translateX(-50%);
 }
+
+.date {
+  padding-top: 20px;
+  width: 100px;
+}

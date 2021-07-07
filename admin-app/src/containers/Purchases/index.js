@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getPurchase, addPurchase, deletePurchase } from "../../actions";
 import NewModal from "../../components/UI/Modal";
 import Input from "../../components/UI/Input";
+import CurrencyFormat from "react-currency-format";
 
 export default function Purchases(props) {
   const purchase = useSelector((state) => state.purchase);
@@ -88,7 +89,17 @@ export default function Purchases(props) {
             <tr>
               <td>{item.title}</td>
               <td>{item.qty}</td>
-              <td>{item.unitPrice}</td>
+              <td>
+                {
+                  <CurrencyFormat
+                    value={item.unitPrice}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"Rs. "}
+                    suffix={".00"}
+                  />
+                }
+              </td>
               <td>{item.description}</td>
               <td>
                 <Button variant="success">Edit</Button>

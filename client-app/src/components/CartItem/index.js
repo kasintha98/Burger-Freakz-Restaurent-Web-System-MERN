@@ -49,6 +49,7 @@ const CartItem = (props) => {
           displayType={"text"}
           thousandSeparator={true}
           prefix={"Rs. "}
+          suffix={".00"}
         />
       </td>
       <td className="form-row justify-content-center">
@@ -79,6 +80,7 @@ const CartItem = (props) => {
           displayType={"text"}
           thousandSeparator={true}
           prefix={"Rs. "}
+          suffix={".00"}
         />
         {offer > 0 ? (
           <div style={{ color: "red" }}>
@@ -88,6 +90,7 @@ const CartItem = (props) => {
               displayType={"text"}
               thousandSeparator={true}
               prefix={"Rs. "}
+              suffix={".00"}
             />
           </div>
         ) : null}

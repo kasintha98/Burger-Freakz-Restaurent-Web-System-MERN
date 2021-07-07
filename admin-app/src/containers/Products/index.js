@@ -12,6 +12,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import Input from "../../components/UI/Input";
 import { addProduct, updateProduct, deleteProduct } from "../../actions";
+import CurrencyFormat from "react-currency-format";
 import NewModal from "../../components/UI/Modal";
 import { generatePublicUrl } from "../../urlConfig";
 import "./style.css";
@@ -223,7 +224,17 @@ function Products(props) {
                   </td>
                   <td>{product.name}</td>
                   <td>{product.description}</td>
-                  <td>{product.price}</td>
+                  <td>
+                    {
+                      <CurrencyFormat
+                        value={product.price}
+                        displayType={"text"}
+                        thousandSeparator={true}
+                        prefix={"Rs. "}
+                        suffix={".00"}
+                      />
+                    }
+                  </td>
                   <td>{"rating"}</td>
                   <td>{product.category.name}</td>
                   <td>
