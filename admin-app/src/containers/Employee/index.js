@@ -1,13 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
+import BootstrapTable from "react-bootstrap-table-next";
+import filterFactory, {
+  textFilter,
+  selectFilter,
+} from "react-bootstrap-table2-filter";
 import Layout from "../../components/Layouts";
-import { Table, Container, Row, Col, Form } from "react-bootstrap";
+import { Container, Row, Col, Form } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { getEmployees } from "../../actions";
 
 export default function Employee(props) {
   const employees = useSelector((state) => state.employees.employees);
-
-  const [filter, setFilter] = useState("all");
 
   const dispatch = useDispatch();
 
@@ -15,93 +18,87 @@ export default function Employee(props) {
     dispatch(getEmployees());
   }, []);
 
-  const renderEmployees = (emp) => {
-    return (
-      <tbody>
-        {emp.map((employee) => (
-          <tr>
-            {filter === "all" ? (
-              <>
-                <td>{employee.firstName}</td>
-                <td>{employee.lastName}</td>
-                <td>{employee.role}</td>
-                <td>{employee.nic}</td>
-                <td>{employee.gender}</td>
-                <td>{employee.email}</td>
-                <td>{employee.contactNumber}</td>
-                <td>{employee.address}</td>
-              </>
-            ) : filter === "employees" && employee.role !== "user" ? (
-              <>
-                <td>{employee.firstName}</td>
-                <td>{employee.lastName}</td>
-                <td>{employee.role}</td>
-                <td>{employee.nic}</td>
-                <td>{employee.gender}</td>
-                <td>{employee.email}</td>
-                <td>{employee.contactNumber}</td>
-                <td>{employee.address}</td>
-              </>
-            ) : filter === "customers" && employee.role === "user" ? (
-              <>
-                <td>{employee.firstName}</td>
-                <td>{employee.lastName}</td>
-                <td>{employee.role}</td>
-                <td>{employee.nic}</td>
-                <td>{employee.gender}</td>
-                <td>{employee.email}</td>
-                <td>{employee.contactNumber}</td>
-                <td>{employee.address}</td>
-              </>
-            ) : null}
-          </tr>
-        ))}
-      </tbody>
-    );
+  const selectOptionsGender = {
+    male: "Male",
+    female: "Female",
+    other: "Other",
   };
+
+  const selectOptionsRole = {
+    user: "Customer",
+    admin: "Admin",
+    manager: "Manager",
+    chef: "Chef",
+    deliveryrider: "Delivery Rider",
+  };
+
+  const columns = [
+    {
+      dataField: "firstName",
+      text: "First Name",
+      filter: textFilter(),
+    },
+    {
+      dataField: "lastName",
+      text: "Last Name",
+      filter: textFilter(),
+    },
+    {
+      dataField: "role",
+      text: "Role",
+      formatter: (cell) => selectOptionsRole[cell],
+      filter: selectFilter({
+        options: selectOptionsRole,
+      }),
+    },
+    {
+      dataField: "nic",
+      text: "NIC",
+      filter: textFilter(),
+    },
+    {
+      dataField: "gender",
+      text: "Gender",
+      formatter: (cell) => selectOptionsGender[cell],
+      filter: selectFilter({
+        options: selectOptionsGender,
+      }),
+    },
+    {
+      dataField: "email",
+      text: "Email",
+      filter: textFilter(),
+    },
+    {
+      dataField: "contactNumber",
+      text: "Contact Number",
+      filter: textFilter(),
+    },
+    {
+      dataField: "address",
+      text: "Address",
+      filter: textFilter(),
+    },
+  ];
 
   return (
     <Layout sidebar>
       <Container>
         <Row>
           <Col md={12}>
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <div className="text-center">
               <h3>Employee Users &amp; Customers</h3>
-              <Form>
-                <Form.Group>
-                  <Form.Label>Filter</Form.Label>
-                  <select
-                    className="form-control"
-                    onChange={(e) => {
-                      setFilter(e.target.value);
-                    }}
-                  >
-                    <option value="all">All</option>
-                    <option value="employees">Employees</option>
-                    <option value="customers">Customers</option>
-                  </select>
-                </Form.Group>
-              </Form>
             </div>
           </Col>
         </Row>
         <Row>
           <Col md={12}>
-            <Table responsive>
-              <thead>
-                <tr>
-                  <th>First Name</th>
-                  <th>Last Name</th>
-                  <th>Role</th>
-                  <th>NIC</th>
-                  <th>Gender</th>
-                  <th>Email</th>
-                  <th>Contact Number</th>
-                  <th>Address</th>
-                </tr>
-              </thead>
-              {renderEmployees(employees)}
-            </Table>
+            <BootstrapTable
+              keyField="id"
+              data={employees}
+              columns={columns}
+              filter={filterFactory()}
+            />
           </Col>
         </Row>
       </Container>

@@ -52,6 +52,18 @@ exports.getOrders = (req, res) => {
     });
 };
 
+exports.searchOrders = (req, res) => {
+  Order.find({ _id: req.body._id })
+    .select("_id paymentStatus items")
+    .populate("items.productId", "_id name productImages")
+    .exec((err, orders) => {
+      if (err) return res.status(200).json({ err });
+      if (orders) {
+        res.status(200).json({ orders });
+      }
+    });
+};
+
 exports.getOrder = (req, res) => {
   Order.findOne({ _id: req.body.orderId })
     .populate("items.productId", "_id name productImages")
