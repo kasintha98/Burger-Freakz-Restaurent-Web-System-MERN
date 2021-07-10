@@ -1,7 +1,12 @@
 const mongoose = require("mongoose");
+const ID = require("nodejs-unique-numeric-id-generator");
 
 const orderSchema = new mongoose.Schema(
   {
+    _id: {
+      type: String,
+      default: ID.generate(new Date().toJSON()),
+    },
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
