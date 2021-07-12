@@ -67,6 +67,6 @@ const productSchema = new Schema(
   { timestamps: true } //automatically stores date created/modified
 );
 
-const Product = mongoose.model("Product", productSchema); //User mean model name. we can use any name like variable name
+const Product = mongoose.model("Product", productSchema); //Product mean model name. we can use any name like variable name
 
 module.exports = Product;

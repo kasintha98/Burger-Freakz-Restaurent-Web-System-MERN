@@ -3,7 +3,7 @@ import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import { Row, Col, Container, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { getSpecificProductBySlug } from "../../actions";
+import { getSpecificProductBySlug, getFeedbacks } from "../../actions";
 import { generatePublicUrl } from "../../urlConfig";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from "react-responsive-carousel";
@@ -16,8 +16,10 @@ import Feedback from "../../components/Feedback";
 export default function ProductPage(props) {
   const [isLoading, setLoading] = useState(true);
   const [qtyInput, setQtyInput] = useState(1);
+  const [overallRate, setOverallRate] = useState(0);
 
   const { product } = useSelector((state) => state.product);
+  const { feedback } = useSelector((state) => state.feedback);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -28,7 +30,12 @@ export default function ProductPage(props) {
     setLoading(false);
   }, []);
 
-  console.log(product);
+  useEffect(() => {
+    dispatch(getFeedbacks(product._id));
+  }, [product]);
+
+  console.log(product._id);
+  console.log(feedback);
 
   if (isLoading) {
     return <div className="spinner-border text-primary" role="status"></div>;
@@ -56,8 +63,22 @@ export default function ProductPage(props) {
       console.log(qtyInput);
     };
 
+    const calcOverallRate = () => {
+      let ratings = [];
+      if (feedback) {
+        for (let i = 0; i < feedback.length; i++) {
+          ratings.push(feedback[i].rating);
+        }
+        let rate = ratings.reduce((a, b) => a + b, 0) / ratings.length;
+        return rate;
+      } else {
+        return 0;
+      }
+    };
+
     return (
       <>
+        {console.log(calcOverallRate())}
         <div className="text-center">
           <h2>{product.name}</h2>
         </div>
@@ -86,11 +107,12 @@ export default function ProductPage(props) {
             <h4>
               Rating:{" "}
               <StarRatings
-                rating={4.5}
+                rating={calcOverallRate()}
                 starDimension="25px"
                 starSpacing="5px"
                 starRatedColor="orange"
-              />
+              />{" "}
+              {`(${feedback.length})`}
             </h4>
             <br></br>
             <h4>Description: </h4>
@@ -100,7 +122,7 @@ export default function ProductPage(props) {
             <div className="text-center">
               <h4>Feedbacks</h4>
             </div>
-            <Feedback></Feedback>
+            <Feedback feedbacks={feedback}></Feedback>
           </Col>
           <Col sm={3}>
             <h4>

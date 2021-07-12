@@ -15,6 +15,7 @@ const employeeRoutes = require("./routes/employee");
 const addressRoutes = require("./routes/address");
 const orderRoutes = require("./routes/order");
 const inventoryRoutes = require("./routes/inventory");
+const feedbackRoutes = require("./routes/feedback");
 const purchaseRoutes = require("./routes/purchase");
 const adminOrderRoutes = require("./routes/admin/order.routes");
 const initialDataRoutes = require("./routes/admin/initialData");
@@ -48,6 +49,7 @@ app.use("/api", addressRoutes);
 app.use("/api", orderRoutes);
 app.use("/api", inventoryRoutes);
 app.use("/api", purchaseRoutes);
+app.use("/api", feedbackRoutes);
 app.use("/api", adminOrderRoutes);
 app.use("/api", initialDataRoutes);
 
