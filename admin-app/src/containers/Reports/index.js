@@ -4,6 +4,9 @@ import Layout from "../../components/Layouts";
 import { Row, Col, Button } from "react-bootstrap";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { PowerBIEmbed } from "powerbi-client-react";
+import { models } from "powerbi-client";
+import "./style.css";
 
 export default function Reports(props) {
   const [startDate, setStartDate] = useState(new Date());
@@ -28,7 +31,7 @@ export default function Reports(props) {
 
   return (
     <Layout sidebar>
-      <Row>
+      {/* <Row>
         <Col sm={4}>
           <Row>
             <div className="text-center">
@@ -84,7 +87,51 @@ export default function Reports(props) {
           Generate Report
         </Button>
       </div>
-      {showReport ? <BarChart dates={dates}></BarChart> : null}
+      {showReport ? <BarChart dates={dates}></BarChart> : null} */}
+      <PowerBIEmbed
+        embedConfig={{
+          type: "report", // Supported types: report, dashboard, tile, visual and qna
+          id: "<Report Id>",
+          embedUrl: "<Embed Url>",
+          accessToken: "<Access Token>",
+          tokenType: models.TokenType.Embed,
+          settings: {
+            panes: {
+              filters: {
+                expanded: false,
+                visible: true,
+              },
+            },
+            //background: models.BackgroundType.Transparent,
+          },
+        }}
+        eventHandlers={
+          new Map([
+            [
+              "loaded",
+              function () {
+                console.log("Report loaded");
+              },
+            ],
+            [
+              "rendered",
+              function () {
+                console.log("Report rendered");
+              },
+            ],
+            [
+              "error",
+              function (event) {
+                console.log(event.detail);
+              },
+            ],
+          ])
+        }
+        cssClassName={"Embed-container"}
+        getEmbeddedComponent={(embeddedReport) => {
+          window.report = embeddedReport;
+        }}
+      />
     </Layout>
   );
 }
