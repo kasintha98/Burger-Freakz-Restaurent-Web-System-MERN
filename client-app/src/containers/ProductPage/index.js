@@ -22,6 +22,8 @@ export default function ProductPage(props) {
   const { feedback } = useSelector((state) => state.feedback);
   const dispatch = useDispatch();
 
+  let allRate = 0;
+
   useEffect(() => {
     const { match } = props;
 
@@ -31,8 +33,10 @@ export default function ProductPage(props) {
   }, []);
 
   useEffect(() => {
-    dispatch(getFeedbacks(product._id));
-  }, [product]);
+    if (product._id !== undefined) {
+      dispatch(getFeedbacks(product._id));
+    }
+  }, [product._id]);
 
   console.log(product._id);
   console.log(feedback);
@@ -69,7 +73,10 @@ export default function ProductPage(props) {
         for (let i = 0; i < feedback.length; i++) {
           ratings.push(feedback[i].rating);
         }
-        let rate = ratings.reduce((a, b) => a + b, 0) / ratings.length;
+        let rateO = ratings.reduce((a, b) => a + b, 0) / ratings.length;
+        var rate = Math.round(rateO * 10) / 10;
+        console.log(rate);
+        allRate = rate;
         return rate;
       } else {
         return 0;
@@ -107,7 +114,7 @@ export default function ProductPage(props) {
             <h4>
               Rating:{" "}
               <StarRatings
-                rating={calcOverallRate()}
+                rating={allRate ? allRate : 4.5}
                 starDimension="25px"
                 starSpacing="5px"
                 starRatedColor="orange"
