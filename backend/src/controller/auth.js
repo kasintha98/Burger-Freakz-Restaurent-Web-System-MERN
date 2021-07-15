@@ -1,9 +1,16 @@
 //controllers for client users
 const User = require("../models/user");
 const jwt = require("jsonwebtoken");
+const env = require("dotenv");
 const bcrypt = require("bcrypt");
 const { validationResult } = require("express-validator");
 const shortId = require("shortid");
+const nodemailer = require("nodemailer");
+const sendgridTransport = require("nodemailer-sendgrid-transport");
+
+const transporter = nodemailer.createTransport(
+  sendgridTransport({ auth: { api_key: process.env.EMAILKEY } })
+);
 
 const generateJwtToken = (_id, role) => {
   return jwt.sign({ _id, role }, process.env.JWT_SECRET, {
@@ -62,6 +69,15 @@ exports.signup = (req, res) => {
           fullName,
           role,
         } = user;
+
+        //send a welcome email
+        transporter.sendMail({
+          to: email,
+          from: "no-reply@burger-freakz.com",
+          subject: "Signup Successfull - Burger Freakz",
+          html: "<h1>Welcome To Burger Freakz</h1></br>Hope You Enjoj Our Food!",
+        });
+
         return res.status(201).json({
           token,
           user: {
