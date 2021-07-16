@@ -1,10 +1,13 @@
 import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getOrder } from "../../actions";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
+import Bill from "../../components/Bill";
 import { Row, Col, Container, Card, Button, Table } from "react-bootstrap";
 import CurrencyFormat from "react-currency-format";
+import ReactPDF from "@react-pdf/renderer";
 
 var dateFormat = require("dateformat");
 
@@ -23,10 +26,11 @@ export default function OrderDetailsPage(props) {
     return null;
   }
   console.log(orderDetails);
+
   return (
     <div>
       <Header></Header>
-      <Container style={{ marginTop: "120px" }}>
+      <Container style={{ marginTop: "120px", marginBottom: "100px" }}>
         <Card style={{ width: "100%" }}>
           <Card.Body>
             <Card.Title>
@@ -107,10 +111,13 @@ export default function OrderDetailsPage(props) {
                 </tbody>
               </Table>
             </Card.Text>
-            <Button variant="primary">Download Bill</Button>
+            <Link class="btn btn-primary" to="/bill">
+              Download Bill
+            </Link>
           </Card.Body>
         </Card>
       </Container>
+      <Footer></Footer>
     </div>
   );
 }

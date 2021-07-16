@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Row, Col, Button } from "react-bootstrap";
 import Input from "../Input";
 import { GoogleMap, withScriptjs, withGoogleMap } from "react-google-maps";
@@ -15,6 +15,20 @@ function Map() {
 const WrappedMap = withScriptjs(withGoogleMap(Map));
 
 export default function Contact() {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [msg, setMsg] = useState("");
+
+  const sendMsg = () => {
+    const msgObj = {
+      name,
+      email,
+      msg,
+    };
+
+    console.log(msgObj);
+  };
+
   return (
     <div>
       <div className="text-center">
@@ -39,20 +53,35 @@ export default function Contact() {
             lable="Your Name"
             type="text"
             placeholder="Enter your name..."
+            value={name}
+            onChange={(e) => {
+              setName(e.target.value);
+            }}
           ></Input>
           <Input
             lable="Your Email"
             type="email"
             placeholder="Enter your email..."
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           ></Input>
           <Input
             lable="Tell Us"
             as="textArea"
             placeholder="Enter your message..."
             rows="3"
+            value={msg}
+            onChange={(e) => setMsg(e.target.value)}
           ></Input>
           <div className="text-center">
-            <Button style={{ width: "100%" }}>Contact Us</Button>
+            <Button
+              style={{ width: "100%" }}
+              onClick={() => {
+                sendMsg();
+              }}
+            >
+              Contact Us
+            </Button>
           </div>
 
           <div className="text-center">

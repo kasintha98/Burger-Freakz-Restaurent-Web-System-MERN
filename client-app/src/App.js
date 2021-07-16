@@ -12,6 +12,7 @@ import ProfilePage from "./containers/ProfilePage";
 import OrderPage from "./containers/OrderPage";
 import OrderDetailsPage from "./containers/OrderDetailsPage";
 import SignupPage from "./containers/SignupPage";
+import PdfPage from "./containers/PdfPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -34,6 +35,7 @@ function App() {
         <Switch>
           <Route path="/" exact component={HomePage} />
           <Route path="/cart" component={CartPage} />
+          <Route path="/bill" exact component={PdfPage} />
           <Route path="/checkout" component={CheckoutPage} />
           <Route path="/profile" exact component={ProfilePage} />
           <Route path="/signupuser" exact component={SignupPage} />

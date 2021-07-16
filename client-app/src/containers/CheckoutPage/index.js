@@ -103,6 +103,7 @@ export default function CheckoutPage() {
   useEffect(() => {
     auth.authenticate && dispatch(getAddress());
     auth.authenticate && dispatch(getCartItems());
+    //auth.authenticate && newAddress.push(auth.user.address);
   }, [auth.authenticate]);
 
   useEffect(() => {

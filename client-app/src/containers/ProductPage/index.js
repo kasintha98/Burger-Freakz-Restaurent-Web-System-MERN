@@ -114,7 +114,7 @@ export default function ProductPage(props) {
             <h4>
               Rating:{" "}
               <StarRatings
-                rating={allRate ? allRate : 4.5}
+                rating={allRate ? allRate : 0}
                 starDimension="25px"
                 starSpacing="5px"
                 starRatedColor="orange"
