@@ -22,6 +22,7 @@ function Signup(props) {
   const [password, setPassword] = useState("");
   //initial state of error
   const [error, setError] = useState("");
+  const [passwordRpt, setPasswordRpt] = useState("");
 
   const auth = useSelector((state) => state.auth);
   const user = useSelector((state) => state.user);
@@ -238,6 +239,16 @@ function Signup(props) {
                     value={password}
                     onChange={(e) => {
                       setPassword(e.target.value);
+                    }}
+                  ></Input>
+
+                  <Input
+                    lable="Confirm Password"
+                    type="password"
+                    placeholder="Enter password again"
+                    value={passwordRpt}
+                    onChange={(e) => {
+                      setPasswordRpt(e.target.value);
                     }}
                   ></Input>
                   <Button

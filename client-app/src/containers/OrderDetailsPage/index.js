@@ -1,20 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getOrder } from "../../actions";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import Bill from "../../components/Bill";
-import { Row, Col, Container, Card, Button, Table } from "react-bootstrap";
+import { Row, Col, Container, Card, Table } from "react-bootstrap";
 import CurrencyFormat from "react-currency-format";
-import ReactPDF from "@react-pdf/renderer";
+import { useReactToPrint } from "react-to-print";
 
 var dateFormat = require("dateformat");
 
 export default function OrderDetailsPage(props) {
   const dispatch = useDispatch();
   const orderDetails = useSelector((state) => state.user.orderDetails);
-  //const [orderDetails, setOrderDetails] = "";
 
   console.log({ props });
 
@@ -22,6 +21,11 @@ export default function OrderDetailsPage(props) {
     const payload = { orderId: props.match.params.orderId };
     dispatch(getOrder(payload));
   }, []);
+
+  const componentRef = useRef();
+  const handlePrint = useReactToPrint({
+    content: () => componentRef.current,
+  });
 
   console.log(orderDetails);
 
@@ -110,10 +114,14 @@ export default function OrderDetailsPage(props) {
                   </tbody>
                 </Table>
               </Card.Text>
-              <Link class="btn btn-primary" to="/bill">
-                Download Bill
-              </Link>
             </Card.Body>
+            <Bill
+              orderId={orderDetails._id}
+              address={orderDetails.address.addressNew}
+              items={orderDetails.items}
+              paymentType={orderDetails.paymentType}
+              total={orderDetails.totalAmount}
+            ></Bill>
           </Card>
         ) : (
           <div class="spinner-border text-primary" role="status"></div>
