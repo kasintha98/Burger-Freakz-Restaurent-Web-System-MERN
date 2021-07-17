@@ -33,12 +33,42 @@ export const login = (user) => {
   };
 };
 
+export const addAddressSign = (payload) => {
+  return async (dispatch) => {
+    try {
+      const res = await axios.post("/user/address/create", { payload });
+      dispatch({ type: userConstants.ADD_USER_ADDRESS_REQUEST });
+
+      if (res.status === 201) {
+        console.log(res);
+        const {
+          addressNew: { addressNew },
+        } = res.data;
+        dispatch({
+          type: userConstants.ADD_USER_ADDRESS_SUCCESS,
+          payload: { addressNew },
+        });
+      } else {
+        const { error } = res.data;
+        dispatch({
+          type: userConstants.ADD_USER_ADDRESS_FAILURE,
+          payload: { error },
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
 export const signup = (user) => {
   return async (dispatch) => {
     try {
       dispatch({ type: authConstants.SIGNUP_REQUEST });
       console.log(user);
       const res = await axios.post("/signup", user);
+
+      const { address } = user;
 
       if (res.status === 201) {
         dispatch({ type: authConstants.SIGNUP_SUCCESS });
@@ -52,6 +82,14 @@ export const signup = (user) => {
             user,
           },
         });
+
+        const signAdd = {
+          addressNew: {
+            addressNew: address,
+          },
+        };
+
+        dispatch(addAddressSign(signAdd));
       } else {
         dispatch({
           type: authConstants.SIGNUP_FAILURE,

@@ -8,10 +8,6 @@ import AddressForm from "./AddressForm";
 import PriceDetails from "../../components/PriceDetails";
 import CartPage from "../CartPage";
 
-const CheckoutStep = (props) => {
-  return <div></div>;
-};
-
 export default function CheckoutPage() {
   const user = useSelector((state) => state.user);
   const auth = useSelector((state) => state.auth);
@@ -24,6 +20,23 @@ export default function CheckoutPage() {
   const [paymentOption, setPaymentOption] = useState("");
   const [confirmPayment, setConfirmPayment] = useState(false);
   //user.addressNew.push(auth.user.address);
+
+  /*   const defaultAddress = JSON.parse(
+    JSON.stringify({ _id: auth.user._id, addressNew: auth.user.address })
+  );
+
+
+  if (
+    auth.authenticate &&
+    user.addressNew.filter((e) => e.addressNew === auth.user.address).length ===
+      0
+  ) {
+    user.addressNew.push(defaultAddress);
+    console.log("aaa");
+    console.log(user.addressNew);
+  }
+
+  console.log(auth.user.address); */
 
   const dispatch = useDispatch();
 
@@ -40,7 +53,7 @@ export default function CheckoutPage() {
 
   const selectPayment = (option) => {
     setPaymentOption(option);
-    console.log(paymentOption);
+    console.log(option);
   };
 
   const onAddressSubmit = (adr) => {
@@ -103,17 +116,14 @@ export default function CheckoutPage() {
   useEffect(() => {
     auth.authenticate && dispatch(getAddress());
     auth.authenticate && dispatch(getCartItems());
-    //auth.authenticate && newAddress.push(auth.user.address);
+
+    /* if (auth.authenticate && !newAddress.includes(auth.user.address)) {
+      newAddress.push(auth.user.address);
+    } */
   }, [auth.authenticate]);
 
   useEffect(() => {
     //pushing default user address to new user addresses
-    if (auth.authenticate) {
-      const defaultAddress = JSON.parse(
-        JSON.stringify({ _id: auth.user._id, addressNew: auth.user.address })
-      );
-      user.addressNew.push(defaultAddress);
-    }
 
     const addressNew = user.addressNew.map((adr) => ({
       ...adr,

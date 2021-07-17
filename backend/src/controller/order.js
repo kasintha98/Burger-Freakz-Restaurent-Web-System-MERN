@@ -73,10 +73,13 @@ exports.getOrder = (req, res) => {
       if (order) {
         Address.findOne({ user: req.user._id }).exec((err, address) => {
           if (err) return res.status(400).json({ err });
-          order.address = address.addressNew.find(
-            (adr) => adr._id.toString() == order.addressId.toString()
-          );
-          res.status(200).json({ order });
+
+          if (address) {
+            order.address = address.addressNew.find(
+              (adr) => adr._id.toString() == order.addressId.toString()
+            );
+            res.status(200).json({ order });
+          }
         });
       }
     });

@@ -45,6 +45,13 @@ export default function SignupPage() {
       address,
     };
 
+    const payload = {
+      addressNew: {
+        address,
+      },
+    };
+    console.log(payload);
+
     dispatch(signup(user));
   };
 

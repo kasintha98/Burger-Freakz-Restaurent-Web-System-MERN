@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getOrder } from "../../actions";
@@ -14,108 +14,110 @@ var dateFormat = require("dateformat");
 export default function OrderDetailsPage(props) {
   const dispatch = useDispatch();
   const orderDetails = useSelector((state) => state.user.orderDetails);
+  //const [orderDetails, setOrderDetails] = "";
+
+  console.log({ props });
 
   useEffect(() => {
-    console.log({ props });
     const payload = { orderId: props.match.params.orderId };
-
     dispatch(getOrder(payload));
   }, []);
 
-  if (!(orderDetails && orderDetails.address)) {
-    return null;
-  }
   console.log(orderDetails);
 
   return (
     <div>
       <Header></Header>
       <Container style={{ marginTop: "120px", marginBottom: "100px" }}>
-        <Card style={{ width: "100%" }}>
-          <Card.Body>
-            <Card.Title>
-              <Row>
-                <Col>Order Id : {orderDetails._id}</Col>
-                <Col>
-                  Grand Total : &nbsp;
-                  <CurrencyFormat
-                    style={{ color: "red", fontWeight: "bold" }}
-                    value={orderDetails.totalAmount}
-                    displayType={"text"}
-                    thousandSeparator={true}
-                    prefix={"Rs. "}
-                    suffix={".00"}
-                  />
-                </Col>
-              </Row>
-            </Card.Title>
-            <Card.Text>
-              <Table striped bordered hover>
-                <thead>
-                  <tr>
-                    <th>Delivery Address</th>
-                    <th>Order Items</th>
-                    <th>Quantity</th>
-                    <th>Payment Type</th>
-                    <th>Order Status</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>{orderDetails.address.addressNew}</td>
-                    <td>
-                      {orderDetails.items.map((item, index) => (
-                        <p key={index}>{item.productId.name}</p>
-                      ))}
-                    </td>
-                    <td>
-                      {orderDetails.items.map((item, index) => (
-                        <p key={index}>{item.purchasedQty}</p>
-                      ))}
-                    </td>
-                    <td>
-                      {orderDetails.paymentType === "cod"
-                        ? "Cash On Delivery"
-                        : orderDetails.paymentType}
-                    </td>
-                    <td>
-                      {orderDetails.orderStatus.map((status) => (
-                        <Row>
-                          <Col sm={4}>{status.type}</Col>
-                          <Col sm={2}>
-                            {status.isCompleted ? (
-                              <i
-                                className="fa fa-check"
-                                style={{ color: "green" }}
-                              ></i>
-                            ) : (
-                              <div
-                                class="spinner-border text-warning spinner-border-sm"
-                                role="status"
-                                style={{}}
-                              ></div>
-                            )}
-                          </Col>
-                          <Col style={{ fontSize: "12px" }} sm={6}>
-                            {status.date
-                              ? dateFormat(
-                                  status.date,
-                                  "mm-dd-yyyy, h:MM:ss TT"
-                                )
-                              : null}
-                          </Col>
-                        </Row>
-                      ))}
-                    </td>
-                  </tr>
-                </tbody>
-              </Table>
-            </Card.Text>
-            <Link class="btn btn-primary" to="/bill">
-              Download Bill
-            </Link>
-          </Card.Body>
-        </Card>
+        {orderDetails ? (
+          <Card style={{ width: "100%" }}>
+            <Card.Body>
+              <Card.Title>
+                <Row>
+                  <Col>Order Id : {orderDetails._id}</Col>
+                  <Col>
+                    Grand Total : &nbsp;
+                    <CurrencyFormat
+                      style={{ color: "red", fontWeight: "bold" }}
+                      value={orderDetails.totalAmount}
+                      displayType={"text"}
+                      thousandSeparator={true}
+                      prefix={"Rs. "}
+                      suffix={".00"}
+                    />
+                  </Col>
+                </Row>
+              </Card.Title>
+              <Card.Text>
+                <Table striped bordered hover>
+                  <thead>
+                    <tr>
+                      <th>Delivery Address</th>
+                      <th>Order Items</th>
+                      <th>Quantity</th>
+                      <th>Payment Type</th>
+                      <th>Order Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>{orderDetails.address.addressNew}</td>
+                      <td>
+                        {orderDetails.items.map((item, index) => (
+                          <p key={index}>{item.productId.name}</p>
+                        ))}
+                      </td>
+                      <td>
+                        {orderDetails.items.map((item, index) => (
+                          <p key={index}>{item.purchasedQty}</p>
+                        ))}
+                      </td>
+                      <td>
+                        {orderDetails.paymentType === "cod"
+                          ? "Cash On Delivery"
+                          : orderDetails.paymentType}
+                      </td>
+                      <td>
+                        {orderDetails.orderStatus.map((status) => (
+                          <Row>
+                            <Col sm={4}>{status.type}</Col>
+                            <Col sm={2}>
+                              {status.isCompleted ? (
+                                <i
+                                  className="fa fa-check"
+                                  style={{ color: "green" }}
+                                ></i>
+                              ) : (
+                                <div
+                                  class="spinner-border text-warning spinner-border-sm"
+                                  role="status"
+                                  style={{}}
+                                ></div>
+                              )}
+                            </Col>
+                            <Col style={{ fontSize: "12px" }} sm={6}>
+                              {status.date
+                                ? dateFormat(
+                                    status.date,
+                                    "mm-dd-yyyy, h:MM:ss TT"
+                                  )
+                                : null}
+                            </Col>
+                          </Row>
+                        ))}
+                      </td>
+                    </tr>
+                  </tbody>
+                </Table>
+              </Card.Text>
+              <Link class="btn btn-primary" to="/bill">
+                Download Bill
+              </Link>
+            </Card.Body>
+          </Card>
+        ) : (
+          <div class="spinner-border text-primary" role="status"></div>
+        )}
       </Container>
       <Footer></Footer>
     </div>
