@@ -3,9 +3,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { addOrder, getAddress, getCartItems } from "../../actions";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
-import { Row, Col, Container, Button, Form } from "react-bootstrap";
+import { Row, Col, Container, Button, Form, Alert } from "react-bootstrap";
 import AddressForm from "./AddressForm";
 import PriceDetails from "../../components/PriceDetails";
+import Paypal from "../../components/Paypal";
 import CartPage from "../CartPage";
 
 export default function CheckoutPage() {
@@ -18,30 +19,19 @@ export default function CheckoutPage() {
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [orderConfirmation, setOrderConfirmation] = useState(false);
   const [paymentOption, setPaymentOption] = useState("");
+  const [paymentStatus, setPaymentStatus] = useState("");
+  const [paid, setPaid] = useState("");
   const [confirmPayment, setConfirmPayment] = useState(false);
   //user.addressNew.push(auth.user.address);
 
-  /*   const defaultAddress = JSON.parse(
-    JSON.stringify({ _id: auth.user._id, addressNew: auth.user.address })
-  );
-
-
-  if (
-    auth.authenticate &&
-    user.addressNew.filter((e) => e.addressNew === auth.user.address).length ===
-      0
-  ) {
-    user.addressNew.push(defaultAddress);
-    console.log("aaa");
-    console.log(user.addressNew);
-  }
-
-  console.log(auth.user.address); */
+  useEffect(() => {
+    setPaid(localStorage.getItem("paid"));
+  }, [localStorage.getItem("paid")]);
 
   const dispatch = useDispatch();
 
   const selectAddress = (adr) => {
-    //console.log(adr);
+    console.log(adr);
     const updatedAddress = newAddress.map((ad) =>
       ad._id === adr._id
         ? { ...ad, selected: true }
@@ -100,13 +90,14 @@ export default function CheckoutPage() {
       addressId: selectedAddress._id,
       totalAmount,
       items,
-      paymentStatus: "pending",
-      paymentType: "cod",
+      paymentStatus,
+      paymentType: paymentOption,
     };
 
     console.log(payload);
     dispatch(addOrder(payload));
     setOrderConfirmation(true);
+    localStorage.setItem("paid", null);
   };
 
   /* const onConfirmPayment = () => {
@@ -286,45 +277,80 @@ export default function CheckoutPage() {
                       </div>
                     </Row>
                     <br></br>
-                    <Row>
-                      <Col sm={1}>
-                        <div>
-                          <input
-                            name="paymentOption"
-                            type="radio"
-                            value="online"
-                            onClick={() => {
-                              selectPayment("online");
-                            }}
-                          ></input>
-                        </div>
-                      </Col>
-                      <Col sm={11}>
-                        <div>Online payment</div>
-                        {/*  <Button>Confirm Payment Option</Button> */}
-                      </Col>
-                    </Row>
-                    <Row>
-                      <Col sm={1}>
-                        <div>
-                          <input
-                            name="paymentOption"
-                            type="radio"
-                            value="cod"
-                            onClick={() => {
-                              selectPayment("cod");
-                            }}
-                          ></input>
-                        </div>
-                      </Col>
-                      <Col sm={11}>
-                        <div>Cash On Delivery</div>
-                        {/* <Button onClick={onConfirmPayment}>
+                    {localStorage.getItem("paid") !== "null" ? (
+                      <Alert variant={`success`}>
+                        Online Payment Successfull!
+                      </Alert>
+                    ) : (
+                      <>
+                        <Row>
+                          <Col sm={1}>
+                            <div>
+                              <input
+                                name="paymentOption"
+                                type="radio"
+                                value="online"
+                                onClick={() => {
+                                  selectPayment("online");
+                                  setPaymentStatus("completed");
+                                }}
+                              ></input>
+                            </div>
+                          </Col>
+                          <Col sm={11}>
+                            <div>Online payment</div>
+                            {/*  <Button>Confirm Payment Option</Button> */}
+                          </Col>
+                        </Row>
+                        <Row>
+                          <Col sm={1}>
+                            <div>
+                              <input
+                                name="paymentOption"
+                                type="radio"
+                                value="cod"
+                                onClick={() => {
+                                  selectPayment("cod");
+                                  setPaymentStatus("pending");
+                                }}
+                              ></input>
+                            </div>
+                          </Col>
+                          <Col sm={11}>
+                            <div>Cash On Delivery</div>
+                            {/* <Button onClick={onConfirmPayment}>
                           Confirm Payment Option
                         </Button> */}
-                      </Col>
-                    </Row>
-                    <br></br>
+                          </Col>
+                        </Row>
+                        <br></br>
+                        <Row>
+                          {paymentOption === "online" ? (
+                            <Paypal
+                              totalPrice={Object.keys(cart.cartItems).reduce(
+                                (totalPrice, key, deli) => {
+                                  const { price, qty } = cart.cartItems[key];
+                                  return totalPrice + price * qty;
+                                },
+                                0
+                              )}
+                              distance="10"
+                              offer={Object.keys(cart.cartItems).reduce(
+                                function (offer, key) {
+                                  return (
+                                    offer +
+                                    cart.cartItems[key].offer *
+                                      cart.cartItems[key].qty
+                                  );
+                                },
+                                0
+                              )}
+                            ></Paypal>
+                          ) : null}
+                        </Row>
+                      </>
+                    )}
+
                     <Row>
                       <div>
                         <h3>
