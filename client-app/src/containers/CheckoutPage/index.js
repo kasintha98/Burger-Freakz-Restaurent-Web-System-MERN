@@ -5,6 +5,7 @@ import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import { Row, Col, Container, Button, Form, Alert } from "react-bootstrap";
 import AddressForm from "./AddressForm";
+import GeoLocation from "./GeoLocation";
 import PriceDetails from "../../components/PriceDetails";
 import Paypal from "../../components/Paypal";
 import CartPage from "../CartPage";
@@ -20,13 +21,6 @@ export default function CheckoutPage() {
   const [orderConfirmation, setOrderConfirmation] = useState(false);
   const [paymentOption, setPaymentOption] = useState("");
   const [paymentStatus, setPaymentStatus] = useState("");
-  const [paid, setPaid] = useState("");
-  const [confirmPayment, setConfirmPayment] = useState(false);
-  //user.addressNew.push(auth.user.address);
-
-  useEffect(() => {
-    setPaid(localStorage.getItem("paid"));
-  }, [localStorage.getItem("paid")]);
 
   const dispatch = useDispatch();
 
@@ -100,17 +94,12 @@ export default function CheckoutPage() {
     localStorage.setItem("paid", null);
   };
 
-  /* const onConfirmPayment = () => {
-    setConfirmPayment(true);
-  }; */
+  //for payment option change
+  //console.log(localStorage.getItem("paid"));
 
   useEffect(() => {
     auth.authenticate && dispatch(getAddress());
     auth.authenticate && dispatch(getCartItems());
-
-    /* if (auth.authenticate && !newAddress.includes(auth.user.address)) {
-      newAddress.push(auth.user.address);
-    } */
   }, [auth.authenticate]);
 
   useEffect(() => {
@@ -185,22 +174,6 @@ export default function CheckoutPage() {
                       </div>
                     </Row>
 
-                    {/* <Row>
-                      <Col sm={1}>
-                        <div>
-                          <input name="address" type="radio"></input>
-                        </div>
-                      </Col>
-                      <Col sm={11}>
-                        <div>
-                          <p>{auth.user.address}</p>
-                        </div>
-                        <div>
-                          <Button>Deliver Here</Button>
-                        </div>
-                      </Col>
-                    </Row> */}
-
                     {confirmAddress ? (
                       <Row>
                         <h5>
@@ -256,6 +229,8 @@ export default function CheckoutPage() {
                       }}
                     >
                       <AddressForm onSubmitForm={onAddressSubmit}></AddressForm>
+                      <br></br>
+                      <GeoLocation onSubmitForm={onAddressSubmit}></GeoLocation>
                     </Col>
                   ) : null}
                 </Row>
@@ -277,7 +252,8 @@ export default function CheckoutPage() {
                       </div>
                     </Row>
                     <br></br>
-                    {localStorage.getItem("paid") !== "null" ? (
+                    {localStorage.getItem("paid") &&
+                    localStorage.getItem("paid") !== "null" ? (
                       <Alert variant={`success`}>
                         Online Payment Successfull!
                       </Alert>
