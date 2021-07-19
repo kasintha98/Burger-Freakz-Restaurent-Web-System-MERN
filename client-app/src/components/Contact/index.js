@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Row, Col, Button } from "react-bootstrap";
 import Input from "../Input";
 import { GoogleMap, withScriptjs, withGoogleMap } from "react-google-maps";
+import { key } from "../../apikey";
 
 function Map() {
   return (
@@ -45,7 +46,7 @@ export default function Contact() {
             loadingElement={<div style={{ height: `100%` }} />}
             containerElement={<div style={{ height: `400px` }} />}
             mapElement={<div style={{ height: `100%` }} />}
-            googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=AIzaSyC4gFCQVS9xyi-qEFb3qsnNH_fbyM-gnQo`}
+            googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=${key}`}
           ></WrappedMap>
         </Col>
         <Col sm={6}>

@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { addAddress } from "../../actions";
 import { useDispatch, useSelector } from "react-redux";
-import { Form, Button } from "react-bootstrap";
+import { Button } from "react-bootstrap";
+import { key } from "../../apikey";
 
 export default function GeoLocation(props) {
   const [latitude, setLatitude] = useState(null);
@@ -72,7 +73,7 @@ export default function GeoLocation(props) {
 
   const getUserAddr = () => {
     fetch(
-      `https://maps.googleapis.com/maps/api/staticmap?center=${latitude},${longitude}&zoom=14&size=400x300&sensor=false&markers=color:red%7C${latitude},${longitude}&key=AIzaSyC4gFCQVS9xyi-qEFb3qsnNH_fbyM-gnQo`
+      `https://maps.googleapis.com/maps/api/staticmap?center=${latitude},${longitude}&zoom=14&size=400x300&sensor=false&markers=color:red%7C${latitude},${longitude}&key=${key}`
     )
       .then((res) => res.json())
       .then((data) => console.log(data))
@@ -89,7 +90,7 @@ export default function GeoLocation(props) {
       {latitude && longitude ? (
         <>
           <img
-            src={`https://maps.googleapis.com/maps/api/staticmap?center=${latitude},${longitude}&zoom=16&size=400x300&sensor=false&markers=color:red%7C${latitude},${longitude}&key=AIzaSyC4gFCQVS9xyi-qEFb3qsnNH_fbyM-gnQo`}
+            src={`https://maps.googleapis.com/maps/api/staticmap?center=${latitude},${longitude}&zoom=16&size=400x300&sensor=false&markers=color:red%7C${latitude},${longitude}&key=${key}`}
             alt="map"
           />
           <div className="text-center">

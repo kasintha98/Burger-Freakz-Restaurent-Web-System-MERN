@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Layout from "../../components/Layouts";
 import { useDispatch, useSelector } from "react-redux";
 import { Row, Card, Button, Form, Table, FormControl } from "react-bootstrap";
@@ -13,8 +13,23 @@ function Orders(props) {
   const order = useSelector((state) => state.order);
   const [type, setType] = useState("");
   const [keywords, setKeywords] = useState("");
+  const [usrAdr, setusrAdr] = useState("");
   const [searchedOrders, setSearchedOrders] = useState();
   const dispatch = useDispatch();
+
+  /*  useEffect(() => {
+    for (let i = 0; order.orders.length; i++) {
+       axios
+        .get(
+          `http://localhost:2000/api/order/getAddressByUser/${order.orders[i].user}`
+        )
+        .then((res) => {
+          console.log(res.data.address);
+          setusrAdr(res.data.address);
+        });
+      console.log(order.orders[i]);
+    }
+  }); */
 
   const onOrderUpdate = (orderId) => {
     const payload = {
@@ -152,7 +167,26 @@ function Orders(props) {
                             : orderItem.paymentType}
                         </td>
                         <td>{orderItem.paymentStatus}</td>
-                        <td>{orderItem.addressId.address}</td>
+                        <td>
+                          {/* {(() => {
+                            if (usrAdr.addressNew) {
+                              for (
+                                var i = 0;
+                                i < usrAdr.addressNew.length;
+                                i++
+                              ) {
+                                if (
+                                  usrAdr.addressNew[i]._id ===
+                                  orderItem.addressId
+                                ) {
+                                  return (
+                                    <p>{usrAdr.addressNew[i].addressNew}</p>
+                                  );
+                                }
+                              }
+                            }
+                          })()} */}
+                        </td>
                       </tr>
                     </tbody>
                   </Table>

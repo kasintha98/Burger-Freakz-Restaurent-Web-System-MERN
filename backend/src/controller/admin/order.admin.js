@@ -1,4 +1,5 @@
 const Order = require("../../models/order");
+const Address = require("../../models/address");
 
 exports.updateOrder = (req, res) => {
   Order.updateOne(
@@ -23,4 +24,10 @@ exports.getCustomerOrders = async (req, res) => {
     .populate("items.productId", "name")
     .exec();
   res.status(200).json({ orders });
+};
+
+exports.getAddressByUser = async (req, res) => {
+  const id = req.params.id;
+  const address = await Address.findOne({ user: id }).exec();
+  res.status(200).json({ address });
 };
