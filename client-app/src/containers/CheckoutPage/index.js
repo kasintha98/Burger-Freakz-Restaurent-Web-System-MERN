@@ -95,7 +95,7 @@ export default function CheckoutPage() {
   };
 
   //for payment option change
-  //console.log(localStorage.getItem("paid"));
+  console.log(localStorage.getItem("paid"));
 
   useEffect(() => {
     auth.authenticate && dispatch(getAddress());

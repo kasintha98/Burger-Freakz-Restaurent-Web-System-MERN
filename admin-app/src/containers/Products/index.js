@@ -197,7 +197,7 @@ function Products(props) {
             <th>Name</th>
             <th>Description</th>
             <th>Price</th>
-            <th>Rating</th>
+
             <th>Category</th>
             <th>Actions</th>
           </tr>
@@ -235,7 +235,7 @@ function Products(props) {
                       />
                     }
                   </td>
-                  <td>{"rating"}</td>
+
                   <td>{product.category.name}</td>
                   <td>
                     <ButtonGroup style={{ width: "100%" }}>
