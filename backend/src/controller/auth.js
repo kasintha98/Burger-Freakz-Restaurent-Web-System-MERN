@@ -5,16 +5,19 @@ const bcrypt = require("bcrypt");
 const { validationResult } = require("express-validator");
 const shortId = require("shortid");
 const nodemailer = require("nodemailer");
-const sendgridTransport = require("nodemailer-sendgrid-transport");
 
-const transporter = nodemailer.createTransport(
-  sendgridTransport({
-    auth: {
-      api_key:
-        "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",
-    },
-  })
-);
+const transporter = nodemailer.createTransport({
+  host: "smtp.dreamhost.com",
+  port: 587,
+  secure: false,
+  auth: {
+    user: "kasintha@nipunamu.com",
+    pass: "BRb5Fm-p",
+  },
+  tls: {
+    rejectUnauthorized: false,
+  },
+});
 
 const generateJwtToken = (_id, role) => {
   return jwt.sign({ _id, role }, process.env.JWT_SECRET, {
@@ -77,7 +80,7 @@ exports.signup = (req, res) => {
         //send welcome email
         transporter.sendMail({
           to: user.email,
-          from: "burgerfreakz@protonmail.com",
+          from: "kasintha@nipunamu.com",
           subject: "Signup Successfull - Burger Freakz",
           html: `<html lang="en">
           <head>

@@ -83,6 +83,11 @@ function Signup(props) {
       return;
     }
 
+    if (password === passwordRpt) {
+      alert("Passwords don't match!");
+      return;
+    }
+
     const user = {
       firstName,
       lastName,
