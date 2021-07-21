@@ -12,8 +12,8 @@ function Signup(props) {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [nic, setNic] = useState("");
-  const [gender, setGender] = useState("Male");
-  const [role, setRole] = useState("System Admin");
+  const [gender, setGender] = useState("male");
+  const [role, setRole] = useState("admin");
   const [contactNumber, setContactNumber] = useState("");
   const [address, setAddress] = useState("");
   //initial state of email
@@ -83,10 +83,10 @@ function Signup(props) {
       return;
     }
 
-    if (password === passwordRpt) {
+    /* if (password === passwordRpt) {
       alert("Passwords don't match!");
       return;
-    }
+    } */
 
     const user = {
       firstName,

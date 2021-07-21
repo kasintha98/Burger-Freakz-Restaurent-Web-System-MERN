@@ -5,14 +5,16 @@ const bcrypt = require("bcrypt");
 const { validationResult } = require("express-validator");
 const shortId = require("shortid");
 const nodemailer = require("nodemailer");
+const env = require("dotenv");
+env.config();
 
 const transporter = nodemailer.createTransport({
-  host: "smtp.dreamhost.com",
+  host: process.env.HOST,
   port: 587,
   secure: false,
   auth: {
-    user: "kasintha@nipunamu.com",
-    pass: "BRb5Fm-p",
+    user: process.env.EMAIL,
+    pass: process.env.PASSWORD,
   },
   tls: {
     rejectUnauthorized: false,
