@@ -90,7 +90,7 @@ export default function GeoLocation(props) {
       {latitude && longitude ? (
         <>
           <img
-            src={`https://maps.googleapis.com/maps/api/staticmap?center=${latitude},${longitude}&zoom=16&size=400x300&sensor=false&markers=color:red%7C${latitude},${longitude}&key=${key}`}
+            src={`https://maps.googleapis.com/maps/api/staticmap?center=${latitude},${longitude}&zoom=14&size=400x300&sensor=false&markers=color:red%7C${latitude},${longitude}&key=${key}`}
             alt="map"
           />
           <div className="text-center">

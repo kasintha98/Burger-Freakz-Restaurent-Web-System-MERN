@@ -29,11 +29,20 @@ function NewModal(props) {
             {props.saveBtnName ? props.saveBtnName : "Save"}
           </Button>
           {props.hideFooter ? null : (
-            <div>
-              <p>
-                Don't have an account? <Link to="/signupuser">Signup Now!</Link>
-              </p>
-            </div>
+            <>
+              <div className="text-center">
+                <p>
+                  Forgot Password? <Link to="/signupuser">Reset Now!</Link>
+                </p>
+              </div>
+              <br></br>
+              <div>
+                <p>
+                  Don't have an account?{" "}
+                  <Link to="/signupuser">Signup Now!</Link>
+                </p>
+              </div>
+            </>
           )}
         </Modal.Footer>
       </Modal>

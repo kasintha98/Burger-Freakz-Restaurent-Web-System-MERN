@@ -30,6 +30,8 @@ export default function Header(props) {
 
   const dispatch = useDispatch();
 
+  console.log(cart);
+
   const userLogin = () => {
     try {
       dispatch(login({ email, password }));
@@ -97,9 +99,11 @@ export default function Header(props) {
           Contact
         </Nav.Link>
         <NavLink class="nav-link" to="/cart">
-          {Object.keys(cart.cartItems) ? (
+          {Object.keys(cart.cartItems).length > 0 ? (
             <CartNum count={Object.keys(cart.cartItems).length}></CartNum>
-          ) : null}
+          ) : (
+            <CartNum count={0}></CartNum>
+          )}
           <i className="fa fa-cart-plus"></i> Cart
         </NavLink>
         <DropdownButton title={auth.user.fullName} variant="dark">

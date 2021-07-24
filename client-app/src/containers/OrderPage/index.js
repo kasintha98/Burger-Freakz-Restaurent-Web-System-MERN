@@ -24,7 +24,9 @@ export default function OrderPage(props) {
 
   useEffect(() => {
     dispatch(getOrders());
-  }, []);
+  }, [user]);
+
+  console.log(user);
 
   const addNewFeedback = () => {
     if (feedbackDes === "") {

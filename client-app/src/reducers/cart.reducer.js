@@ -31,7 +31,8 @@ export default (state = initState, action) => {
       break;
     case cartConstants.RESET_CART:
       state = {
-        ...initState,
+        ...state,
+        cartItems: action.payload.cartItems,
       };
   }
   return state;
