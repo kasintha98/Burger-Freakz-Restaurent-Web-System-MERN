@@ -17,20 +17,6 @@ function Orders(props) {
   const [searchedOrders, setSearchedOrders] = useState();
   const dispatch = useDispatch();
 
-  /*  useEffect(() => {
-    for (let i = 0; order.orders.length; i++) {
-       axios
-        .get(
-          `http://localhost:2000/api/order/getAddressByUser/${order.orders[i].user}`
-        )
-        .then((res) => {
-          console.log(res.data.address);
-          setusrAdr(res.data.address);
-        });
-      console.log(order.orders[i]);
-    }
-  }); */
-
   const onOrderUpdate = (orderId) => {
     const payload = {
       orderId,
@@ -182,24 +168,11 @@ function Orders(props) {
                           </td>
                           <td>{orderItem.paymentStatus}</td>
                           <td>
-                            {/* {(() => {
-                            if (usrAdr.addressNew) {
-                              for (
-                                var i = 0;
-                                i < usrAdr.addressNew.length;
-                                i++
-                              ) {
-                                if (
-                                  usrAdr.addressNew[i]._id ===
-                                  orderItem.addressId
-                                ) {
-                                  return (
-                                    <p>{usrAdr.addressNew[i].addressNew}</p>
-                                  );
-                                }
-                              }
-                            }
-                          })()} */}
+                            {orderItem.location ? (
+                              <>{orderItem.location}</>
+                            ) : (
+                              <>Test Address</>
+                            )}
                           </td>
                         </tr>
                       </tbody>

@@ -21,11 +21,13 @@ export default function CheckoutPage() {
   const [orderConfirmation, setOrderConfirmation] = useState(false);
   const [paymentOption, setPaymentOption] = useState("");
   const [paymentStatus, setPaymentStatus] = useState("");
+  const [location, setLocation] = useState("");
 
   const dispatch = useDispatch();
 
   const selectAddress = (adr) => {
     console.log(adr);
+
     const updatedAddress = newAddress.map((ad) =>
       ad._id === adr._id
         ? { ...ad, selected: true }
@@ -43,11 +45,15 @@ export default function CheckoutPage() {
   const onAddressSubmit = (adr) => {
     setConfirmAddress(true);
     setSelectedAddress(adr);
+    setLocation(adr.addressNew);
+    console.log(adr.addressNew);
   };
 
   const confirmDeliveryAddress = (adr) => {
     setConfirmAddress(true);
     setSelectedAddress(adr);
+    setLocation(adr.addressNew);
+    console.log(adr.addressNew);
   };
 
   const userOrderConfirmation = () => {
@@ -86,6 +92,7 @@ export default function CheckoutPage() {
       items,
       paymentStatus,
       paymentType: paymentOption,
+      location: location,
     };
 
     console.log(payload);
