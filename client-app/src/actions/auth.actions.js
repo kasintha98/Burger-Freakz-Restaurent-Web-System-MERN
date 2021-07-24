@@ -133,7 +133,7 @@ export const signout = () => {
     localStorage.clear();
 
     dispatch({ type: authConstants.LOGOUT_SUCCESS });
-    dispatch({ type: cartConstants.RESET_CART });
+    dispatch({ type: cartConstants.RESET_CART, payload: { cartItems: {} } });
 
     /* const res = await axios.post("/admin/signout");
 

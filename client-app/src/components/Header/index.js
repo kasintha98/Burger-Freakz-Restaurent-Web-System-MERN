@@ -30,8 +30,6 @@ export default function Header(props) {
 
   const dispatch = useDispatch();
 
-  console.log(cart);
-
   const userLogin = () => {
     try {
       dispatch(login({ email, password }));

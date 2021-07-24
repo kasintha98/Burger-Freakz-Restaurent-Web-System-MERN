@@ -24,7 +24,7 @@ export default function OrderPage(props) {
 
   useEffect(() => {
     dispatch(getOrders());
-  }, [user]);
+  }, []);
 
   console.log(user);
 
