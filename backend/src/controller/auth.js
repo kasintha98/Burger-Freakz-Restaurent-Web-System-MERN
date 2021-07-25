@@ -2,6 +2,7 @@
 const User = require("../models/user");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const crypto = require("crypto");
 const { validationResult } = require("express-validator");
 const shortId = require("shortid");
 const nodemailer = require("nodemailer");
@@ -254,4 +255,64 @@ exports.signin = (req, res) => {
       return res.status(400).json({ message: "Something went wrong!" });
     }
   });
+};
+
+exports.resetPassword = (req, res) => {
+  crypto.randomBytes(32, (err, buffer) => {
+    if (err) {
+      console.log(err);
+    }
+    const token = buffer.toString("hex");
+    User.findOne({ email: req.body.email }).then((user) => {
+      if (!user) {
+        return res
+          .status(422)
+          .json({ error: "User don't exist with that email!" });
+      }
+      user.resetToken = token;
+      user.expireToken = Date.now() + 3600000;
+
+      user.save().then((result) => {
+        transporter.sendMail({
+          to: user.email,
+          from: "kasintha@nipunamu.com",
+          subject: "Password Reset - Burger Freakz",
+          html: `<h1>You have requested for a password reset!</h1>
+          <h4>Click the below button to reset the password!</h4>
+          <h4><a href="${process.env.FRONTENDAPI}/change-password/${token}">Reset Password</a></h4>
+          `,
+        });
+
+        res.json({ message: "Please Check Your Email!" });
+      });
+    });
+  });
+};
+
+exports.newPassword = (req, res) => {
+  const newPassword = req.body.password;
+  const sentToken = req.body.token;
+
+  User.findOne({
+    resetToken: sentToken,
+    expireToken: { $gt: Date.now() },
+  })
+    .then((user) => {
+      if (!user) {
+        return res.status(422).json({ error: "Try Again Session Expired!" });
+      }
+
+      bcrypt.hash(newPassword, 12).then((hash_password) => {
+        user.hash_password = hash_password;
+        user.resetToken = undefined;
+        user.expireToken = undefined;
+
+        user.save().then((saveduser) => {
+          res.json({ message: "Password Changed Successfully!" });
+        });
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };

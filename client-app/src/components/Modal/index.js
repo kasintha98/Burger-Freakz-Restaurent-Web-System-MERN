@@ -32,7 +32,7 @@ function NewModal(props) {
             <>
               <div className="text-center">
                 <p>
-                  Forgot Password? <Link to="/signupuser">Reset Now!</Link>
+                  Forgot Password? <Link to="/reset-password">Reset Now!</Link>
                 </p>
               </div>
               <br></br>

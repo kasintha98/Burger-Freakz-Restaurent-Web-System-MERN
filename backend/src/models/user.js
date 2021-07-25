@@ -82,8 +82,14 @@ const userSchema = new Schema(
       lowercase: true,
     },
 
+    resetToken: { type: String },
+
+    expireToken: { type: Date },
+
     profilePicture: {
       type: String,
+      default:
+        "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
     },
   },
   { timestamps: true } //automatically stores date created/modified

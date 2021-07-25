@@ -10,6 +10,8 @@ import CartPage from "./containers/CartPage";
 import CheckoutPage from "./containers/CheckoutPage";
 import ProfilePage from "./containers/ProfilePage";
 import OrderPage from "./containers/OrderPage";
+import ResetPasswordPage from "./containers/ResetPasswordPage";
+import ChangePasswordPage from "./containers/ChangePasswordPage";
 import OrderDetailsPage from "./containers/OrderDetailsPage";
 import SignupPage from "./containers/SignupPage";
 import PdfPage from "./containers/PdfPage";
@@ -39,9 +41,15 @@ function App() {
           <Route path="/checkout" component={CheckoutPage} />
           <Route path="/profile" exact component={ProfilePage} />
           <Route path="/signupuser" exact component={SignupPage} />
+          <Route path="/reset-password" component={ResetPasswordPage} />
           <Route path="/profile/orders" component={OrderPage} />
           <Route path="/category/:slug" exact component={ProductListPage} />
           <Route path="/product/:slug" component={ProductPage} />
+          <Route
+            path="/change-password/:token"
+            component={ChangePasswordPage}
+          />
+
           <Route
             path="/profile/orderDetails/:orderId"
             component={OrderDetailsPage}
