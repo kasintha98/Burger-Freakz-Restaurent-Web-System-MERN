@@ -101,6 +101,7 @@ export default function Reports(props) {
           </div>
         ) : null}
       </Row>
+      <br></br>
     </Layout>
   );
 }

@@ -107,81 +107,97 @@ export default function OrderPage(props) {
         <div style={{ marginBottom: "50px" }} className="text-center">
           <h2>My Orders!</h2>
         </div>
-        {user.orders.map((order) => {
-          return order.items.map((item) => (
-            <Card style={{ width: "100%" }}>
-              <Row>
-                <Col sm={3}>
-                  <Card.Img
-                    variant="top"
-                    src={generatePublicUrl(item.productId.productImages[0].img)}
-                  />
-                </Col>
-                <Col sm={9}>
-                  <Row>
-                    <Col>
-                      <Card.Title>{item.productId.name}</Card.Title>
-                      <Card.Text>
-                        Price:{" "}
-                        <CurrencyFormat
-                          value={item.payablePrice}
-                          displayType={"text"}
-                          thousandSeparator={true}
-                          prefix={"Rs. "}
-                        />{" "}
-                      </Card.Text>
-                      {item.offer ? (
-                        <Card.Text>
-                          Offer:{" "}
-                          <CurrencyFormat
-                            style={{ color: "red", fontWeight: "bold" }}
-                            value={item.offer}
-                            displayType={"text"}
-                            thousandSeparator={true}
-                            prefix={"Rs. "}
-                          />{" "}
-                        </Card.Text>
-                      ) : null}
-                      <Card.Text>Purchased Qty: {item.purchasedQty}</Card.Text>
-                    </Col>
-                    <Col>
-                      <Card.Text>
-                        Grand Total:{" "}
-                        <CurrencyFormat
-                          style={{ color: "green", fontWeight: "bold" }}
-                          value={
-                            item.payablePrice * item.purchasedQty -
-                            item.purchasedQty * item.offer
-                          }
-                          displayType={"text"}
-                          thousandSeparator={true}
-                          prefix={"Rs. "}
+        <div>
+          {user.orders && user.orders.length ? (
+            <>
+              {user.orders.map((order) => {
+                return order.items.map((item) => (
+                  <Card style={{ width: "100%" }}>
+                    <Row>
+                      <Col sm={3}>
+                        <Card.Img
+                          variant="top"
+                          src={generatePublicUrl(
+                            item.productId.productImages[0].img
+                          )}
                         />
-                      </Card.Text>
-                      <Button
-                        variant="primary"
-                        onClick={() => {
-                          setCurrentProduct(item.productId._id);
-                          handleShow();
-                        }}
-                      >
-                        Rate &amp; Feedback
-                      </Button>
-                      <br></br>
-                      <Link
-                        className="btn btn-success"
-                        to={`orderDetails/${order._id}`}
-                      >
-                        Check Order Status
-                      </Link>
-                    </Col>
-                  </Row>
-                  <Card.Body></Card.Body>
-                </Col>
-              </Row>
-            </Card>
-          ));
-        })}
+                      </Col>
+                      <Col sm={9}>
+                        <Row>
+                          <Col>
+                            <Card.Title>{item.productId.name}</Card.Title>
+                            <Card.Text>
+                              Price:{" "}
+                              <CurrencyFormat
+                                value={item.payablePrice}
+                                displayType={"text"}
+                                thousandSeparator={true}
+                                prefix={"Rs. "}
+                              />{" "}
+                            </Card.Text>
+                            {item.offer ? (
+                              <Card.Text>
+                                Offer:{" "}
+                                <CurrencyFormat
+                                  style={{ color: "red", fontWeight: "bold" }}
+                                  value={item.offer}
+                                  displayType={"text"}
+                                  thousandSeparator={true}
+                                  prefix={"Rs. "}
+                                />{" "}
+                              </Card.Text>
+                            ) : null}
+                            <Card.Text>
+                              Purchased Qty: {item.purchasedQty}
+                            </Card.Text>
+                          </Col>
+                          <Col>
+                            <Card.Text>
+                              Grand Total:{" "}
+                              <CurrencyFormat
+                                style={{ color: "green", fontWeight: "bold" }}
+                                value={
+                                  item.payablePrice * item.purchasedQty -
+                                  item.purchasedQty * item.offer
+                                }
+                                displayType={"text"}
+                                thousandSeparator={true}
+                                prefix={"Rs. "}
+                              />
+                            </Card.Text>
+                            <Button
+                              variant="primary"
+                              onClick={() => {
+                                setCurrentProduct(item.productId._id);
+                                handleShow();
+                              }}
+                            >
+                              Rate &amp; Feedback
+                            </Button>
+                            <br></br>
+                            <Link
+                              className="btn btn-success"
+                              to={`orderDetails/${order._id}`}
+                            >
+                              Check Order Status
+                            </Link>
+                          </Col>
+                        </Row>
+                        <Card.Body></Card.Body>
+                      </Col>
+                    </Row>
+                  </Card>
+                ));
+              })}
+            </>
+          ) : (
+            <div className="text-center" style={{ padding: "10vh" }}>
+              <div class="alert alert-danger" role="alert">
+                <h5>You Have Not Placed Any Orders!!</h5>
+              </div>
+            </div>
+          )}
+        </div>
       </Container>
       {renderAddFeedbackModal()}
       <Footer></Footer>

@@ -1,5 +1,5 @@
 import React from "react";
-import { Modal, Button } from "react-bootstrap";
+import { Modal, Button, Row, Col } from "react-bootstrap";
 import "./style.css";
 import { Link } from "react-router-dom";
 
@@ -11,7 +11,7 @@ function NewModal(props) {
           <Modal.Title>{props.modalTitle}</Modal.Title>
         </Modal.Header>
         <Modal.Body>{props.children}</Modal.Body>
-        <Modal.Footer>
+        <Modal.Footer className="text-center">
           {props.clsBtnName ? (
             <Button variant="secondary" onClick={props.handleClose}>
               props.clsBtnName
@@ -28,23 +28,29 @@ function NewModal(props) {
           >
             {props.saveBtnName ? props.saveBtnName : "Save"}
           </Button>
-          {props.hideFooter ? null : (
-            <>
-              <div className="text-center">
-                <p>
-                  Forgot Password? <Link to="/reset-password">Reset Now!</Link>
-                </p>
-              </div>
-              <br></br>
-              <div>
-                <p>
-                  Don't have an account?{" "}
-                  <Link to="/signupuser">Signup Now!</Link>
-                </p>
-              </div>
-            </>
-          )}
         </Modal.Footer>
+        {props.hideFooter ? null : (
+          <>
+            <Row className="justify-content-md-center">
+              <Col>
+                <div className="text-center">
+                  <p>
+                    Forgot Password?{" "}
+                    <Link to="/reset-password">Reset Now!</Link>
+                  </p>
+                </div>
+              </Col>
+              <Col>
+                <div className="text-center">
+                  <p>
+                    Don't have an account?{" "}
+                    <Link to="/signupuser">Signup Now!</Link>
+                  </p>
+                </div>
+              </Col>
+            </Row>
+          </>
+        )}
       </Modal>
     </div>
   );

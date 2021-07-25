@@ -8,6 +8,7 @@ import Input from "../../components/UI/Input";
 
 export default function Inventory(props) {
   const inventory = useSelector((state) => state.inventory);
+  const purchase = useSelector((state) => state.purchase);
 
   const [show, setShow] = useState(false);
   const [name, setName] = useState("");
@@ -100,6 +101,32 @@ export default function Inventory(props) {
     );
   };
 
+  const renderPurchase = (pur) => {
+    return (
+      <tbody>
+        {pur ? (
+          pur.map((item) => (
+            <tr>
+              <td>{item.title}</td>
+              <td>{item.qty}</td>
+
+              <td>{item.description}</td>
+              <td>
+                <Button variant="success">Edit</Button>
+                &nbsp;
+                <Button variant="danger">Delete</Button>
+              </td>
+            </tr>
+          ))
+        ) : (
+          <div class="d-flex justify-content-center">
+            <div class="spinner-border text-primary" role="status"></div>
+          </div>
+        )}
+      </tbody>
+    );
+  };
+
   //show add inventory popup modal
   const renderInventoryModal = () => {
     return (
@@ -173,6 +200,7 @@ export default function Inventory(props) {
               </tr>
             </thead>
             {renderInventory(inventory.inventory)}
+            {renderPurchase(purchase.purchase)}
           </Table>
           {renderInventoryModal()}
           {renderDeleteInventoryModal()}

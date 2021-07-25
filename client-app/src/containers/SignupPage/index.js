@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useForm } from "react-hook-form";
 import { signup } from "../../actions";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
@@ -19,7 +18,6 @@ export default function SignupPage() {
   const [contactNumber, setContactNumberNumber] = useState("");
   const [nic, setNicNumber] = useState("");
   const [address, setAddress] = useState("");
-  const [error, setError] = useState("");
 
   const auth = useSelector((state) => state.auth);
 
@@ -29,7 +27,7 @@ export default function SignupPage() {
   const userSignup = (e) => {
     e.preventDefault();
 
-    if (firstName == "") {
+    if (firstName === "") {
       alert("Empty first name");
       return;
     }

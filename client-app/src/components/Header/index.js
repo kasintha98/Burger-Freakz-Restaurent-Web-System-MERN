@@ -104,13 +104,15 @@ export default function Header(props) {
           )}
           <i className="fa fa-cart-plus"></i> Cart
         </NavLink>
-        <DropdownButton title={auth.user.fullName} variant="dark">
+        <DropdownButton title={`${auth.user.fullName}`} variant="dark">
           <Dropdown.Item>
-            <Link to="/profile">Profile</Link>
+            <Link to="/profile">
+              <i className="fa fa-id-badge"></i> Profile
+            </Link>
           </Dropdown.Item>
           <Dropdown.Item>
             <Link onClick={() => logout()} to="/">
-              Logout
+              <i className="fa fa-sign-out"></i> Logout
             </Link>
           </Dropdown.Item>
         </DropdownButton>
@@ -171,6 +173,7 @@ export default function Header(props) {
   const renderLoginModal = () => {
     return (
       <NewModal
+        size="lg"
         modalTitle="Login"
         variant="primary"
         action={userLogin}
