@@ -13,7 +13,9 @@ export default function ProfilePage(props) {
     <div>
       {console.log(auth)}
       <Header></Header>
-      <Container style={{ marginTop: "120px" }}>
+      <Container
+        style={{ marginTop: "120px", minHeight: "calc(100vh - 180px)" }}
+      >
         <div class="text-center" style={{ paddingBottom: "100px" }}>
           <h3>My Profile!</h3>
           <Card className="bg-dark text-white">

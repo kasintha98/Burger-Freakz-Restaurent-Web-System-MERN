@@ -87,7 +87,9 @@ export default function CartPage(props) {
       ) : (
         <div>
           <Header></Header>
-          <Container style={{ marginTop: "120px" }}>
+          <Container
+            style={{ marginTop: "120px", minHeight: "calc(100vh - 180px)" }}
+          >
             <div className="text-center">
               <h2>My Cart</h2>
             </div>

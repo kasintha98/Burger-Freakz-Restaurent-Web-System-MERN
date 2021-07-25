@@ -32,7 +32,9 @@ export default function OrderDetailsPage(props) {
   return (
     <div>
       <Header></Header>
-      <Container style={{ marginTop: "120px", marginBottom: "100px" }}>
+      <Container
+        style={{ marginTop: "120px", minHeight: "calc(100vh - 180px)" }}
+      >
         {orderDetails ? (
           <Card style={{ width: "100%" }}>
             <Card.Body>

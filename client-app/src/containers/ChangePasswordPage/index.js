@@ -78,7 +78,9 @@ export default function ChangePasswordPage() {
     <div>
       <Header></Header>
       <ToastContainer />
-      <Container style={{ marginTop: "120px" }}>
+      <Container
+        style={{ marginTop: "120px", minHeight: "calc(100vh - 180px)" }}
+      >
         <div style={{ marginBottom: "50px" }} className="text-center">
           <h2>Change Password!</h2>
         </div>

@@ -125,7 +125,9 @@ export default function CheckoutPage() {
     return (
       <div>
         <Header></Header>
-        <Container style={{ marginTop: "120px", marginBottom: "300px" }}>
+        <Container
+          style={{ marginTop: "120px", minHeight: "calc(100vh - 180px)" }}
+        >
           <div class="alert alert-success text-center" role="alert">
             <h4>
               Thank You! <br></br>

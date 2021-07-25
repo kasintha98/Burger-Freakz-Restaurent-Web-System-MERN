@@ -60,7 +60,9 @@ export default function SignupPage() {
       {!auth.authenticate ? (
         <>
           <Header></Header>
-          <Container style={{ marginTop: "120px" }}>
+          <Container
+            style={{ marginTop: "120px", minHeight: "calc(100vh - 180px)" }}
+          >
             <div style={{ marginBottom: "50px" }} className="text-center">
               <h2>Signup!</h2>
             </div>

@@ -67,7 +67,12 @@ export default function ProductListPage(props) {
   return (
     <div>
       <Header></Header>
-      <Container style={{ marginTop: "120px" }}>
+      <Container
+        style={{
+          marginTop: "120px",
+          minHeight: "calc(100vh - 180px)",
+        }}
+      >
         <h2 className="text-center">{props.match.params.slug}</h2>
         <Row>
           {product.products.length > 0 ? (
