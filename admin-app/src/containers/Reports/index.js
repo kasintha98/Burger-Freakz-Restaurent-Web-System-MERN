@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Layout from "../../components/Layouts";
-import { Row, Col, Button } from "react-bootstrap";
+import { Row, Col, Button, Alert } from "react-bootstrap";
 import "react-datepicker/dist/react-datepicker.css";
 import FeedbackReport from "../../components/Reports/FeedbackReport";
 import InventoryReport from "../../components/Reports/InventoryReport";
@@ -75,6 +75,13 @@ export default function Reports(props) {
       </Row>
       <br></br>
       <Row>
+        {!showReport ? (
+          <div className="text-center w-100" style={{ paddingTop: "200px" }}>
+            <Alert variant={"info"}>
+              <h3>Please Select A Report Type To Display!</h3>
+            </Alert>
+          </div>
+        ) : null}
         {showReport && showReport === "feedback" ? (
           <div id="report">
             <FeedbackReport></FeedbackReport>

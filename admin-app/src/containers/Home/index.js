@@ -7,21 +7,7 @@ function Home(props) {
   const auth = useSelector((state) => state.auth);
   const order = useSelector((state) => state.order);
 
-  const [notCompletedOrders, setNotCompletedOrders] = useState(0);
-
   let orderNumbers = 0;
-
-  const calcNotCompleteOrders = (order) => {
-    let orderNo = 0;
-    order.orders.forEach(function (item, index) {
-      item.orderStatus.forEach(function (status, i) {
-        if (status.isCompleted && status.type === "delivered") {
-          orderNo = orderNo + 1;
-          return <p>{orderNo}</p>;
-        }
-      });
-    });
-  };
 
   return (
     <div>
@@ -34,20 +20,33 @@ function Home(props) {
           <h2>
             {auth.authenticate ? <div>{auth.user.fullName} </div> : null}{" "}
           </h2>
-          {/* {order.orders.map((orderItem, index) => (
+          {order.orders.map((orderItem, index) => (
             <div>
-              {orderItem.orderStatus.map((status) => (
-                <div>
-                  <p>
-                    {status.isCompleted && status.type === "delivered"
-                      ? ` Number Of Completed Orders: ${(orderNumbers =
-                          orderNumbers + 1)}`
-                      : null}
-                  </p>
-                </div>
-              ))}
+              {(() => {
+                for (var i = 0; i < orderItem.orderStatus.length; i++) {
+                  if (
+                    orderItem.orderStatus[i].type === "delivered" &&
+                    orderItem.orderStatus[i].isCompleted !== true
+                  ) {
+                    orderNumbers = orderNumbers + 1;
+                  }
+                }
+              })()}
             </div>
-          ))} */}
+          ))}
+          <div
+            style={{
+              marginTop: "50px",
+              backgroundColor: "#fcba03",
+              border: "2px solid black",
+            }}
+          >
+            <br></br>
+            <h2> Not Completed Orders In Queue</h2>
+            <h1 style={{ padding: "50px" }}>
+              {orderNumbers ? orderNumbers : 0}
+            </h1>
+          </div>
         </Jumbotron>
       </Layout>
     </div>
