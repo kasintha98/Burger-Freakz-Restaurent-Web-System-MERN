@@ -1,34 +1,59 @@
 import axios from "../helpers/axios";
 import { authConstants, cartConstants, userConstants } from "./constants";
+import { toast } from "react-toastify";
 
 export const login = (user) => {
   return async (dispatch) => {
     dispatch({ type: authConstants.LOGIN_REQUEST });
-    //post request from front end to signin with the data from frontend
-    const res = await axios.post(`/signin`, {
-      ...user,
-    });
 
-    //if respond is 200 (user successfully login)
-    if (res.status === 200) {
-      const { token, user } = res.data;
-      localStorage.setItem("token", token);
-      localStorage.setItem("user", JSON.stringify(user));
-      dispatch({
-        type: authConstants.LOGIN_SUCCESS,
-        payload: {
-          token,
-          user,
-        },
+    try {
+      //post request from front end to signin with the data from frontend
+      const res = await axios.post(`/signin`, {
+        ...user,
       });
-    } else {
-      if (res.status === 400) {
-        console.log(res);
+
+      //if respond is 200 (user successfully login)
+      if (res.status === 200) {
+        const { token, user } = res.data;
+        localStorage.setItem("token", token);
+        localStorage.setItem("user", JSON.stringify(user));
+        dispatch({
+          type: authConstants.LOGIN_SUCCESS,
+          payload: {
+            token,
+            user,
+            errormsg: "",
+          },
+        });
+
+        toast.success("Login Success!", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+      }
+      if (res.status === 202) {
         dispatch({
           type: authConstants.LOGIN_FAILURE,
           payload: { errormsg: res.data.errormsg },
         });
+
+        toast.error(res.data.errormsg, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
       }
+    } catch (error) {
+      console.log(error);
     }
   };
 };
@@ -72,6 +97,7 @@ export const signup = (user) => {
 
       if (res.status === 201) {
         dispatch({ type: authConstants.SIGNUP_SUCCESS });
+
         const { token, user } = res.data;
         localStorage.setItem("token", token);
         localStorage.setItem("user", JSON.stringify(user));
@@ -90,10 +116,29 @@ export const signup = (user) => {
         };
 
         dispatch(addAddressSign(signAdd));
+
+        toast.success("Signup Success!", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
       } else {
         dispatch({
           type: authConstants.SIGNUP_FAILURE,
           payload: { errormsg: res.data.errormsg },
+        });
+        toast.error(res.data.errormsg, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
         });
       }
     } catch (error) {

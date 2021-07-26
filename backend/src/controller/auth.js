@@ -32,8 +32,8 @@ const generateJwtToken = (_id, role) => {
 exports.signup = (req, res) => {
   User.findOne({ email: req.body.email }).exec(async (err, user) => {
     if (user)
-      return res.status(400).json({
-        message: "User already registerd!",
+      return res.status(202).json({
+        errormsg: "User already registerd!",
       });
 
     const {
@@ -249,10 +249,10 @@ exports.signin = (req, res) => {
           },
         });
       } else {
-        return res.status(400).json({ message: "Something went wrong!" });
+        return res.status(202).json({ errormsg: "Invalid Credentials!" });
       }
     } else {
-      return res.status(400).json({ message: "Something went wrong!" });
+      return res.status(202).json({ errormsg: "Invalid Credentials!" });
     }
   });
 };
@@ -266,8 +266,8 @@ exports.resetPassword = (req, res) => {
     User.findOne({ email: req.body.email }).then((user) => {
       if (!user) {
         return res
-          .status(422)
-          .json({ error: "User don't exist with that email!" });
+          .status(202)
+          .json({ error: "No user exists with that email!" });
       }
       user.resetToken = token;
       user.expireToken = Date.now() + 3600000;
@@ -277,9 +277,17 @@ exports.resetPassword = (req, res) => {
           to: user.email,
           from: "kasintha@nipunamu.com",
           subject: "Password Reset - Burger Freakz",
-          html: `<h1>You have requested for a password reset!</h1>
-          <h4>Click the below button to reset the password!</h4>
-          <h4><a href="${process.env.FRONTENDAPI}/change-password/${token}">Reset Password</a></h4>
+          html: `<div style="text-align: center; 
+          background-image: url('https://images.pexels.com/photos/3272281/pexels-photo-3272281.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'); 
+          background-size: auto; background-position: center center; background-repeat: no-repeat; color: white;">
+          <br>
+          <h1>You have requested for a password reset!</h1>
+          <br>
+          <h2>Click the below button to reset the password!</h2>
+          <br>
+          <h4><a href="${process.env.FRONTENDAPI}/change-password/${token}" style="padding: 20px; background-color: #3dffdf;" >Reset Password</a></h4>
+          <br>
+          </div>
           `,
         });
 
@@ -299,7 +307,7 @@ exports.newPassword = (req, res) => {
   })
     .then((user) => {
       if (!user) {
-        return res.status(422).json({ error: "Try Again Session Expired!" });
+        return res.status(202).json({ error: "Try Again Session Expired!" });
       }
 
       bcrypt.hash(newPassword, 12).then((hash_password) => {

@@ -45,7 +45,7 @@ export default (state = initState, action) => {
         authenticate: true,
         authenticating: false,
         error: null,
-        errormsg: null,
+        errormsg: action.payload.errormsg,
       };
       break;
     case authConstants.LOGIN_FAILURE:

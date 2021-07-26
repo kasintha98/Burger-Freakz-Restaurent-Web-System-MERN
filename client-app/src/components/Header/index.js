@@ -8,6 +8,7 @@ import {
   Dropdown,
   DropdownButton,
   Container,
+  Alert,
 } from "react-bootstrap";
 import "./style.css";
 import NewModal from "../Modal";
@@ -18,6 +19,7 @@ import { login, signout } from "../../actions";
 import { Link, NavLink } from "react-router-dom";
 import { useScrollSection } from "react-scroll-section";
 import CartNum from "../UI/CartNum";
+import { ToastContainer } from "react-toastify";
 
 export default function Header(props) {
   const [loginModal, setLoginModal] = useState(false);
@@ -35,7 +37,7 @@ export default function Header(props) {
       dispatch(login({ email, password }));
       console.log({ auth: auth });
     } catch (error) {
-      console.log({ error: error.response.data });
+      console.log({ error });
     }
   };
 
@@ -182,10 +184,11 @@ export default function Header(props) {
         handleClose={() => {
           setLoginModal(false);
         }}
+        log={true}
       >
-        {error ? (
-          <div style={{ color: "red", fontSize: 12 }}>{auth.error}</div>
-        ) : null}
+        {/* {auth.errormsg ? (
+          <Alert variant={"danger"}>{auth.errormsg}</Alert>
+        ) : null} */}
         <Input
           value={email}
           onChange={(e) => {
@@ -210,6 +213,7 @@ export default function Header(props) {
 
   return (
     <div>
+      <ToastContainer />
       <Navbar fixed="top" bg="dark" variant="dark" expand="lg">
         <Container>
           <Navbar.Brand>
@@ -240,6 +244,7 @@ export default function Header(props) {
           </Navbar.Collapse>
         </Container>
       </Navbar>
+
       {renderLoginModal()}
     </div>
   );

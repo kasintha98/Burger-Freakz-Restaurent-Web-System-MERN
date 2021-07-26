@@ -198,14 +198,20 @@ export default function ProfilePage(props) {
                 <span style={{ color: "#0275d8" }}>{auth.user.gender}</span>
               </p>
             </Col>
-            <Col sm={4}>
+            <Col
+              sm={4}
+              style={{
+                backgroundColor: "#333",
+                color: "white",
+              }}
+            >
               <br></br>
               <div className="text-center">
                 <h3>Actions</h3>
               </div>
               <br></br>
               <div className="text-center"></div>
-              <Row>
+              <Row style={{ paddingLeft: "10px", paddingRight: "10px" }}>
                 <Link
                   style={{ height: "50px", marginBottom: "20px" }}
                   to="/profile/orders"

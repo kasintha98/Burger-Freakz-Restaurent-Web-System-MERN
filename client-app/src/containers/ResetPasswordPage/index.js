@@ -6,7 +6,7 @@ import Input from "../../components/Input";
 import { Row, Col, Container, Image, Button } from "react-bootstrap";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import side from "../../img/side.jpg";
+import side2 from "../../img/side2.jpg";
 
 export default function ResetPasswordPage() {
   const [email, setEmail] = useState("");
@@ -15,7 +15,7 @@ export default function ResetPasswordPage() {
     if (email === "") {
       toast.error("Please Enter The Email!", {
         position: "top-right",
-        autoClose: 10000,
+        autoClose: 5000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -31,9 +31,21 @@ export default function ResetPasswordPage() {
     axios
       .post(`http://localhost:2000/api/reset-password`, emailObj)
       .then((res) => {
+        if (res.data.error) {
+          toast.error(res.data.error, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          });
+        }
+
         toast.success(res.data.message, {
           position: "top-right",
-          autoClose: 10000,
+          autoClose: 5000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
@@ -44,7 +56,7 @@ export default function ResetPasswordPage() {
       .catch((err) => {
         toast.error(err, {
           position: "top-right",
-          autoClose: 10000,
+          autoClose: 5000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
@@ -68,7 +80,7 @@ export default function ResetPasswordPage() {
         </div>
         <Row>
           <Col>
-            <Image src={side} thumbnail />
+            <Image src={side2} thumbnail />
           </Col>
           <Col>
             <Input

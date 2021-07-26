@@ -9,6 +9,8 @@ import {
   Marker,
 } from "react-google-maps";
 import { key } from "../../apikey";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Map(props) {
   return (
@@ -30,30 +32,43 @@ export default function Contact() {
   const [email, setEmail] = useState("");
   const [msg, setMsg] = useState("");
 
-  const [err, setErr] = useState("");
-  const [suc, setSuc] = useState("");
-  const [showA, setShowA] = useState(true);
-  const [showB, setShowB] = useState(true);
-
-  const toggleShowA = () => setShowA(!showA);
-  const toggleShowB = () => setShowB(!showB);
-
   const sendMsg = () => {
     if (name === "") {
-      setErr("Please Fill The Name Field!");
-      setShowA(true);
+      toast.error("Please Fill The Name Field!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
       return;
     }
 
     if (email === "") {
-      setErr("Please Fill The Email Field!");
-      setShowA(true);
+      toast.error("Please Enter A Valid Email!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
       return;
     }
 
     if (msg === "") {
-      setErr("Please Fill The Message Field!");
-      setShowA(true);
+      toast.error("Please Fill The Message Field!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
       return;
     }
 
@@ -67,19 +82,24 @@ export default function Contact() {
 
     axios.post(`http://localhost:2000/api/contact/sendmail`, msgObj);
 
-    setSuc("Message Send Successfully!");
-    setShowB(true);
+    toast.success("Message Send Successfully!", {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
 
     setName("");
     setMsg("");
     setEmail("");
-
-    setErr("");
-    setShowA(false);
   };
 
   return (
     <div>
+      <ToastContainer />
       <div className="text-center">
         <br></br>
         <br></br>
@@ -99,30 +119,6 @@ export default function Contact() {
           ></WrappedMap>
         </Col>
         <Col sm={6}>
-          {err ? (
-            <Toast show={showA} onClose={toggleShowA}>
-              <Toast.Header
-                style={{ backgroundColor: "#913c3c", color: "white" }}
-              >
-                <strong className="me-auto">Error!</strong>
-              </Toast.Header>
-              <Toast.Body style={{ backgroundColor: "#fa6666" }}>
-                {err}
-              </Toast.Body>
-            </Toast>
-          ) : null}
-          {suc ? (
-            <Toast show={showB} onClose={toggleShowB}>
-              <Toast.Header
-                style={{ backgroundColor: "#3c915b", color: "white" }}
-              >
-                <strong className="me-auto">Success!</strong>
-              </Toast.Header>
-              <Toast.Body style={{ backgroundColor: "#67eb97" }}>
-                {suc}
-              </Toast.Body>
-            </Toast>
-          ) : null}
           <Input
             lable="Your Name"
             type="text"

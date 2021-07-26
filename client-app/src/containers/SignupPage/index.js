@@ -7,6 +7,8 @@ import { Row, Col, Container, Image, Form, Button } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import Input from "../../components/Input";
 import side from "../../img/side.jpg";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function SignupPage() {
   const [email, setEmail] = useState("");
@@ -17,7 +19,10 @@ export default function SignupPage() {
   const [gender, setGender] = useState("other");
   const [contactNumber, setContactNumberNumber] = useState("");
   const [nic, setNicNumber] = useState("");
-  const [address, setAddress] = useState("");
+  //const [address, setAddress] = useState("");
+  const [noNew, setNoNew] = useState("");
+  const [streetNew, setStreetNew] = useState("");
+  const [cityNew, setCityNew] = useState("");
 
   const auth = useSelector((state) => state.auth);
 
@@ -27,10 +32,44 @@ export default function SignupPage() {
   const userSignup = (e) => {
     e.preventDefault();
 
-    if (firstName === "") {
-      alert("Empty first name");
+    if (noNew === "") {
+      toast.error("Address No. can't be empty!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
       return;
     }
+    if (streetNew === "") {
+      toast.error("Address street can't be empty!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      return;
+    }
+    if (!cityNew) {
+      toast.error("Address city can't be empty!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      return;
+    }
+
+    let address = `${noNew}, ${streetNew}, ${cityNew}.`;
 
     const user = {
       firstName,
@@ -58,12 +97,14 @@ export default function SignupPage() {
       {!auth.authenticate ? (
         <>
           <Header></Header>
+          <ToastContainer />
           <Container
             style={{ marginTop: "120px", minHeight: "calc(100vh - 180px)" }}
           >
             <div style={{ marginBottom: "50px" }} className="text-center">
               <h2>Signup!</h2>
             </div>
+
             <Form onSubmit={userSignup}>
               <Row>
                 <Col>
@@ -71,12 +112,6 @@ export default function SignupPage() {
                 </Col>
                 <Col>
                   <Row>
-                    {/*  {auth.errormsg && (
-                      <div style={{ color: "red", fontSize: 12 }}>
-                        {auth.errormsg}
-                      </div>
-                    )} */}
-
                     <Col>
                       <Input
                         value={firstName}
@@ -128,15 +163,32 @@ export default function SignupPage() {
                     placeholder="Enter your contact number..."
                   ></Input>
                   <Input
-                    value={address}
+                    value={noNew}
                     onChange={(e) => {
-                      setAddress(e.target.value);
+                      setNoNew(e.target.value);
                     }}
                     lable="Address"
-                    as="textarea"
-                    rows="3"
-                    placeholder="Enter your address..."
+                    type="text"
+                    placeholder="No..."
                   ></Input>
+                  <Form.Control
+                    value={streetNew}
+                    onChange={(e) => {
+                      setStreetNew(e.target.value);
+                    }}
+                    type="text"
+                    placeholder="Street..."
+                  />
+                  <br></br>
+                  <Form.Control
+                    value={cityNew}
+                    onChange={(e) => {
+                      setCityNew(e.target.value);
+                    }}
+                    type="text"
+                    placeholder="City..."
+                  />
+                  <br></br>
                   <Input
                     value={password}
                     onChange={(e) => {

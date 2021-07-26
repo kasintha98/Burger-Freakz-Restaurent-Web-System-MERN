@@ -7,18 +7,32 @@ import { useParams } from "react-router-dom";
 import { Row, Col, Container, Image, Button } from "react-bootstrap";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import side from "../../img/side.jpg";
+import side3 from "../../img/side3.jpg";
 
 export default function ChangePasswordPage() {
   const [password, setPassword] = useState("");
   const [rptPassword, setRptPassword] = useState("");
   const { token } = useParams();
 
-  const changePassword = () => {
-    if (password === "" || rptPassword === "") {
+  const changePassword = (props) => {
+    if (password === "") {
       toast.error("Please Enter The New Password", {
         position: "top-right",
-        autoClose: 10000,
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+
+      return;
+    }
+
+    if (password.length < 8) {
+      toast.error("Password Must Be At Least 8 Characters Long", {
+        position: "top-right",
+        autoClose: 5000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -32,7 +46,7 @@ export default function ChangePasswordPage() {
     if (password !== rptPassword) {
       toast.error("Passwords Don't Match!", {
         position: "top-right",
-        autoClose: 10000,
+        autoClose: 5000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -48,9 +62,21 @@ export default function ChangePasswordPage() {
     axios
       .post(`http://localhost:2000/api/new-password`, passwordObj)
       .then((res) => {
+        if (res.data.error) {
+          toast.error(res.data.error, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          });
+        }
+
         toast.success(res.data.message, {
           position: "top-right",
-          autoClose: 10000,
+          autoClose: 5000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
@@ -61,7 +87,7 @@ export default function ChangePasswordPage() {
       .catch((err) => {
         toast.error(err, {
           position: "top-right",
-          autoClose: 10000,
+          autoClose: 5000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
@@ -86,7 +112,7 @@ export default function ChangePasswordPage() {
         </div>
         <Row>
           <Col>
-            <Image src={side} thumbnail />
+            <Image src={side3} thumbnail />
           </Col>
           <Col>
             <Input

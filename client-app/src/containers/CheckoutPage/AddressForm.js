@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { addAddress } from "../../actions";
 import { Form, Button } from "react-bootstrap";
 import Input from "../../components/Input";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function AddressForm(props) {
   const [noNew, setNoNew] = useState("");
@@ -19,15 +21,39 @@ export default function AddressForm(props) {
   const onAddressSubmit = (e) => {
     //validations of data
     if (noNew === "") {
-      alert("Address No. can't be empty!");
+      toast.error("Address No. can't be empty!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
       return;
     }
     if (streetNew === "") {
-      alert("Address street can't be empty!");
+      toast.error("Address street can't be empty!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
       return;
     }
     if (!cityNew) {
-      alert("Address city can't be empty!");
+      toast.error("Address city can't be empty!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
       return;
     }
 
@@ -53,6 +79,7 @@ export default function AddressForm(props) {
 
   return (
     <div>
+      <ToastContainer />
       <div className="text-center">
         <h3 style={{ marginBottom: "30px" }}>Input New Address</h3>
       </div>

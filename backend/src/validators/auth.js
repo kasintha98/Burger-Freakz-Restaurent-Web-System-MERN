@@ -31,14 +31,15 @@ exports.validateSignupRequestUser = [
   check("contactNumber")
     .isLength({ min: 10, max: 10 })
     .withMessage("Please enter a valid contact number!"),
+  check("nic")
+    .isLength({ min: 10, max: 10 })
+    .withMessage("Please enter a valid NIC number!"),
 ];
 
 //validating user inputs in signin using express validator
 exports.validateSigninRequest = [
   check("email").isEmail().withMessage("Please enter a valid email!"),
-  check("password")
-    .isLength({ min: 8 })
-    .withMessage("Password must be at least 8 characters long!"),
+  check("password").notEmpty().withMessage("Password can't be empty!"),
 ];
 
 //checking validation results
@@ -48,7 +49,7 @@ exports.isRequestValidated = (req, res, next) => {
 
   if (errors.array().length > 0) {
     //if errors exists in the errors array showing them
-    return res.status(400).json({ errormsg: errors.array()[0].msg });
+    return res.status(202).json({ errormsg: errors.array()[0].msg });
   }
   next();
 };

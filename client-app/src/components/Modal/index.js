@@ -22,7 +22,10 @@ function NewModal(props) {
             variant={props.variant ? props.variant : "primary"}
             onClick={() => {
               props.action();
-              props.handleClose();
+
+              if (!props.log) {
+                props.handleClose();
+              }
             }}
             style={{ width: "100%" }}
           >
