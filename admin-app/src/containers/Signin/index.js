@@ -7,6 +7,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
 import "./style.css";
 import logo from "../../img/logo.jpg";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Signin(props) {
   //initial state of email
@@ -23,7 +25,7 @@ function Signin(props) {
   const userLogin = (e) => {
     e.preventDefault();
 
-    if (email === "") {
+    /* if (email === "") {
       alert("Email can't be empty!");
       return;
     }
@@ -31,7 +33,7 @@ function Signin(props) {
     if (password === "") {
       alert("Password can't be empty!");
       return;
-    }
+    } */
 
     const user = { email, password };
 
@@ -46,6 +48,7 @@ function Signin(props) {
 
   return (
     <div>
+      <ToastContainer />
       <Layout>
         <Row style={{ height: "100vh" }}>
           <Col className="main col-4"></Col>

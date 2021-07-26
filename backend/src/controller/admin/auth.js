@@ -8,8 +8,8 @@ const shortId = require("shortid");
 exports.signup = (req, res) => {
   User.findOne({ email: req.body.email }).exec(async (err, user) => {
     if (user)
-      return res.status(400).json({
-        message: "Admin already registerd!",
+      return res.status(202).json({
+        errormsg: "Admin already registerd!",
       });
 
     const {
@@ -41,7 +41,7 @@ exports.signup = (req, res) => {
 
     _user.save((err, data) => {
       if (err) {
-        return res.status(400).json({ message: "Something went wrong!" });
+        return res.status(202).json({ errormsg: "Something went wrong!" });
       }
       if (data) {
         return res.status(201).json({ message: "Admin created successfully!" });
@@ -54,7 +54,7 @@ exports.signup = (req, res) => {
 exports.signin = (req, res) => {
   User.findOne({ email: req.body.email }).exec(async (err, user) => {
     if (err) {
-      return res.status(400).json({ err });
+      return res.status(202).json({ err });
     }
     if (user) {
       const isPassword = await user.authenticate(req.body.password);
@@ -103,10 +103,10 @@ exports.signin = (req, res) => {
           },
         });
       } else {
-        return res.status(400).json({ message: "Invalid Password!" });
+        return res.status(202).json({ errormsg: "Invalid Credentials!" });
       }
     } else {
-      return res.status(400).json({ message: "Something went wrong!" });
+      return res.status(202).json({ errormsg: "Something went wrong!" });
     }
   });
 };

@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import Layout from "../../components/Layouts";
-import { Container, Form, Button, Row, Col } from "react-bootstrap";
+import { Form, Button, Row, Col } from "react-bootstrap";
 import Input from "../../components/UI/Input";
 import { Redirect } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { signup } from "../../actions";
 import "./style.css";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import logo from "../../img/logo.jpg";
 
 function Signup(props) {
@@ -15,13 +17,18 @@ function Signup(props) {
   const [gender, setGender] = useState("male");
   const [role, setRole] = useState("admin");
   const [contactNumber, setContactNumber] = useState("");
-  const [address, setAddress] = useState("");
+  //const [address, setAddress] = useState("");
+
+  const [noNew, setNoNew] = useState("");
+  const [streetNew, setStreetNew] = useState("");
+  const [cityNew, setCityNew] = useState("");
+
   //initial state of email
   const [email, setEmail] = useState("");
   //initial state of password
   const [password, setPassword] = useState("");
   //initial state of error
-  const [error, setError] = useState("");
+
   const [passwordRpt, setPasswordRpt] = useState("");
 
   const auth = useSelector((state) => state.auth);
@@ -33,60 +40,59 @@ function Signup(props) {
     return <Redirect to={"/"} />;
   }
 
-  if (user.loading) {
-    return <div className="spinner-border text-primary" role="status"></div>;
-  }
-
   const userSignup = (e) => {
     e.preventDefault();
 
-    //validations of data
-    if (firstName === "") {
-      alert("First Name can't be empty!");
+    if (noNew === "") {
+      toast.error("Address No. can't be empty!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
       return;
     }
-    if (lastName === "") {
-      alert("Last Name can't be empty!");
+    if (streetNew === "") {
+      toast.error("Address street can't be empty!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
       return;
     }
-    if (nic === "") {
-      alert("NIC can't be empty!");
+    if (!cityNew) {
+      toast.error("Address city can't be empty!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
       return;
     }
-    if (gender === "") {
-      alert("Gender can't be empty!");
+    if (password !== passwordRpt) {
+      toast.error("Passwords don't match!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
       return;
     }
 
-    if (role === "") {
-      alert("Role can't be empty!");
-      return;
-    }
-
-    if (contactNumber === "") {
-      alert("Contact Number can't be empty!");
-      return;
-    }
-
-    if (address === "") {
-      alert("Address can't be empty!");
-      return;
-    }
-
-    if (email === "") {
-      alert("Email can't be empty!");
-      return;
-    }
-
-    if (password === "") {
-      alert("Password can't be empty!");
-      return;
-    }
-
-    /* if (password === passwordRpt) {
-      alert("Passwords don't match!");
-      return;
-    } */
+    let address = `${noNew}, ${streetNew}, ${cityNew}.`;
 
     const user = {
       firstName,
@@ -101,26 +107,16 @@ function Signup(props) {
     };
 
     dispatch(signup(user));
-    props.history.push("/signin");
+    //props.history.push("/signin");
   };
 
   return (
     <div>
+      <ToastContainer />
       <Layout>
         <Row style={{ height: "100vh" }}>
           <Col className="mainReg col-4"></Col>
           <Col className="col-8">
-            {/* showing error messages */}
-            {user.message ? (
-              <div
-                className="alert alert-success text-center"
-                role="alert"
-                style={{ marginTop: "20px" }}
-              >
-                {user.message}
-              </div>
-            ) : null}
-
             <Row
               style={{
                 marginTop: "50px",
@@ -139,131 +135,155 @@ function Signup(props) {
                 <br></br>
                 <h3 className="text-center">Burger Freakz Admin Dashboard</h3>
                 <br></br>
-                <Form onSubmit={userSignup}>
-                  <Row>
-                    <Col md={6}>
-                      <Input
-                        lable="First Name"
-                        type="text"
-                        placeholder="Enter first name"
-                        value={firstName}
-                        onChange={(e) => {
-                          setFirstName(e.target.value);
-                        }}
-                      ></Input>
-                    </Col>
-                    <Col md={6}>
-                      <Input
-                        lable="Last Name"
-                        type="text"
-                        placeholder="Enter last name"
-                        value={lastName}
-                        onChange={(e) => {
-                          setLastName(e.target.value);
-                        }}
-                      ></Input>
-                    </Col>
-                  </Row>
+                {user.loading ? (
+                  <div
+                    className="spinner-border text-primary"
+                    role="status"
+                  ></div>
+                ) : (
+                  <Form onSubmit={userSignup}>
+                    <Row>
+                      <Col md={6}>
+                        <Input
+                          lable="First Name"
+                          type="text"
+                          placeholder="Enter first name"
+                          value={firstName}
+                          onChange={(e) => {
+                            setFirstName(e.target.value);
+                          }}
+                        ></Input>
+                      </Col>
+                      <Col md={6}>
+                        <Input
+                          lable="Last Name"
+                          type="text"
+                          placeholder="Enter last name"
+                          value={lastName}
+                          onChange={(e) => {
+                            setLastName(e.target.value);
+                          }}
+                        ></Input>
+                      </Col>
+                    </Row>
 
-                  <Input
-                    lable="Email"
-                    type="email"
-                    placeholder="Enter email"
-                    value={email}
-                    onChange={(e) => {
-                      setEmail(e.target.value);
-                    }}
-                    error="We'll never share your email with anyone else."
-                  ></Input>
-
-                  <Input
-                    lable="National Identity Card Number"
-                    type="text"
-                    placeholder="Enter NIC number"
-                    value={nic}
-                    onChange={(e) => {
-                      setNic(e.target.value);
-                    }}
-                  ></Input>
-                  <Form.Group>
-                    <Form.Label>Gender</Form.Label>
-                    <Form.Control
-                      as="select"
-                      value={gender}
+                    <Input
+                      lable="Email"
+                      type="text"
+                      placeholder="Enter email"
+                      value={email}
                       onChange={(e) => {
-                        setGender(e.target.value);
+                        setEmail(e.target.value);
                       }}
-                    >
-                      <option value="male">Male</option>
-                      <option value="female">Female</option>
-                      <option value="other">Other</option>
-                    </Form.Control>
-                  </Form.Group>
+                      error="We'll never share your email with anyone else."
+                    ></Input>
 
-                  <Form.Group>
-                    <Form.Label>Role</Form.Label>
-                    <Form.Control
-                      as="select"
-                      value={role}
+                    <Input
+                      lable="National Identity Card Number"
+                      type="text"
+                      placeholder="Enter NIC number"
+                      value={nic}
                       onChange={(e) => {
-                        setRole(e.target.value);
+                        setNic(e.target.value);
                       }}
+                    ></Input>
+                    <Form.Group>
+                      <Form.Label>Gender</Form.Label>
+                      <Form.Control
+                        as="select"
+                        value={gender}
+                        onChange={(e) => {
+                          setGender(e.target.value);
+                        }}
+                      >
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="other">Other</option>
+                      </Form.Control>
+                    </Form.Group>
+
+                    <Form.Group>
+                      <Form.Label>Role</Form.Label>
+                      <Form.Control
+                        as="select"
+                        value={role}
+                        onChange={(e) => {
+                          setRole(e.target.value);
+                        }}
+                      >
+                        <option value="admin">System Admin</option>
+                        <option value="manager">Manager</option>
+                        <option value="chef">Chef</option>
+                        <option value="deliveryrider">Delivery Rider</option>
+                      </Form.Control>
+                    </Form.Group>
+
+                    <Input
+                      lable="Contact Number"
+                      type="tel"
+                      placeholder="Enter contact number"
+                      value={contactNumber}
+                      onChange={(e) => {
+                        setContactNumber(e.target.value);
+                      }}
+                    ></Input>
+
+                    <Input
+                      value={noNew}
+                      onChange={(e) => {
+                        setNoNew(e.target.value);
+                      }}
+                      lable="Address"
+                      type="text"
+                      placeholder="No..."
+                    ></Input>
+                    <Form.Control
+                      value={streetNew}
+                      onChange={(e) => {
+                        setStreetNew(e.target.value);
+                      }}
+                      type="text"
+                      placeholder="Street..."
+                    />
+                    <br></br>
+                    <Form.Control
+                      value={cityNew}
+                      onChange={(e) => {
+                        setCityNew(e.target.value);
+                      }}
+                      type="text"
+                      placeholder="City..."
+                    />
+                    <br></br>
+
+                    <Input
+                      lable="Password"
+                      type="password"
+                      placeholder="Enter password"
+                      value={password}
+                      onChange={(e) => {
+                        setPassword(e.target.value);
+                      }}
+                    ></Input>
+
+                    <Input
+                      lable="Confirm Password"
+                      type="password"
+                      placeholder="Enter password again"
+                      value={passwordRpt}
+                      onChange={(e) => {
+                        setPasswordRpt(e.target.value);
+                      }}
+                    ></Input>
+                    <Button
+                      variant="primary"
+                      type="submit"
+                      style={{ width: "100%", marginBottom: "50px" }}
                     >
-                      <option value="admin">System Admin</option>
-                      <option value="manager">Manager</option>
-                      <option value="chef">Chef</option>
-                      <option value="deliveryrider">Delivery Rider</option>
-                    </Form.Control>
-                  </Form.Group>
-
-                  <Input
-                    lable="Contact Number"
-                    type="tel"
-                    placeholder="Enter contact number"
-                    value={contactNumber}
-                    onChange={(e) => {
-                      setContactNumber(e.target.value);
-                    }}
-                  ></Input>
-
-                  <Input
-                    lable="Address"
-                    as="textarea"
-                    rows="3"
-                    placeholder="Enter address"
-                    value={address}
-                    onChange={(e) => {
-                      setAddress(e.target.value);
-                    }}
-                  ></Input>
-
-                  <Input
-                    lable="Password"
-                    type="password"
-                    placeholder="Enter password"
-                    value={password}
-                    onChange={(e) => {
-                      setPassword(e.target.value);
-                    }}
-                  ></Input>
-
-                  <Input
-                    lable="Confirm Password"
-                    type="password"
-                    placeholder="Enter password again"
-                    value={passwordRpt}
-                    onChange={(e) => {
-                      setPasswordRpt(e.target.value);
-                    }}
-                  ></Input>
-                  <Button
-                    variant="primary"
-                    type="submit"
-                    style={{ width: "100%", marginBottom: "50px" }}
-                  >
-                    Sign Up
-                  </Button>
-                </Form>
+                      Sign Up
+                    </Button>
+                  </Form>
+                )}
               </Col>
             </Row>
           </Col>

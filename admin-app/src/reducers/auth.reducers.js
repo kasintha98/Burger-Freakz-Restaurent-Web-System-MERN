@@ -20,6 +20,7 @@ const initState = {
   authenticating: false,
   loading: false,
   error: null,
+  errormsg: null,
   message: "",
 };
 
@@ -40,6 +41,14 @@ export default (state = initState, action) => {
         user: action.payload.user,
         token: action.payload.token,
         authenticate: true,
+        authenticating: false,
+      };
+      break;
+    case authConstants.LOGIN_FAILURE:
+      state = {
+        ...state,
+        errormsg: action.payload.errormsg,
+        authenticate: false,
         authenticating: false,
       };
       break;

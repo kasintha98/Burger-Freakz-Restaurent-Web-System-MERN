@@ -1,6 +1,7 @@
 import axios from "../helpers/axios";
 import { authConstants } from "./constants";
 import { userConstants } from "./constants";
+import { toast } from "react-toastify";
 
 export const login = (user) => {
   return async (dispatch) => {
@@ -22,13 +23,32 @@ export const login = (user) => {
           user,
         },
       });
-    } else {
-      if (res.status === 400) {
-        dispatch({
-          type: authConstants.LOGIN_FAILURE,
-          payload: { error: res.data.error },
-        });
-      }
+
+      toast.success("Login Success!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
+    if (res.status === 202) {
+      dispatch({
+        type: authConstants.LOGIN_FAILURE,
+        payload: { errormsg: res.data.errormsg },
+      });
+
+      toast.error(res.data.errormsg, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
     }
   };
 };
@@ -44,6 +64,17 @@ export const signup = (user) => {
         type: userConstants.USER_SIGNUP_SUCCESS,
         payload: { error: res.data },
       });
+
+      toast.success("Signup Success!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+
       /* const { token, user } = res.data;
       localStorage.setItem("token", token);
       localStorage.setItem("user", JSON.stringify(user)); */
@@ -58,8 +89,19 @@ export const signup = (user) => {
     } else {
       dispatch({
         type: userConstants.USER_SIGNUP_FAILURE,
-        payload: { error: res.data.error },
+        payload: { errormsg: res.data.errormsg },
       });
+
+      toast.error(res.data.errormsg, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+
       /* if (res.status === 400) {
         dispatch({
           type: authConstants.LOGIN_FAILURE,

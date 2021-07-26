@@ -4,6 +4,7 @@ const initState = {
   error: null,
   message: "",
   loading: false,
+  errormsg: null,
 };
 
 export default (state = initState, action) => {
@@ -26,6 +27,7 @@ export default (state = initState, action) => {
         ...state,
         loading: false,
         error: action.payload.error,
+        errormsg: action.payload.errormsg,
       };
       break;
   }
