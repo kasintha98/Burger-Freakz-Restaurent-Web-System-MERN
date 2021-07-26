@@ -1,5 +1,6 @@
 import axios from "../helpers/axios";
 import { purchaseConstants } from "./constants";
+import { toast } from "react-toastify";
 
 export const getPurchase = () => {
   return async (dispatch) => {
@@ -37,10 +38,30 @@ export const addPurchase = (form) => {
           type: purchaseConstants.ADD_PURCHASE_SUCCESS,
           payload: { purchase: res.data.purchase },
         });
+
+        toast.success(res.data.msg, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
       } else {
         dispatch({
           type: purchaseConstants.ADD_PURCHASE_FAILURE,
           payload: res.data.error,
+        });
+
+        toast.error(res.data.error, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
         });
       }
       console.log(res);
@@ -61,11 +82,31 @@ export const deletePurchase = (id) => {
       dispatch({
         type: purchaseConstants.DELETE_PURCHASE_SUCCESS,
       });
+
+      toast.success(res.data.msg, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
     } else {
       const { error } = res.data;
       dispatch({
         type: purchaseConstants.DELETE_PURCHASE_FAILURE,
         payload: { error },
+      });
+
+      toast.error(res.data.error, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
       });
     }
   };

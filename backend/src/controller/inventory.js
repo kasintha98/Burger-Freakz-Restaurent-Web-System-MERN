@@ -14,10 +14,12 @@ exports.addInventory = async (req, res) => {
   const inv = new Inventory(inventoryObj);
   await inv.save((err, inventory) => {
     if (err) {
-      return res.status(400).json({ err });
+      return res.status(202).json({ error: err });
     }
     if (inventory) {
-      return res.status(201).json({ inventory });
+      return res
+        .status(201)
+        .json({ inventory, msg: "Inventory added successfully!" });
     }
   });
 };
@@ -39,7 +41,7 @@ exports.deleteInventory = async (req, res) => {
       .then(() =>
         res.status(200).json({ msg: "Inventory Item Deleted Successfully!" })
       )
-      .catch((err) => res.status(400).json("Error: " + err));
+      .catch((err) => res.status(202).json({ error: err }));
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

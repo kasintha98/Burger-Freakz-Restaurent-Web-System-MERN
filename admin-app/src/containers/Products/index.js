@@ -16,6 +16,8 @@ import CurrencyFormat from "react-currency-format";
 import NewModal from "../../components/UI/Modal";
 import { generatePublicUrl } from "../../urlConfig";
 import "./style.css";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Products(props) {
   const [productName, setProductName] = useState("");
@@ -61,43 +63,123 @@ function Products(props) {
 
     //validations of data
     if (productName === "") {
-      alert("Name can't be empty!");
+      toast.error("Name can't be empty!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
       return;
     }
     if (productPrice === "") {
-      alert("Price can't be empty!");
+      toast.error("Price can't be empty!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
       return;
     }
     if (isNaN(productPrice)) {
-      alert("Price must be a number!");
+      toast.error("Price must be a number!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
       return;
     }
     if (productQty === "") {
-      alert("Quantity can't be empty!");
+      toast.error("Quantity can't be empty!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
       return;
     }
     if (isNaN(productQty)) {
-      alert("Quantity must be a number!");
+      toast.error("Quantity must be a number!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
       return;
     }
     if (productDescription === "") {
-      alert("Description can't be empty!");
+      toast.error("Description can't be empty!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
       return;
     }
     if (productOffer === "") {
-      alert("Offer can't be empty!");
+      toast.error("Offer can't be empty!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
       return;
     }
     if (isNaN(productOffer)) {
-      alert("Offer must be a number!");
+      toast.error("Offer must be a number!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
       return;
     }
     if (!productCategory) {
-      alert("Category can't be empty!");
+      toast.error("Category can't be empty!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
       return;
     }
     if (productImage.length < 0) {
-      alert("Product images can't be empty!");
+      toast.error("Product images can't be empty!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
       return;
     }
 
@@ -163,8 +245,127 @@ function Products(props) {
   const updateProductForm = () => {
     const form = new FormData();
 
-    console.log(productNameUpdate);
-    console.log(productIdUpdate);
+    //validations of data
+    if (productNameUpdate === "") {
+      toast.error("Name can't be empty!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      return;
+    }
+    if (productPriceUpdate === "") {
+      toast.error("Price can't be empty!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      return;
+    }
+    if (isNaN(productPriceUpdate)) {
+      toast.error("Price must be a number!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      return;
+    }
+    if (productQtyUpdate === "") {
+      toast.error("Quantity can't be empty!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      return;
+    }
+    if (isNaN(productQtyUpdate)) {
+      toast.error("Quantity must be a number!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      return;
+    }
+    if (productDescriptionUpdate === "") {
+      toast.error("Description can't be empty!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      return;
+    }
+    if (productOfferUpdate === "") {
+      toast.error("Offer can't be empty!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      return;
+    }
+    if (isNaN(productOfferUpdate)) {
+      toast.error("Offer must be a number!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      return;
+    }
+    if (!productCategoryUpdate) {
+      toast.error("Category can't be empty!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      return;
+    }
+    if (productImageUpdate.length < 0) {
+      toast.error("Product images can't be empty!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      return;
+    }
 
     form.append("_id", productIdUpdate);
     form.append("name", productNameUpdate);
@@ -287,6 +488,7 @@ function Products(props) {
         addNewItem={updateProductForm}
         modalTitle="Edit Product"
         size="lg"
+        cat={true}
       >
         <Input
           lable="Product Name"
@@ -576,6 +778,7 @@ function Products(props) {
 
   return (
     <Layout sidebar>
+      <ToastContainer />
       <Container>
         <Row>
           <Col md={12}>

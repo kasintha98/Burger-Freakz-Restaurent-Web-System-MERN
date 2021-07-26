@@ -1,5 +1,6 @@
 import axios from "../helpers/axios";
 import { orderConstants } from "./constants";
+import { toast } from "react-toastify";
 
 export const getCustomerOrders = () => {
   return async (dispatch) => {
@@ -37,6 +38,15 @@ export const updateOrder = (payload) => {
           type: orderConstants.UPDATE_CUSTOMER_ORDER_SUCCESS,
         });
         dispatch(getCustomerOrders());
+        toast.success("Order status updated successfully!", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
       } else {
         const { error } = res.data;
         dispatch({

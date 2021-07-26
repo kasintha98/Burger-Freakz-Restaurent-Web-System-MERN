@@ -18,7 +18,10 @@ function NewModal(props) {
             variant={props.variant ? props.variant : "primary"}
             onClick={() => {
               props.addNewItem();
-              props.handleClose();
+
+              if (!props.cat) {
+                props.handleClose();
+              }
             }}
           >
             {props.saveBtnName ? props.saveBtnName : "Save"}

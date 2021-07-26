@@ -47,10 +47,10 @@ exports.addProduct = (req, res) => {
   //saving the new category object(new instance) in the mongo database
   product.save((err, product) => {
     if (err) {
-      return res.status(400).json({ err });
+      return res.status(202).json({ error: err });
     }
     if (product) {
-      res.status(201).json({ product });
+      res.status(201).json({ product, msg: "Product added successfully!" });
     }
   });
 };
@@ -158,7 +158,7 @@ exports.updateProduct = async (req, res) => {
         .then(() =>
           res.status(201).json({ msg: "You've Updated the product!" })
         )
-        .catch((err) => res.status(400).json({ error: err.message }));
+        .catch((err) => res.status(202).json({ error: err.message }));
     });
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -171,7 +171,7 @@ exports.deleteProduct = async (req, res) => {
       .then(() =>
         res.status(200).json({ msg: "Product Deleted Successfully!" })
       )
-      .catch((err) => res.status(400).json("Error: " + err));
+      .catch((err) => res.status(202).json({ error: err.message }));
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

@@ -5,6 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { getInventory, addInventory, deleteInventory } from "../../actions";
 import NewModal from "../../components/UI/Modal";
 import Input from "../../components/UI/Input";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Inventory(props) {
   const inventory = useSelector((state) => state.inventory);
@@ -34,15 +36,54 @@ export default function Inventory(props) {
 
     //validations of data
     if (name === "") {
-      alert("Name can't be empty!");
+      toast.error("Name can't be empty!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
       return;
     }
-    if (description === "") {
-      alert("Description can't be empty!");
-      return;
-    }
+
     if (qty === "") {
-      alert("Quantity can't be empty!");
+      toast.error("Quantity can't be empty!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      return;
+    }
+
+    if (isNaN(qty)) {
+      toast.error("Quantity must be a number!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      return;
+    }
+
+    if (description === "") {
+      toast.error("Description can't be empty!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
       return;
     }
 
@@ -135,6 +176,7 @@ export default function Inventory(props) {
         handleClose={handleClose}
         addNewItem={addNewInventory}
         modalTitle="Add New Inventory Item"
+        cat={true}
       >
         <Input
           lable="Item Name"
@@ -147,7 +189,7 @@ export default function Inventory(props) {
         />
         <Input
           lable="Item Quantity"
-          type={"number"}
+          type={"text"}
           value={qty}
           placeholder={"Item Quantity"}
           onChange={(e) => {
@@ -170,6 +212,7 @@ export default function Inventory(props) {
 
   return (
     <Layout sidebar>
+      <ToastContainer />
       {inventory.loading ? (
         <div class="d-flex justify-content-center">
           <div class="spinner-border text-primary" role="status"></div>

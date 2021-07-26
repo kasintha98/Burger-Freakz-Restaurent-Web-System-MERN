@@ -19,6 +19,8 @@ import Input from "../../components/UI/Input";
 import NewModal from "../../components/UI/Modal";
 import { generatePublicUrl } from "../../urlConfig";
 import "./style.css";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Category(props) {
   const category = useSelector((state) => state.category);
@@ -49,15 +51,39 @@ function Category(props) {
 
     //validations of data
     if (categoryName === "") {
-      alert("Name can't be empty!");
+      toast.error("Name can't be empty!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
       return;
     }
     if (categoryDescription === "") {
-      alert("Description can't be empty!");
+      toast.error("Description can't be empty!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
       return;
     }
     if (!categoryImage) {
-      alert("Category image can't be empty!");
+      toast.error("Category image can't be empty!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
       return;
     }
 
@@ -189,6 +215,7 @@ function Category(props) {
         handleClose={handleClose}
         addNewItem={addNewCategory}
         modalTitle="Add New Category"
+        cat={true}
       >
         <Input
           lable="Category Name"
@@ -229,8 +256,45 @@ function Category(props) {
   const updateCategoryForm = () => {
     const form = new FormData();
 
-    console.log(categoryNameUpdate);
-    console.log(categoryIdUpdate);
+    //validations of data
+    if (categoryNameUpdate === "") {
+      toast.error("Name can't be empty!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      return;
+    }
+
+    if (categoryDescriptionUpdate === "") {
+      toast.error("Description can't be empty!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      return;
+    }
+
+    if (!categoryImageUpdate) {
+      toast.error("Category image can't be empty!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      return;
+    }
 
     form.append("_id", categoryIdUpdate);
     form.append("name", categoryNameUpdate);
@@ -252,6 +316,7 @@ function Category(props) {
         addNewItem={updateCategoryForm}
         modalTitle="Edit Category"
         size="lg"
+        cat={true}
       >
         <Input
           lable="Category Name"
@@ -369,6 +434,7 @@ function Category(props) {
 
   return (
     <Layout sidebar>
+      <ToastContainer />
       {category.loading ? (
         <div class="d-flex justify-content-center">
           <div class="spinner-border text-primary" role="status"></div>

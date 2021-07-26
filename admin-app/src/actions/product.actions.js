@@ -1,5 +1,6 @@
 import axios from "../helpers/axios";
 import { productConstants } from "./constants";
+import { toast } from "react-toastify";
 
 const getAllProducts = () => {
   return async (dispatch) => {
@@ -38,10 +39,30 @@ export const addProduct = (form) => {
           payload: { product: res.data.product },
         });
         dispatch(getAllProducts());
+
+        toast.success(res.data.msg, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
       } else {
         dispatch({
           type: productConstants.ADD_NEW_PRODUCT_FAILURE,
           payload: res.data.error,
+        });
+
+        toast.error(res.data.error, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
         });
       }
       console.log(res);
@@ -59,11 +80,31 @@ export const updateProduct = (form) => {
     if (res.status === 201) {
       dispatch({ type: productConstants.UPDATE_PRODUCT_SUCCESS });
       dispatch(getAllProducts());
+
+      toast.success(res.data.msg, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
     } else {
       const { error } = res.data;
       dispatch({
         type: productConstants.UPDATE_PRODUCT_FAILURE,
         payload: { error },
+      });
+
+      toast.error(res.data.error, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
       });
     }
   };
@@ -80,11 +121,31 @@ export const deleteProduct = (id) => {
       dispatch({
         type: productConstants.DELETE_PRODUCT_SUCCESS,
       });
+
+      toast.success(res.data.msg, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
     } else {
       const { error } = res.data;
       dispatch({
         type: productConstants.DELETE_PRODUCT_FAILURE,
         payload: { error },
+      });
+
+      toast.error(res.data.error, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
       });
     }
   };

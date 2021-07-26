@@ -1,5 +1,6 @@
 import axios from "../helpers/axios";
 import { inventoryConstants } from "./constants";
+import { toast } from "react-toastify";
 
 export const getInventory = () => {
   return async (dispatch) => {
@@ -37,10 +38,28 @@ export const addInventory = (form) => {
           type: inventoryConstants.ADD_INVENTORY_SUCCESS,
           payload: { inventory: res.data.inventory },
         });
+        toast.success(res.data.msg, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
       } else {
         dispatch({
           type: inventoryConstants.ADD_INVENTORY_FAILURE,
           payload: res.data.error,
+        });
+        toast.error(res.data.error, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
         });
       }
       console.log(res);
@@ -61,11 +80,30 @@ export const deleteInventory = (id) => {
       dispatch({
         type: inventoryConstants.DELETE_INVENTORY_SUCCESS,
       });
+      toast.success(res.data.msg, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
     } else {
       const { error } = res.data;
       dispatch({
         type: inventoryConstants.DELETE_INVENTORY_FAILURE,
         payload: { error },
+      });
+
+      toast.error(res.data.error, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
       });
     }
   };

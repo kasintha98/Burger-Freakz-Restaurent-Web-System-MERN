@@ -6,6 +6,8 @@ import { getPurchase, addPurchase, deletePurchase } from "../../actions";
 import NewModal from "../../components/UI/Modal";
 import Input from "../../components/UI/Input";
 import CurrencyFormat from "react-currency-format";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Purchases(props) {
   const purchase = useSelector((state) => state.purchase);
@@ -35,20 +37,80 @@ export default function Purchases(props) {
 
     //validations of data
     if (title === "") {
-      alert("Title can't be empty!");
+      toast.error("Title can't be empty!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
       return;
     }
-    if (description === "") {
-      alert("Description can't be empty!");
-      return;
-    }
+
     if (qty === "") {
-      alert("Quantity can't be empty!");
+      toast.error("Quantity can't be empty!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      return;
+    }
+
+    if (isNaN(qty)) {
+      toast.error("Quantity must be a number!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
       return;
     }
 
     if (unitPrice === "") {
-      alert("Unit Price can't be empty!");
+      toast.error("Unit Price can't be empty!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      return;
+    }
+
+    if (isNaN(unitPrice)) {
+      toast.error("Unit price must be a number!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      return;
+    }
+
+    if (description === "") {
+      toast.error("Description can't be empty!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
       return;
     }
 
@@ -77,7 +139,7 @@ export default function Purchases(props) {
         handleClose={() => {
           setDeletePurchaseModal(false);
         }}
-      >{`Do you want to delete "${currentPurchase.name}" item?`}</NewModal>
+      >{`Do you want to delete "${currentPurchase.title}" item?`}</NewModal>
     );
   };
 
@@ -133,6 +195,7 @@ export default function Purchases(props) {
         handleClose={handleClose}
         addNewItem={addNewPurchase}
         modalTitle="Add New Purchase Item"
+        cat={true}
       >
         <Input
           lable="Purchase Title"
@@ -145,7 +208,7 @@ export default function Purchases(props) {
         />
         <Input
           lable="Purchase Quantity"
-          type={"number"}
+          type={"text"}
           value={qty}
           placeholder={"Purchase Quantity"}
           onChange={(e) => {
@@ -154,7 +217,7 @@ export default function Purchases(props) {
         />
         <Input
           lable="Unit Price"
-          type={"number"}
+          type={"text"}
           value={unitPrice}
           placeholder={"Unit Price"}
           onChange={(e) => {
@@ -177,6 +240,7 @@ export default function Purchases(props) {
 
   return (
     <Layout sidebar>
+      <ToastContainer />
       {purchase.loading ? (
         <div class="d-flex justify-content-center">
           <div class="spinner-border text-primary" role="status"></div>

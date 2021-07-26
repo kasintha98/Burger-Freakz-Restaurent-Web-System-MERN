@@ -7,6 +7,8 @@ import "./style.css";
 import axios from "axios";
 import { Col } from "react-bootstrap";
 import { updateOrder } from "../../actions";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 var dateFormat = require("dateformat");
 
 function Orders(props) {
@@ -40,6 +42,7 @@ function Orders(props) {
 
   return (
     <Layout sidebar>
+      <ToastContainer />
       <Row>
         <div style={{ display: "flex", justifyContent: "space-between" }}>
           <h3>Orders</h3>

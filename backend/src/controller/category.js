@@ -29,10 +29,12 @@ exports.addCategory = (req, res) => {
   const cat = new Category(categoryObj);
   cat.save((err, category) => {
     if (err) {
-      return res.status(400).json({ err });
+      return res.status(202).json({ error: err });
     }
     if (category) {
-      return res.status(201).json({ category });
+      return res
+        .status(201)
+        .json({ category, msg: "Category added successfully!" });
     }
   });
 };
@@ -104,7 +106,7 @@ exports.updateCategory = async (req, res) => {
         .then(() =>
           res.status(201).json({ msg: "You've Updated the category!" })
         )
-        .catch((err) => res.status(400).json({ error: err.message }));
+        .catch((err) => res.status(202).json({ error: err.message }));
     });
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -117,7 +119,7 @@ exports.deleteCategory = async (req, res) => {
       .then(() =>
         res.status(200).json({ msg: "Category Deleted Successfully!" })
       )
-      .catch((err) => res.status(400).json("Error: " + err));
+      .catch((err) => res.status(202).json({ error: err.message }));
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

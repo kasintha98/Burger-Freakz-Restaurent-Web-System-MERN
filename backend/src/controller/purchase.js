@@ -15,10 +15,12 @@ exports.addPurchase = async (req, res) => {
   const pur = new Purchase(purchaseObj);
   await pur.save((err, purchase) => {
     if (err) {
-      return res.status(400).json({ err });
+      return res.status(202).json({ error: err });
     }
     if (purchase) {
-      return res.status(201).json({ purchase });
+      return res
+        .status(201)
+        .json({ purchase, msg: "Purchase added successfully!" });
     }
   });
 };
@@ -40,7 +42,7 @@ exports.deletePurchase = async (req, res) => {
       .then(() =>
         res.status(200).json({ msg: "Purchase Item Deleted Successfully!" })
       )
-      .catch((err) => res.status(400).json("Error: " + err));
+      .catch((err) => res.status(202).json({ error: err }));
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
