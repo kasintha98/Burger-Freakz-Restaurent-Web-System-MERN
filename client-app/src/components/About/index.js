@@ -22,25 +22,26 @@ export default function About() {
                 </div>{" "}
               </Card.Title>
               <Card.Text>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-                in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-                nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-                sunt in culpa qui officia deserunt mollit anim id est laborum.
+                Burger Freakz Restaurant is a food supplying company mainly
+                focused on serving different kinds of burgers, submarines, and
+                submarines. For example, Crispy Chicken Cheesy Blast, Double
+                Cheesy Blast, Double Crispy Chicken Blast are some of the iconic
+                burgers that we are selling. We supply better quality food than
+                other our competitive food companies. We mainly focus on quality
+                rather than quantity.
                 <br></br>
                 <br></br>
-                Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-                accusantium doloremque laudantium, totam rem aperiam, eaque ipsa
-                quae ab illo inventore veritatis et quasi architecto beatae
-                vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia
-                voluptas sit aspernatur aut odit aut fugit, sed quia
-                consequuntur magni dolores eos qui ratione voluptatem sequi
-                nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor
-                sit amet, consectetur, adipisci velit, sed quia non numquam eius
-                modi tempora incidunt ut labore et dolore magnam aliquam quaerat
-                voluptatem.
+                The company has both dine-in and delivery facilities. The
+                company was started by Mr Yukthika Wimalaweera and his sister Ms
+                Yasara Wimalaweera in May 2020.
+                <br></br>
+                <br></br>
+                The restaurant is situated in a calm area in the city of
+                Homagama. You can enjoy your foods away from the noisy city, but
+                close to nature.
+                <br></br>
+                <br></br>
+                So, what are you waiting for? Come and feel the difference!
                 <br></br>
                 <br></br>
                 <div className="text-center">

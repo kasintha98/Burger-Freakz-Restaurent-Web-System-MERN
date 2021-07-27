@@ -196,6 +196,13 @@ function Products(props) {
 
     dispatch(addProduct(form));
 
+    setProductName("");
+    setProductPrice("");
+    setProductOffer("");
+    setProductCategory("");
+    setProductQty("");
+    setProductDescription("");
+    setProductImage([]);
     //window.location.reload();
   };
 

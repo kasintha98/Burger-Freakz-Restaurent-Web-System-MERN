@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
-import { Row, Col, Container, Button } from "react-bootstrap";
+import { Row, Col, Container, Button, Alert } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { getSpecificProductBySlug, getFeedbacks } from "../../actions";
 import { generatePublicUrl } from "../../urlConfig";
@@ -129,7 +129,11 @@ export default function ProductPage(props) {
             <div className="text-center">
               <h4>Feedbacks</h4>
             </div>
-            <Feedback feedbacks={feedback}></Feedback>
+            {feedback.length > 0 ? (
+              <Feedback feedbacks={feedback}></Feedback>
+            ) : (
+              <Alert variant={"info"}>No Feedbacks Yet!</Alert>
+            )}
           </Col>
           <Col sm={3}>
             <h4>

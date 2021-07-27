@@ -64,7 +64,7 @@ export default function Header(props) {
     return (
       <>
         <NavLink
-          class="nav-link"
+          className="nav-link"
           to="/"
           onClick={homeSection.onClick}
           selected={homeSection.selected}
@@ -78,27 +78,27 @@ export default function Header(props) {
           About
         </Nav.Link>
         <Nav.Link
-          class="nav-link"
+          className="nav-link"
           onClick={chefSection.onClick}
           selected={chefSection.selected}
         >
           Chef
         </Nav.Link>
         <Nav.Link
-          class="nav-link"
+          className="nav-link"
           onClick={menuSection.onClick}
           selected={menuSection.selected}
         >
           Menu
         </Nav.Link>
         <Nav.Link
-          class="nav-link"
+          className="nav-link"
           onClick={contactSection.onClick}
           selected={contactSection.selected}
         >
           Contact
         </Nav.Link>
-        <NavLink class="nav-link" to="/cart">
+        <NavLink className="nav-link" to="/cart">
           {Object.keys(cart.cartItems).length > 0 ? (
             <CartNum count={Object.keys(cart.cartItems).length}></CartNum>
           ) : (
@@ -125,7 +125,7 @@ export default function Header(props) {
   const renderNonLoggedInMenu = () => {
     return (
       <>
-        <NavLink class="nav-link" to="/">
+        <NavLink className="nav-link" to="/">
           Home
         </NavLink>
         <Nav.Link
@@ -135,21 +135,21 @@ export default function Header(props) {
           About
         </Nav.Link>
         <Nav.Link
-          class="nav-link"
+          className="nav-link"
           onClick={chefSection.onClick}
           selected={chefSection.selected}
         >
           Chef
         </Nav.Link>
         <Nav.Link
-          class="nav-link"
+          className="nav-link"
           onClick={menuSection.onClick}
           selected={menuSection.selected}
         >
           Menu
         </Nav.Link>
         <Nav.Link
-          class="nav-link"
+          className="nav-link"
           onClick={contactSection.onClick}
           selected={contactSection.selected}
         >
@@ -162,7 +162,7 @@ export default function Header(props) {
         >
           Login
         </Nav.Link>
-        <NavLink class="nav-link" to="/cart">
+        <NavLink className="nav-link" to="/cart">
           {Object.keys(cart.cartItems) ? (
             <CartNum count={Object.keys(cart.cartItems).length}></CartNum>
           ) : null}

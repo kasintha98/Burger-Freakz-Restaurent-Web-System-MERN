@@ -12,7 +12,7 @@ export default function MyCarousel(props) {
           <img className="d-block w-100" src={bg1} alt="First slide" />
           <Carousel.Caption>
             <h3>Order Now!</h3>
-            <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+            <p>Feel the taste!</p>
           </Carousel.Caption>
         </Carousel.Item>
         <Carousel.Item>
@@ -20,7 +20,7 @@ export default function MyCarousel(props) {
 
           <Carousel.Caption>
             <h3>Order Now!</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Feel the taste!</p>
           </Carousel.Caption>
         </Carousel.Item>
         <Carousel.Item>
@@ -28,9 +28,7 @@ export default function MyCarousel(props) {
 
           <Carousel.Caption>
             <h3>Order Now!</h3>
-            <p>
-              Praesent commodo cursus magna, vel scelerisque nisl consectetur.
-            </p>
+            <p>Feel the taste!</p>
           </Carousel.Caption>
         </Carousel.Item>
       </Carousel>

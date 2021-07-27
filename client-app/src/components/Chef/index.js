@@ -23,8 +23,7 @@ export default function index() {
               <div className="text-center">Sathish Suharsha</div>
             </Card.Title>
             <Card.Text>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua.
+              Well experienced and talented chef. 2+ years of experience.
             </Card.Text>
           </Card.Body>
         </Card>
@@ -32,12 +31,10 @@ export default function index() {
           <Card.Img variant="top" src={supun} />
           <Card.Body>
             <Card.Title>
-              {" "}
               <div className="text-center">Supun Dhananjaya</div>
             </Card.Title>
             <Card.Text>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua.
+              Well experienced and talented chef. 2+ years of experience.
             </Card.Text>
           </Card.Body>
         </Card>
@@ -45,12 +42,10 @@ export default function index() {
           <Card.Img variant="top" src={deshitha} />
           <Card.Body>
             <Card.Title>
-              {" "}
               <div className="text-center">Deshitha Perera</div>
             </Card.Title>
             <Card.Text>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua.
+              Well experienced and talented chef. 2+ years of experience.
             </Card.Text>
           </Card.Body>
         </Card>
