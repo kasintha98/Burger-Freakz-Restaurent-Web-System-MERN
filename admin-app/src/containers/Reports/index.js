@@ -37,7 +37,7 @@ export default function Reports(props) {
     setTimeout(function () {
       win.document.close(); // CLOSE THE CURRENT WINDOW.
       win.print();
-    }, 6000);
+    }, 8000);
   };
 
   return (

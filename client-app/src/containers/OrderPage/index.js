@@ -10,6 +10,8 @@ import { Link } from "react-router-dom";
 import NewModal from "../../components/Modal";
 import Input from "../../components/Input";
 import StarRatings from "react-star-ratings";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function OrderPage(props) {
   const dispatch = useDispatch();
@@ -100,7 +102,7 @@ export default function OrderPage(props) {
   return (
     <div>
       <Header></Header>
-
+      <ToastContainer />
       <Container
         style={{ marginTop: "120px", minHeight: "calc(100vh - 180px)" }}
       >

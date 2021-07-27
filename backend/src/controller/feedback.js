@@ -13,10 +13,12 @@ exports.addFeedback = async (req, res) => {
   const feed = new Feedback(feedbackObj);
   await feed.save((err, feedback) => {
     if (err) {
-      return res.status(400).json({ err });
+      return res.status(202).json({ error: err });
     }
     if (feedback) {
-      return res.status(201).json({ feedback });
+      return res
+        .status(201)
+        .json({ feedback, msg: "Feedback added successfully!" });
     }
   });
 };

@@ -1,5 +1,6 @@
 import axios from "../helpers/axios";
 import { categoryConstants, feedbackConstants } from "./constants";
+import { toast } from "react-toastify";
 
 export const getFeedbacks = (productId) => {
   return async (dispatch) => {
@@ -37,10 +38,30 @@ export const addFeedback = (feedback) => {
           type: feedbackConstants.ADD_FEEDBACK_SUCCESS,
           payload: { feedback: res.data.feedback },
         });
+
+        toast.success(res.data.msg, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
       } else {
         dispatch({
           type: categoryConstants.ADD_NEW_CATEGORY_FAILURE,
           payload: res.data.error,
+        });
+
+        toast.error(res.data.error, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
         });
       }
       console.log(res);
