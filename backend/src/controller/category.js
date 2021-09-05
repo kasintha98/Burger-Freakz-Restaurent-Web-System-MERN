@@ -39,23 +39,6 @@ exports.addCategory = (req, res) => {
   });
 };
 
-/* function createCategories(categories) {
-  //saving all the categories in an array and returning them for easy get
-  const categoryList = [];
-
-  for (let cat of categories) {
-    categoryList.push({
-      _id: cat._id,
-      name: cat.name,
-      slug: cat.slug,
-      description: cat.description,
-      categoryImage: cat.categoryImage,
-    });
-  }
-
-  return categoryList;
-} */
-
 exports.getCategories = (req, res) => {
   Category.find({}).exec((err, categories) => {
     if (err) {
@@ -63,7 +46,6 @@ exports.getCategories = (req, res) => {
     }
     if (categories) {
       //using createCategories function to store all the categories in the categoryList array
-      /* const categoryList = createCategories(categories); */
 
       return res.status(200).json({ categories /* categoryList */ });
     }
@@ -71,16 +53,6 @@ exports.getCategories = (req, res) => {
 };
 
 exports.updateCategory = async (req, res) => {
-  //const { _id, name, description, categoryImages } = req.body;
-
-  /* const category = { _id, name, description, categoryImages };
-
-  const updatedCategory = await Category.findOneAndUpdate({ _id }, category, {
-    new: true,
-  });
-
-  return res.status(201).json({ updatedCategory }); */
-
   //saving all category images uploaded in an array
   let categoryImages = [];
 

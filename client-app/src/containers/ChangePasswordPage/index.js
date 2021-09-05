@@ -15,6 +15,7 @@ export default function ChangePasswordPage() {
   const { token } = useParams();
 
   const changePassword = (props) => {
+    //input validation
     if (password === "") {
       toast.error("Please Enter The New Password", {
         position: "top-right",

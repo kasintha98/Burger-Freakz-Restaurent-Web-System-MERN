@@ -8,12 +8,7 @@ import {
   ButtonGroup,
 } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  addCategory,
-  getAllCategory,
-  updateCategory,
-  deleteCategory,
-} from "../../actions";
+import { addCategory, updateCategory, deleteCategory } from "../../actions";
 import Layout from "../../components/Layouts";
 import Input from "../../components/UI/Input";
 import NewModal from "../../components/UI/Modal";

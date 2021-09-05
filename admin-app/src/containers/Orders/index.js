@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Layout from "../../components/Layouts";
 import { useDispatch, useSelector } from "react-redux";
 import { Row, Card, Button, Form, Table, FormControl } from "react-bootstrap";
@@ -7,7 +7,7 @@ import "./style.css";
 import axios from "axios";
 import { Col } from "react-bootstrap";
 import { updateOrder } from "../../actions";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 var dateFormat = require("dateformat");
 
@@ -15,10 +15,10 @@ function Orders(props) {
   const order = useSelector((state) => state.order);
   const [type, setType] = useState("");
   const [keywords, setKeywords] = useState("");
-  const [usrAdr, setusrAdr] = useState("");
   const [searchedOrders, setSearchedOrders] = useState();
   const dispatch = useDispatch();
 
+  //calling the action to update order
   const onOrderUpdate = (orderId) => {
     const payload = {
       orderId,

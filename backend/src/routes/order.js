@@ -11,6 +11,7 @@ const {
 } = require("../controller/order");
 const router = require("express").Router();
 
+//backend routes for user order
 router.post("/addOrder", requireSignin, userMiddleware, addOrder);
 router.get("/getOrders", requireSignin, userMiddleware, getOrders);
 router.post("/searchOrders", searchOrders);

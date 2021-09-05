@@ -5,7 +5,7 @@ import filterFactory, {
   selectFilter,
 } from "react-bootstrap-table2-filter";
 import Layout from "../../components/Layouts";
-import { Container, Row, Col, Form } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { getEmployees } from "../../actions";
 
@@ -14,6 +14,7 @@ export default function Employee(props) {
 
   const dispatch = useDispatch();
 
+  //getting all employees when loading the page
   useEffect(() => {
     dispatch(getEmployees());
   }, []);

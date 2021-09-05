@@ -1,7 +1,7 @@
-import React, { Component, PropTypes } from "react";
+import React, { Component } from "react";
 import { jsPDF } from "jspdf";
 import html2canvas from "html2canvas";
-import { Row, Col, Card, Table } from "react-bootstrap";
+import { Table } from "react-bootstrap";
 import logo from "../../img/logo.jpg";
 
 export default class Bill extends Component {

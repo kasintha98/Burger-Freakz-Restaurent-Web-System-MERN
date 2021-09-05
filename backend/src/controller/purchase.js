@@ -1,5 +1,6 @@
 const Purchase = require("../models/purchase");
 
+//add a new purchase
 exports.addPurchase = async (req, res) => {
   const { title, description, qty, unitPrice, addedBy } = req.body;
 

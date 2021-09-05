@@ -1,6 +1,6 @@
 import { Route, Switch } from "react-router-dom";
 import React, { useEffect } from "react";
-import { isUserLoggedIn, getAllCategory, getInitialData } from "./actions";
+import { isUserLoggedIn, getInitialData } from "./actions";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Home from "./containers/Home";
@@ -20,6 +20,7 @@ function App() {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
 
+  //checking user logging and getting initial data
   useEffect(() => {
     if (!auth.authenticate) {
       dispatch(isUserLoggedIn());

@@ -1,6 +1,7 @@
 import axios from "../helpers/axios";
 import { employeeConstants } from "./constants";
 
+//action to get employee users from the database
 export const getEmployees = () => {
   return async (dispatch) => {
     dispatch({ type: employeeConstants.GET_EMPLOYEE_REQUEST });

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Jumbotron } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import Layout from "../../components/Layouts";

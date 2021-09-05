@@ -10,6 +10,7 @@ export default function CategoryGallery(props) {
   const category = useSelector((state) => state.category);
   const dispatch = useDispatch();
 
+  //calling the action to get categories
   useEffect(() => {
     dispatch(getAllCategory());
   }, []);

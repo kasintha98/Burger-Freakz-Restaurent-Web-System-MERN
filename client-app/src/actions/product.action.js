@@ -1,6 +1,7 @@
 import axios from "../helpers/axios";
 import { productConstants } from "./constants";
 
+//geting products belong to a specific category by url slug
 export const getProductsBySlug = (slug) => {
   return async (dispatch) => {
     const res = await axios.get(`/products/${slug}`);
@@ -15,6 +16,7 @@ export const getProductsBySlug = (slug) => {
   };
 };
 
+//get details of a single product according to url slug
 export const getSpecificProductBySlug = (slug) => {
   return async (dispatch) => {
     const res = await axios.get(`/products/product/${slug}`);

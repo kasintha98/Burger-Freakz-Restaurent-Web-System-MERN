@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Layout from "../../components/Layouts";
-import { Container, Form, Button, Row, Col } from "react-bootstrap";
+import { Form, Button, Row, Col } from "react-bootstrap";
 import Input from "../../components/UI/Input";
 import { login } from "../../actions";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,8 +15,7 @@ function Signin(props) {
   const [email, setEmail] = useState("");
   //initial state of password
   const [password, setPassword] = useState("");
-  //initial state of error
-  const [error, setError] = useState("");
+
   //geting user's authenticate status (from auth.reducers.js) and storing in the auth variable
   const auth = useSelector((state) => state.auth);
 
@@ -24,16 +23,6 @@ function Signin(props) {
 
   const userLogin = (e) => {
     e.preventDefault();
-
-    /* if (email === "") {
-      alert("Email can't be empty!");
-      return;
-    }
-
-    if (password === "") {
-      alert("Password can't be empty!");
-      return;
-    } */
 
     const user = { email, password };
 

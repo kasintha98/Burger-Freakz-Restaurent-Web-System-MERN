@@ -2,6 +2,7 @@ const nodemailer = require("nodemailer");
 const env = require("dotenv");
 env.config();
 
+//using nodemailer to send emails
 const transporter = nodemailer.createTransport({
   host: process.env.HOST,
   port: 587,
@@ -15,6 +16,7 @@ const transporter = nodemailer.createTransport({
   },
 });
 
+//sending email
 exports.sendEmail = (req, res) => {
   const { name, email, msg } = req.body;
 

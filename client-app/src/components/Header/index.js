@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useRef } from "react";
 import {
   Navbar,
   Button,
@@ -8,7 +8,6 @@ import {
   Dropdown,
   DropdownButton,
   Container,
-  Alert,
 } from "react-bootstrap";
 import "./style.css";
 import NewModal from "../Modal";
@@ -25,13 +24,13 @@ export default function Header(props) {
   const [loginModal, setLoginModal] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState();
 
   const auth = useSelector((state) => state.auth);
   const cart = useSelector((state) => state.cart);
 
   const dispatch = useDispatch();
 
+  //calling action to login the user
   const userLogin = () => {
     try {
       dispatch(login({ email, password }));
@@ -41,15 +40,10 @@ export default function Header(props) {
     }
   };
 
+  //calling the action to logout the user
   const logout = () => {
     dispatch(signout());
   };
-
-  /* useEffect(() => {
-     if(auth.authenticate){
-
-    } 
-  }, [auth.authenticate]); */
 
   const myRef = useRef(null);
   const executeScroll = () => myRef.current.scrollIntoView();
@@ -186,9 +180,6 @@ export default function Header(props) {
         }}
         log={true}
       >
-        {/* {auth.errormsg ? (
-          <Alert variant={"danger"}>{auth.errormsg}</Alert>
-        ) : null} */}
         <Input
           value={email}
           onChange={(e) => {

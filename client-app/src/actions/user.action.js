@@ -1,6 +1,7 @@
 import { cartConstants, userConstants } from "./constants";
 import axios from "../helpers/axios";
 
+//action to get addresses of user
 export const getAddress = () => {
   return async (dispatch) => {
     try {
@@ -27,6 +28,7 @@ export const getAddress = () => {
   };
 };
 
+//action to add a new address
 export const addAddress = (payload) => {
   return async (dispatch) => {
     try {
@@ -55,6 +57,7 @@ export const addAddress = (payload) => {
   };
 };
 
+//action to get users cart items
 const getCartItems = () => {
   return async (dispatch) => {
     try {
@@ -76,6 +79,7 @@ const getCartItems = () => {
   };
 };
 
+//action to add new order
 export const addOrder = (payload) => {
   return async (dispatch) => {
     try {
@@ -89,13 +93,6 @@ export const addOrder = (payload) => {
           payload: { cartItems: {} },
         });
         dispatch(getCartItems());
-        /* const {
-          addressNew: { addressNew },
-        } = res.data; */
-        /*  dispatch({
-          type: userConstants.ADD_USER_ADDRESS_SUCCESS,
-          payload: { addressNew },
-        }); */
       } else {
         const { error } = res.data;
         dispatch({
@@ -109,6 +106,7 @@ export const addOrder = (payload) => {
   };
 };
 
+//action to get all user's orders
 export const getOrders = () => {
   return async (dispatch) => {
     try {

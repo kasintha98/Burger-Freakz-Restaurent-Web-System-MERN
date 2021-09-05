@@ -7,6 +7,7 @@ const {
 } = require("../controller/cart");
 const router = express.Router();
 
+//backend routes for cart
 router.post(
   "/user/cart/addtocart",
   requireSignin,

@@ -18,6 +18,7 @@ export default function AddressForm(props) {
 
   let addressNew;
 
+  //add a new address
   const onAddressSubmit = (e) => {
     //validations of data
     if (noNew === "") {
@@ -68,6 +69,7 @@ export default function AddressForm(props) {
     setSubmitFlag(true);
   };
 
+  //when user selecting delivery address detecting it
   useEffect(() => {
     console.log("addressCount", user.addressNew);
     if (submitFlag) {

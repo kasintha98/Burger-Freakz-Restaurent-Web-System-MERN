@@ -2,6 +2,7 @@ import axios from "../helpers/axios";
 import { inventoryConstants } from "./constants";
 import { toast } from "react-toastify";
 
+//get inventory from database
 export const getInventory = () => {
   return async (dispatch) => {
     dispatch({ type: inventoryConstants.GET_INVENTORY_REQUEST });
@@ -27,6 +28,7 @@ export const getInventory = () => {
   };
 };
 
+//action to add inventory to database
 export const addInventory = (form) => {
   return async (dispatch) => {
     dispatch({ type: inventoryConstants.ADD_INVENTORY_REQUEST });
@@ -69,6 +71,7 @@ export const addInventory = (form) => {
   };
 };
 
+//action to delete inventory from database
 export const deleteInventory = (id) => {
   return async (dispatch) => {
     dispatch({ type: inventoryConstants.DELETE_INVENTORY_REQUEST });

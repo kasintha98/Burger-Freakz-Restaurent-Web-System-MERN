@@ -7,6 +7,7 @@ const {
 } = require("../controller/purchase");
 const router = express.Router();
 
+//backend routes for purchases
 router.post("/purchase/add", requireSignin, adminMiddleware, addPurchase);
 
 router.get("/purchase", getPurchase);

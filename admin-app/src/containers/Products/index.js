@@ -211,15 +211,6 @@ function Products(props) {
   };
   const handleShow = () => setShow(true);
 
-  /*   const renderCategories = (categories) => {
-    let myCategories = [];
-    for (let category of categories) {
-      myCategories.push(<li key={category._id}>{category.name}</li>);
-    }
-
-    return myCategories;
-  }; */
-
   const handleProductImage = (e) => {
     setProductImage([...productImage, e.target.files[0]]);
   };
@@ -452,7 +443,6 @@ function Products(props) {
                         onClick={() => {
                           updateProductData(product);
                         }}
-                        variant="success"
                       >
                         Edit
                       </Button>

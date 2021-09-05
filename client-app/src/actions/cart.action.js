@@ -3,6 +3,7 @@ import { cartConstants } from "./constants";
 import store from "../store";
 import axios from "../helpers/axios";
 
+//action to get cart items from database
 const getCartItems = () => {
   return async (dispatch) => {
     try {
@@ -24,16 +25,13 @@ const getCartItems = () => {
   };
 };
 
+//action to add items to cart
 export const addToCart = (product, newQty) => {
   return async (dispatch) => {
     const {
       cart: { cartItems },
       auth,
     } = store.getState();
-    //console.log("action::products", products);
-
-    //const product = action.payload.product;
-    //const products = state.products;
 
     const qty = cartItems[product._id]
       ? parseInt(cartItems[product._id].qty) + newQty
@@ -44,12 +42,6 @@ export const addToCart = (product, newQty) => {
     if (auth.authenticate) {
       dispatch({ type: cartConstants.ADD_TO_CART_REQUEST });
       const payload = {
-        /* cartItems: Object.keys(cartItems).map((key, index)=>{
-          return{
-            quantity: cartItems[key].qty,
-            product: cartItems[key]._id
-          }
-        }) */
         cartItems: [
           {
             product: product._id,
@@ -76,6 +68,7 @@ export const addToCart = (product, newQty) => {
   };
 };
 
+//action to update cart details
 export const updateCart = () => {
   return async (dispatch) => {
     const { auth } = store.getState();
@@ -86,7 +79,7 @@ export const updateCart = () => {
 
     if (auth.authenticate) {
       localStorage.removeItem("cart");
-      //dispatch(getCartItems())
+
       if (cartItems) {
         const payload = {
           cartItems: Object.keys(cartItems).map((key, index) => {
@@ -114,6 +107,7 @@ export const updateCart = () => {
   };
 };
 
+//action to remove items from cart
 export const removeCartItem = (payload) => {
   return async (dispatch) => {
     try {

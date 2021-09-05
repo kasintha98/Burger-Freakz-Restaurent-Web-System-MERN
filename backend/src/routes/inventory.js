@@ -7,6 +7,7 @@ const {
 } = require("../controller/inventory");
 const router = express.Router();
 
+//backend routes for inventory
 router.post("/inventory/add", requireSignin, adminMiddleware, addInventory);
 
 router.get("/inventory", getInventory);

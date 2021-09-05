@@ -2,6 +2,7 @@ import axios from "../helpers/axios";
 import { purchaseConstants } from "./constants";
 import { toast } from "react-toastify";
 
+//action to get all purchases from database
 export const getPurchase = () => {
   return async (dispatch) => {
     dispatch({ type: purchaseConstants.GET_PURCHASE_REQUEST });
@@ -27,6 +28,7 @@ export const getPurchase = () => {
   };
 };
 
+//action to add a purchase
 export const addPurchase = (form) => {
   return async (dispatch) => {
     dispatch({ type: purchaseConstants.ADD_PURCHASE_REQUEST });
@@ -71,6 +73,7 @@ export const addPurchase = (form) => {
   };
 };
 
+//action to delete a purchase
 export const deletePurchase = (id) => {
   return async (dispatch) => {
     dispatch({ type: purchaseConstants.DELETE_PURCHASE_REQUEST });

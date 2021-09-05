@@ -3,9 +3,7 @@ const slugify = require("slugify");
 const Category = require("../models/category");
 
 exports.addProduct = (req, res) => {
-  //res.status(200).json({ file: req.files, body: req.body });
-
-  ///destructuring the request body and getting all the elements separately for easy use
+  //destructuring the request body and getting all the elements separately for easy use
   const {
     name,
     price,
@@ -89,18 +87,6 @@ exports.getSpecificProductBySlug = (req, res) => {
     if (product) {
       return res.status(200).json({ product });
     }
-
-    /*   if (product) {
-        Product.find({ product: product._id }).exec((err, products) => {
-          if (err) {
-            return res.status(400).json({ err });
-          }
-
-          if (products.length > 0) {
-            res.status(200).json({ products });
-          }
-        });
-      } */
   });
 };
 
@@ -119,16 +105,6 @@ exports.getProducts = (req, res) => {
 };
 
 exports.updateProduct = async (req, res) => {
-  //const { _id, name,price,quantity, description,offer, productImages } = req.body;
-
-  /* const product = {  _id, name,price,quantity, description,offer, productImages  };
-
-  const updatedProduct = await Product.findOneAndUpdate({ _id }, product, {
-    new: true,
-  });
-
-  return res.status(201).json({ updatedProduct}); */
-
   //saving all Productimages uploaded in an array
   let productImages = [];
 

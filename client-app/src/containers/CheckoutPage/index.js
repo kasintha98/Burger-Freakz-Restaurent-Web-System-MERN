@@ -25,6 +25,9 @@ export default function CheckoutPage() {
 
   const dispatch = useDispatch();
 
+  //aaaa forr change
+
+  //seting new address
   const selectAddress = (adr) => {
     console.log(adr);
 
@@ -102,7 +105,7 @@ export default function CheckoutPage() {
   };
 
   //for payment option change
-  //console.log(localStorage.getItem("paid"));
+  console.log(localStorage.getItem("paid"));
 
   useEffect(() => {
     auth.authenticate && dispatch(getAddress());
@@ -305,9 +308,6 @@ export default function CheckoutPage() {
                           </Col>
                           <Col sm={11}>
                             <div>Cash On Delivery</div>
-                            {/* <Button onClick={onConfirmPayment}>
-                          Confirm Payment Option
-                        </Button> */}
                           </Col>
                         </Row>
                         <br></br>
@@ -358,9 +358,6 @@ export default function CheckoutPage() {
                             Order confirmation email will send to{" "}
                             <strong> {auth.user.email}</strong>
                           </h4>
-                          {/* <Button onClick={userOrderConfirmation}>
-                            Continue
-                          </Button> */}
                         </div>
                       </Row>
                     ) : null}

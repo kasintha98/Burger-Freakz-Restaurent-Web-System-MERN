@@ -2,6 +2,7 @@ import axios from "../helpers/axios";
 import { productConstants } from "./constants";
 import { toast } from "react-toastify";
 
+//action to get all products from database
 const getAllProducts = () => {
   return async (dispatch) => {
     dispatch({ type: productConstants.GET_ALL_PRODUCTS_REQUEST });
@@ -27,6 +28,7 @@ const getAllProducts = () => {
   };
 };
 
+//action to add product
 export const addProduct = (form) => {
   return async (dispatch) => {
     dispatch({ type: productConstants.ADD_NEW_PRODUCT_REQUEST });
@@ -72,6 +74,7 @@ export const addProduct = (form) => {
   };
 };
 
+//action to a update product
 export const updateProduct = (form) => {
   return async (dispatch) => {
     dispatch({ type: productConstants.UPDATE_PRODUCT_REQUEST });
@@ -110,6 +113,7 @@ export const updateProduct = (form) => {
   };
 };
 
+//action to delete a product
 export const deleteProduct = (id) => {
   return async (dispatch) => {
     dispatch({ type: productConstants.DELETE_PRODUCT_REQUEST });

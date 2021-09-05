@@ -16,10 +16,12 @@ export default function CartPage(props) {
 
   const [cartItems, setCartItems] = useState("");
 
+  //calling the action to add items to cart
   useEffect(() => {
     setCartItems(cart.cartItems);
   }, [cart.cartItems]);
 
+  //calling action to get the cart items
   useEffect(() => {
     if (auth.authenticate) {
       dispatch(getCartItems());

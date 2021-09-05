@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Row, Col, Button, Toast } from "react-bootstrap";
+import React, { useState } from "react";
+import { Row, Col, Button } from "react-bootstrap";
 import axios from "axios";
 import Input from "../Input";
 import {
@@ -32,7 +32,9 @@ export default function Contact() {
   const [email, setEmail] = useState("");
   const [msg, setMsg] = useState("");
 
+  //action to send a contact email
   const sendMsg = () => {
+    ///vlidating inputs
     if (name === "") {
       toast.error("Please Fill The Name Field!", {
         position: "top-right",

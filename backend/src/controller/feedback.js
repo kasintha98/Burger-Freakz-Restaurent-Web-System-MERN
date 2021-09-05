@@ -1,5 +1,6 @@
 const Feedback = require("../models/feedback");
 
+//add a feedback to a product
 exports.addFeedback = async (req, res) => {
   const { userId, productId, feedback, rating } = req.body;
 
@@ -23,6 +24,7 @@ exports.addFeedback = async (req, res) => {
   });
 };
 
+//get feedbacks of products
 exports.getFeedback = async (req, res) => {
   await Feedback.find({ productId: req.params.id })
     .populate({ path: "userId", select: "_id firstName lastName" })

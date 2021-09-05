@@ -10,10 +10,12 @@ function Header(props) {
   const auth = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
+  //logout action calling
   const logout = () => {
     dispatch(signout());
   };
 
+  //show logged in navbar
   const renderLoggedInLinks = () => {
     return (
       <Nav>
@@ -26,6 +28,7 @@ function Header(props) {
     );
   };
 
+  //show non logged in navbar
   const renderNonLoggedInLinks = () => {
     return (
       <Nav>

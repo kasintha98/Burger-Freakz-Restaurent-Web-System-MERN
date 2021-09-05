@@ -2,6 +2,7 @@ import axios from "../helpers/axios";
 import { categoryConstants, feedbackConstants } from "./constants";
 import { toast } from "react-toastify";
 
+//action to get feedbacks by product
 export const getFeedbacks = (productId) => {
   return async (dispatch) => {
     dispatch({ type: feedbackConstants.GET_FEEDBACK_REQUEST });
@@ -27,6 +28,7 @@ export const getFeedbacks = (productId) => {
   };
 };
 
+//action to add a new feedback to a product
 export const addFeedback = (feedback) => {
   return async (dispatch) => {
     dispatch({ type: feedbackConstants.ADD_FEEDBACK_REQUEST });

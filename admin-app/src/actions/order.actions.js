@@ -2,6 +2,7 @@ import axios from "../helpers/axios";
 import { orderConstants } from "./constants";
 import { toast } from "react-toastify";
 
+//action to get customer orders from the database
 export const getCustomerOrders = () => {
   return async (dispatch) => {
     dispatch({ type: orderConstants.GET_CUSTOMER_ORDER_REQUEST });
@@ -26,6 +27,7 @@ export const getCustomerOrders = () => {
   };
 };
 
+//action to update order status
 export const updateOrder = (payload) => {
   return async (dispatch) => {
     dispatch({ type: orderConstants.UPDATE_CUSTOMER_ORDER_REQUEST });

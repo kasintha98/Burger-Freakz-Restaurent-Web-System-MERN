@@ -7,6 +7,7 @@ const {
 } = require("../../controller/admin/order.admin");
 const router = express.Router();
 
+//backend routes for admin order
 router.post("/order/update", requireSignin, adminMiddleware, updateOrder);
 
 router.post(

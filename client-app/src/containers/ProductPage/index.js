@@ -16,7 +16,6 @@ import Feedback from "../../components/Feedback";
 export default function ProductPage(props) {
   const [isLoading, setLoading] = useState(true);
   const [qtyInput, setQtyInput] = useState(1);
-  const [overallRate, setOverallRate] = useState(0);
 
   const { product } = useSelector((state) => state.product);
   const { feedback } = useSelector((state) => state.feedback);

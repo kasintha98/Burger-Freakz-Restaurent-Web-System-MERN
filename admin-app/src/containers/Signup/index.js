@@ -17,7 +17,6 @@ function Signup(props) {
   const [gender, setGender] = useState("male");
   const [role, setRole] = useState("admin");
   const [contactNumber, setContactNumber] = useState("");
-  //const [address, setAddress] = useState("");
 
   const [noNew, setNoNew] = useState("");
   const [streetNew, setStreetNew] = useState("");

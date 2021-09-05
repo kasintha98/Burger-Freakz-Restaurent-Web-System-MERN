@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 
+//creating a new schema
 const feedbackSchema = new Schema(
   {
     userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },

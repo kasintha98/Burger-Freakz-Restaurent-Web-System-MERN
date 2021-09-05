@@ -1,5 +1,4 @@
-import React, { useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getOrder } from "../../actions";
 import Header from "../../components/Header";
@@ -7,7 +6,6 @@ import Footer from "../../components/Footer";
 import Bill from "../../components/Bill";
 import { Row, Col, Container, Card, Table } from "react-bootstrap";
 import CurrencyFormat from "react-currency-format";
-import { useReactToPrint } from "react-to-print";
 
 var dateFormat = require("dateformat");
 
@@ -21,13 +19,6 @@ export default function OrderDetailsPage(props) {
     const payload = { orderId: props.match.params.orderId };
     dispatch(getOrder(payload));
   }, []);
-
-  const componentRef = useRef();
-  const handlePrint = useReactToPrint({
-    content: () => componentRef.current,
-  });
-
-  console.log(orderDetails);
 
   return (
     <div>

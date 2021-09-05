@@ -35,6 +35,7 @@ exports.getInventory = async (req, res) => {
   });
 };
 
+//delete inventory items from database
 exports.deleteInventory = async (req, res) => {
   try {
     await Inventory.findByIdAndDelete(req.params.id)

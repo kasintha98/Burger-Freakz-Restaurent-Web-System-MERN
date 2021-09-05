@@ -1,5 +1,6 @@
 const User = require("../models/user");
 
+//get all employee users from the database
 exports.getEmployees = (req, res) => {
   User.find({}).exec((err, employees) => {
     if (err) {

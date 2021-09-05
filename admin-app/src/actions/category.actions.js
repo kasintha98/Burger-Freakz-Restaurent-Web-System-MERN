@@ -2,6 +2,7 @@ import axios from "../helpers/axios";
 import { categoryConstants } from "./constants";
 import { toast } from "react-toastify";
 
+//actio to get all categories from database
 const getAllCategory = () => {
   return async (dispatch) => {
     dispatch({ type: categoryConstants.GET_ALL_CATEGORIES_REQUEST });
@@ -27,6 +28,7 @@ const getAllCategory = () => {
   };
 };
 
+//action to add a new category
 export const addCategory = (form) => {
   return async (dispatch) => {
     dispatch({ type: categoryConstants.ADD_NEW_CATEGORY_REQUEST });
@@ -71,6 +73,7 @@ export const addCategory = (form) => {
   };
 };
 
+//action to update a category
 export const updateCategory = (form) => {
   return async (dispatch) => {
     dispatch({ type: categoryConstants.UPDATE_CATEGORY_REQUEST });

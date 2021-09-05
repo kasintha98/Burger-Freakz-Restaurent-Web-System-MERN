@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 
+//creating a new schema
 const addressSchema = new mongoose.Schema({
   addressNew: {
     type: String,

@@ -1,11 +1,11 @@
 import axios from "../helpers/axios";
 import {
   categoryConstants,
-  initialDataConstants,
   productConstants,
   orderConstants,
 } from "./constants";
 
+//get all categories, products and orders initially after login
 export const getInitialData = () => {
   return async (dispatch) => {
     const res = await axios.post("/initialData");
